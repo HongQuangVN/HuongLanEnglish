@@ -504,6 +504,101 @@
     .tab-btn{min-width:100px;font-size:12px;padding:8px 12px;}
     .tab-label{display:none;}
   }
+
+  /* STUDENT INFO / SUBMIT */
+  .name-field{display:flex;flex-direction:column;gap:6px;max-width:360px;}
+  .name-field label{font-size:13px;font-weight:700;color:var(--gray);}
+  .name-field input{
+    border:2px solid var(--border);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:15px;
+    font-family:inherit;
+    color:var(--dark);
+    outline:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .name-field input:focus{border-color:var(--pink);background:var(--pink-light);}
+  .name-warning{
+    margin-top:14px;
+    background:#ffe1de;
+    color:var(--red);
+    padding:10px 16px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:700;
+    display:inline-block;
+  }
+
+  .fab-submit{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:200;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--pink);
+    color:white;
+    border:none;
+    padding:16px 26px;
+    border-radius:40px;
+    font-size:15px;
+    font-weight:800;
+    font-family:inherit;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(255,92,154,0.45);
+    transition:transform .15s ease;
+  }
+  .fab-submit:hover{transform:translateY(-3px) scale(1.03);}
+  .fab-submit:active{transform:translateY(0) scale(0.98);}
+  @media(max-width:600px){
+    .fab-submit{right:14px;bottom:14px;padding:13px 18px;font-size:13px;}
+  }
+
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(34,36,58,0.55);
+    display:flex;align-items:center;justify-content:center;
+    z-index:300;
+    padding:20px;
+  }
+  .modal-card{
+    background:white;
+    border-radius:24px;
+    padding:32px 28px;
+    max-width:420px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    animation:modalPop .18s ease;
+  }
+  @keyframes modalPop{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal-card h3{margin:0 0 14px;font-size:19px;}
+  .modal-name-line{font-size:14px;color:var(--gray);margin:0 0 10px;}
+  .modal-score-preview{
+    background:var(--pink-light);
+    border-radius:14px;
+    padding:14px;
+    font-weight:700;
+    color:var(--pink);
+    margin-bottom:14px;
+    font-size:15px;
+  }
+  .modal-note{font-size:12.5px;color:var(--gray);margin:0 0 18px;}
+  .modal-actions{display:flex;gap:10px;justify-content:center;}
+  .modal-actions .check-btn{margin:0;}
+  .modal-icon{font-size:44px;margin-bottom:10px;}
+  .modal-icon.success{filter:none;}
+  .spinner{
+    width:36px;height:36px;
+    border:4px solid var(--pink-light);
+    border-top-color:var(--pink);
+    border-radius:50%;
+    margin:0 auto 16px;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
 </style>
 </head>
 <body>
@@ -522,6 +617,18 @@
     <p>Để nói được tốt, các bạn hãy tin mình là <b>"tắm mình"</b> trong podcast, authentic materials, ghi chép lại tất cả các <b>CỤM</b>, <b>cấu trúc ngữ pháp</b> mà người bản xứ hay sử dụng. Cuối cùng hãy <b>shadowing</b> và áp dụng chúng vào trong bài nói hằng ngày của mình — chỉ cần làm 1 tháng như vậy, mình đảm bảo bạn sẽ lên trình nói.</p>
     <p>Hi vọng bạn sẽ tận dụng triệt để 5 topics này mình chia sẻ nhé.</p>
     <p>Nếu bạn mong muốn được chấm bài speaking, hãy liên lạc Zalo <b>0368 344 648</b>, mình sẽ chấm hoàn toàn miễn phí cho bạn. Tin mình đi, mình làm được thì các bạn chắc chắn còn làm được tốt hơn!!!!</p>
+  </div>
+
+  <!-- STUDENT INFO -->
+  <div class="section" id="student-info-card">
+    <span class="step-tag pink">BẮT ĐẦU</span>
+    <h2 class="sec-title">Thông tin người làm bài</h2>
+    <p class="sec-sub">Nhập tên của em trước khi làm bài. Làm xong, bấm nút <b>"📤 Nộp bài"</b> ở góc dưới màn hình để gửi bài cho giáo viên.</p>
+    <div class="name-field">
+      <label for="student-name">Họ và tên</label>
+      <input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="name">
+    </div>
+    <div class="name-warning" id="name-warning" style="display:none">⚠️ Vui lòng nhập tên trước khi nộp bài nhé!</div>
   </div>
 
   <!-- TAB NAV -->
@@ -1816,6 +1923,55 @@
 
 </div>
 
+<!-- FLOATING SUBMIT BUTTON -->
+<button class="fab-submit" id="fab-submit" onclick="openSubmitModal()">
+  <span class="fab-icon">📤</span><span class="fab-label">Nộp bài</span>
+</button>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submit-modal" style="display:none">
+  <div class="modal-card">
+
+    <div id="modal-step-confirm">
+      <h3>📤 Xác nhận nộp bài</h3>
+      <p class="modal-name-line">Học sinh: <b id="modal-student-name">—</b></p>
+      <div class="modal-score-preview" id="modal-score-preview">Đang tính điểm...</div>
+      <p class="modal-note">Mỗi lần bấm "Xác nhận nộp" sẽ tạo một bản ghi mới. Nếu làm thêm rồi nộp lại, giáo viên sẽ thấy cả các lần nộp trước đó.</p>
+      <div class="modal-actions">
+        <button class="check-btn reset" onclick="closeSubmitModal()">Hủy</button>
+        <button class="check-btn" onclick="doSubmit()">✓ Xác nhận nộp</button>
+      </div>
+    </div>
+
+    <div id="modal-step-loading" style="display:none">
+      <div class="spinner"></div>
+      <p>Đang gửi bài làm, vui lòng đợi chút...</p>
+    </div>
+
+    <div id="modal-step-success" style="display:none">
+      <div class="modal-icon success">🎉</div>
+      <h3>Nộp bài thành công!</h3>
+      <p id="modal-success-text"></p>
+      <div class="modal-actions">
+        <button class="check-btn" onclick="closeSubmitModal()">Đóng</button>
+      </div>
+    </div>
+
+    <div id="modal-step-error" style="display:none">
+      <div class="modal-icon">⚠️</div>
+      <h3>Không gửi được bài làm</h3>
+      <p id="modal-error-text">Vui lòng kiểm tra kết nối mạng và thử lại.</p>
+      <div class="modal-actions">
+        <button class="check-btn reset" onclick="closeSubmitModal()">Đóng</button>
+        <button class="check-btn" onclick="doSubmit()">↺ Thử lại</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
   function normalize(s){
     return s.trim().toLowerCase().replace(/\s+/g,' ').replace(/[.,!?]/g,'');
@@ -1878,7 +2034,9 @@
 
   function saveProgress(){
     try{
-      const data = { fib:{}, vn:{}, speak:{}, activeTab:null };
+      const data = { fib:{}, vn:{}, speak:{}, activeTab:null, studentName:'' };
+      const nameEl = document.getElementById('student-name');
+      if(nameEl) data.studentName = nameEl.value;
       document.querySelectorAll('.fib').forEach(i => {
         const t = i.dataset.topic;
         if(!data.fib[t]) data.fib[t] = [];
@@ -1903,6 +2061,10 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if(!raw) return;
       const data = JSON.parse(raw);
+      if(data.studentName){
+        const nameEl = document.getElementById('student-name');
+        if(nameEl) nameEl.value = data.studentName;
+      }
       Object.keys(data.fib || {}).forEach(t => {
         const inputs = document.querySelectorAll('.fib[data-topic="' + t + '"]');
         data.fib[t].forEach((v,i) => { if(inputs[i]) inputs[i].value = v; });
@@ -1933,7 +2095,143 @@
         if(hint) hint.textContent = '';
       });
     });
+    const nameEl = document.getElementById('student-name');
+    if(nameEl){
+      nameEl.addEventListener('input', () => {
+        saveProgress();
+        const warning = document.getElementById('name-warning');
+        if(nameEl.value.trim() && warning) warning.style.display = 'none';
+      });
+    }
   });
+
+  // ===== NỘP BÀI (lưu vào Supabase để trang ket-qua.html đọc) =====
+  const ALL_TOPICS = ['houses', 'food', 'firstjob', 'travel', 'shopping'];
+
+  // Chấm điểm toàn bộ 53 câu điền từ của 5 chủ đề, kể cả những câu học sinh chưa bấm "Kiểm tra đáp án"
+  function gradeAllFIB(){
+    let totalCorrect = 0, totalBlanks = 0;
+    const perTopic = {};
+    ALL_TOPICS.forEach(t => {
+      const inputs = document.querySelectorAll('.fib[data-topic="' + t + '"]');
+      let correct = 0;
+      const items = [];
+      inputs.forEach(inp => {
+        const val = inp.value;
+        const isCorrect = val.trim().length > 0 && normalize(val) === normalize(inp.dataset.answer);
+        if(isCorrect) correct++;
+        items.push({ answer_key: inp.dataset.answer, student_answer: val, is_correct: isCorrect });
+      });
+      perTopic[t] = { correct, total: inputs.length, items };
+      totalCorrect += correct;
+      totalBlanks += inputs.length;
+    });
+    return { perTopic, totalCorrect, totalBlanks };
+  }
+
+  // Gom toàn bộ câu dịch (Bước 02) kèm theo đề bài, để giáo viên xem có ngữ cảnh
+  function gatherTranslations(){
+    const result = {};
+    ALL_TOPICS.forEach(t => { result[t] = []; });
+    document.querySelectorAll('.trans-item').forEach(item => {
+      const ta = item.querySelector('.vn-blank-input');
+      if(!ta) return;
+      const t = ta.dataset.topic;
+      if(!result[t]) result[t] = [];
+      const promptEl = item.querySelector('.en');
+      result[t].push({
+        prompt: promptEl ? promptEl.textContent.trim() : '',
+        answer: ta.value
+      });
+    });
+    return result;
+  }
+
+  // Gom bài nói / dàn ý (Bước 04) của cả 5 chủ đề
+  function gatherSpeaking(){
+    const result = {};
+    ALL_TOPICS.forEach(t => {
+      const el = document.getElementById('speak-text-' + t);
+      result[t] = el ? el.value : '';
+    });
+    return result;
+  }
+
+  function getStudentName(){
+    const el = document.getElementById('student-name');
+    return el ? el.value.trim() : '';
+  }
+
+  function showModalStep(step){
+    ['confirm','loading','success','error'].forEach(s => {
+      const el = document.getElementById('modal-step-' + s);
+      if(el) el.style.display = (s === step) ? 'block' : 'none';
+    });
+  }
+
+  function openSubmitModal(){
+    const name = getStudentName();
+    const warning = document.getElementById('name-warning');
+    if(!name){
+      if(warning) warning.style.display = 'inline-block';
+      const card = document.getElementById('student-info-card');
+      if(card) card.scrollIntoView({ behavior:'smooth', block:'center' });
+      const nameEl = document.getElementById('student-name');
+      if(nameEl) nameEl.focus();
+      return;
+    }
+    if(warning) warning.style.display = 'none';
+
+    const grade = gradeAllFIB();
+    document.getElementById('modal-student-name').textContent = name;
+    document.getElementById('modal-score-preview').textContent =
+      'Điểm điền từ hiện tại: ' + grade.totalCorrect + ' / ' + grade.totalBlanks + ' câu đúng';
+
+    showModalStep('confirm');
+    document.getElementById('submit-modal').style.display = 'flex';
+  }
+
+  function closeSubmitModal(){
+    document.getElementById('submit-modal').style.display = 'none';
+  }
+
+  async function doSubmit(){
+    showModalStep('loading');
+    const name = getStudentName();
+    const grade = gradeAllFIB();
+
+    const payload = {
+      student_name: name,
+      total_score: grade.totalCorrect,
+      max_score: grade.totalBlanks,
+      data: {
+        fib: grade.perTopic,
+        translations: gatherTranslations(),
+        speaking: gatherSpeaking(),
+        submitted_at_client: new Date().toISOString()
+      }
+    };
+
+    try{
+      if(!window.supabaseClient){
+        throw new Error('missing-config');
+      }
+      const { error } = await window.supabaseClient.from('submissions').insert(payload);
+      if(error) throw error;
+
+      document.getElementById('modal-success-text').textContent =
+        'Đã lưu bài làm của ' + name + ' — ' + grade.totalCorrect + '/' + grade.totalBlanks +
+        ' câu điền từ đúng. Giáo viên sẽ xem được bài này trong trang kết quả.';
+      showModalStep('success');
+    }catch(e){
+      console.error('Submit error:', e);
+      document.getElementById('modal-error-text').textContent =
+        (e && e.message === 'missing-config')
+          ? 'Trang chưa được cấu hình Supabase (thiếu config.js). Vui lòng báo giáo viên/quản trị trang.'
+          : 'Không gửi được bài làm. Vui lòng kiểm tra kết nối mạng và thử lại.';
+      showModalStep('error');
+    }
+  }
 </script>
 
 </body>
