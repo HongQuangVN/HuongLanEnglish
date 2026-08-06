@@ -1,0 +1,39 @@
+{
+  "devFiles": [],
+  "ampDevFiles": [],
+  "polyfillFiles": [
+    "static/chunks/0oyv_next_dist_build_polyfills_polyfill-nomodule.js"
+  ],
+  "lowPriorityFiles": [],
+  "rootMainFiles": [
+    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_14f7vz5._.js",
+    "static/chunks/0oyv_next_dist_compiled_next-devtools_index_0ujf1e3.js",
+    "static/chunks/0oyv_next_dist_compiled_react-dom_09y_j7v._.js",
+    "static/chunks/0oyv_next_dist_compiled_react-server-dom-turbopack_1vwygnz._.js",
+    "static/chunks/0oyv_next_dist_compiled_0zlbos4._.js",
+    "static/chunks/0oyv_next_dist_client_0e8jqzy._.js",
+    "static/chunks/0oyv_next_dist_0mvm6ft._.js",
+    "static/chunks/0oyv_@swc_helpers_cjs_0kmsfpn._.js",
+    "static/chunks/huonglan-app_1anvha4._.js",
+    "static/chunks/turbopack-huonglan-app_1x9m4c9._.js"
+  ],
+  "pages": {},
+  "ampFirstPages": [],
+  "rootMainFilesTree": {
+    "/giao-vien/dang-nhap/page": [
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_14f7vz5._.js",
+      "static/chunks/0oyv_next_dist_compiled_next-devtools_index_0ujf1e3.js",
+      "static/chunks/0oyv_next_dist_compiled_react-dom_09y_j7v._.js",
+      "static/chunks/0oyv_next_dist_compiled_react-server-dom-turbopack_1vwygnz._.js",
+      "static/chunks/0oyv_next_dist_compiled_0zlbos4._.js",
+      "static/chunks/0oyv_next_dist_client_0e8jqzy._.js",
+      "static/chunks/0oyv_next_dist_0mvm6ft._.js",
+      "static/chunks/0oyv_@swc_helpers_cjs_0kmsfpn._.js",
+      "static/chunks/huonglan-app_1anvha4._.js",
+      "static/chunks/turbopack-huonglan-app_1x9m4c9._.js",
+      "static/chunks/huonglan-app_0924a2o._.js"
+    ]
+  },
+  "pagesChunkGroupBootstrapParams": {},
+  "chunkLoadingGlobal": "TURBOPACK"
+}
