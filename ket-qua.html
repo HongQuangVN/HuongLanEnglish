@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kết quả bài làm — 5 Topics Worksheet</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+  :root{
+    --pink:#ff5c9a;
+    --pink-light:#ffe1ee;
+    --yellow:#ffc93c;
+    --yellow-light:#fff3d1;
+    --blue:#3b5bfd;
+    --blue-light:#e8ecff;
+    --dark:#22243a;
+    --gray:#6b6d80;
+    --green:#2ec27e;
+    --red:#e8483c;
+    --amber:#c98a00;
+    --border:#f0d9e6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    background:linear-gradient(180deg,#fff8f0 0%, #fdf0f5 100%);
+    color:var(--dark);
+    line-height:1.6;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
+
+  /* HEADER (đồng bộ với trang làm bài) */
+  .header{
+    background:linear-gradient(135deg, var(--pink) 0%, #ff8fb8 100%);
+    border-radius:24px;
+    padding:32px 28px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:20px;
+    box-shadow:0 10px 30px rgba(255,92,154,0.25);
+  }
+  .header::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:-40px;
+    width:180px;height:180px;
+    background:rgba(255,255,255,0.15);
+    border-radius:50%;
+  }
+  .badge{
+    display:inline-block;
+    background:var(--dark);
+    color:white;
+    padding:6px 16px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  .header h1{margin:0 0 8px;font-size:28px;font-weight:800;}
+  .header p{margin:0;font-size:15px;opacity:0.95;max-width:640px;}
+
+  .check-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--pink);
+    color:white;
+    border:none;
+    padding:12px 24px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 4px 14px rgba(255,92,154,0.35);
+  }
+  .check-btn:hover{transform:translateY(-2px);}
+  .check-btn.reset{
+    background:white;
+    color:var(--gray);
+    border:1.5px solid #ddd;
+    box-shadow:none;
+  }
+
+  /* ===== GATE (lớp mật khẩu) ===== */
+  .gate-overlay{
+    position:fixed;inset:0;
+    background:linear-gradient(180deg,#fff8f0 0%, #fdf0f5 100%);
+    display:flex;align-items:center;justify-content:center;
+    z-index:500;
+    padding:20px;
+  }
+  .gate-card{
+    background:white;
+    border-radius:24px;
+    padding:40px 32px;
+    max-width:380px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.12);
+  }
+  .gate-icon{font-size:44px;margin-bottom:12px;}
+  .gate-card h2{margin:0 0 8px;font-size:21px;}
+  .gate-card p{margin:0 0 20px;font-size:14px;color:var(--gray);}
+  .gate-card input{
+    width:100%;
+    border:2px solid var(--border);
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:15px;
+    font-family:inherit;
+    outline:none;
+    margin-bottom:14px;
+    text-align:center;
+    transition:border-color .15s ease;
+  }
+  .gate-card input:focus{border-color:var(--pink);background:var(--pink-light);}
+  .gate-card .check-btn{width:100%;justify-content:center;}
+  .gate-error{
+    margin-top:14px;
+    background:#ffe1de;
+    color:var(--red);
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:700;
+  }
+  .gate-hint{margin-top:18px;font-size:12px;color:#bbb;}
+
+  /* ===== STATS ===== */
+  .stats-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:20px;
+  }
+  .stat-card{
+    background:white;
+    border-radius:18px;
+    padding:18px 16px;
+    text-align:center;
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  }
+  .stat-num{font-size:26px;font-weight:800;color:var(--pink);}
+  .stat-label{font-size:12.5px;color:var(--gray);margin-top:4px;font-weight:600;}
+
+  /* ===== TOOLBAR ===== */
+  .toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .toolbar input[type="text"]{
+    flex:1 1 240px;
+    border:2px solid var(--border);
+    border-radius:30px;
+    padding:11px 20px;
+    font-size:14px;
+    font-family:inherit;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  .toolbar input[type="text"]:focus{border-color:var(--pink);}
+  .toolbar select{
+    border:2px solid var(--border);
+    border-radius:30px;
+    padding:11px 18px;
+    font-size:14px;
+    font-family:inherit;
+    background:white;
+    color:var(--dark);
+    outline:none;
+    cursor:pointer;
+  }
+  .last-updated{font-size:12px;color:var(--gray);margin-bottom:16px;}
+
+  /* ===== RESULTS TABLE ===== */
+  .section{
+    background:white;
+    border-radius:20px;
+    padding:8px;
+    margin-bottom:26px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+    overflow-x:auto;
+  }
+  .results-table{width:100%;border-collapse:separate;border-spacing:0;min-width:720px;}
+  .results-table th{
+    text-align:left;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--gray);
+    padding:14px 18px 10px;
+  }
+  .results-table td{
+    padding:14px 18px;
+    border-top:1px dotted var(--border);
+    font-size:14px;
+    vertical-align:middle;
+  }
+  .results-table tr:hover td{background:#fff8fb;}
+  .cell-name{font-weight:700;}
+  .cell-time{color:var(--gray);font-size:13px;white-space:nowrap;}
+  .cell-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .topic-chip{
+    background:var(--pink-light);
+    color:var(--pink);
+    border-radius:20px;
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .cell-total{font-weight:800;white-space:nowrap;}
+  .cell-total .pct{font-weight:600;font-size:12.5px;opacity:0.75;}
+  .detail-btn{padding:9px 18px;font-size:13px;box-shadow:none;white-space:nowrap;}
+  .empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:var(--gray);
+  }
+  .empty-state .big{font-size:40px;margin-bottom:10px;}
+
+  /* ===== DETAIL MODAL ===== */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(34,36,58,0.6);
+    display:flex;align-items:center;justify-content:center;
+    z-index:400;
+    padding:16px;
+  }
+  .detail-card{
+    background:white;
+    border-radius:24px;
+    max-width:760px;
+    width:100%;
+    max-height:88vh;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    position:relative;
+    animation:modalPop .18s ease;
+  }
+  @keyframes modalPop{from{transform:scale(.96);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal-close{
+    position:absolute;
+    top:16px;right:16px;
+    background:var(--pink-light);
+    color:var(--pink);
+    border:none;
+    width:34px;height:34px;
+    border-radius:50%;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .detail-header{padding:26px 28px 14px;border-bottom:1px solid var(--border);}
+  .detail-header h3{margin:0 0 4px;font-size:20px;padding-right:40px;}
+  .detail-header .detail-time{font-size:13px;color:var(--gray);}
+  .detail-total{
+    display:inline-block;
+    margin-top:8px;
+    font-weight:800;
+    font-size:14px;
+    background:var(--pink-light);
+    padding:6px 14px;
+    border-radius:16px;
+  }
+  .detail-tabs{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    padding:14px 20px;
+    border-bottom:1px solid var(--border);
+    flex-shrink:0;
+  }
+  .detail-tab-btn{
+    background:var(--blue-light);
+    border:none;
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--gray);
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .detail-tab-btn.active{background:var(--pink);color:white;}
+  .detail-body{padding:20px 28px 28px;overflow-y:auto;}
+  .detail-block{margin-bottom:24px;}
+  .detail-block:last-child{margin-bottom:0;}
+  .detail-block h4{margin:0 0 12px;font-size:15px;}
+
+  .detail-fib-list{display:flex;flex-direction:column;gap:8px;}
+  .detail-fib-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#f9f9fb;
+    border-radius:12px;
+    padding:10px 14px;
+  }
+  .detail-fib-item.is-correct{background:#eafaf1;}
+  .detail-fib-item.is-wrong{background:#fff1ef;}
+  .fib-index{
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:white;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;color:var(--gray);
+  }
+  .detail-fib-item div:nth-child(2){flex:1;min-width:0;}
+  .fib-student{font-size:14px;font-weight:600;word-break:break-word;}
+  .fib-key{font-size:12px;color:var(--red);margin-top:2px;}
+  .fib-mark{font-size:16px;font-weight:800;flex-shrink:0;}
+  .is-correct .fib-mark{color:var(--green);}
+  .is-wrong .fib-mark{color:var(--red);}
+
+  .detail-trans-list{display:flex;flex-direction:column;gap:10px;}
+  .detail-trans-item{background:var(--blue-light);border-radius:12px;padding:12px 16px;}
+  .trans-prompt{font-size:13px;color:var(--gray);margin-bottom:6px;}
+  .trans-answer{font-size:14.5px;font-weight:600;word-break:break-word;}
+
+  .detail-speaking{
+    background:var(--yellow-light);
+    border-radius:12px;
+    padding:16px;
+    font-size:14px;
+    white-space:pre-wrap;
+    word-break:break-word;
+    min-height:40px;
+  }
+
+  @media(max-width:640px){
+    .stats-row{grid-template-columns:repeat(2,1fr);}
+    .header h1{font-size:22px;}
+    .detail-header h3{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== GATE (mật khẩu giáo viên) ===== -->
+<div class="gate-overlay" id="gate-overlay">
+  <div class="gate-card">
+    <div class="gate-icon">🔒</div>
+    <h2>Khu vực giáo viên</h2>
+    <p>Nhập mật khẩu để xem kết quả bài làm của học sinh.</p>
+    <input type="password" id="gate-passcode" placeholder="Mật khẩu" autocomplete="off"
+      onkeydown="if(event.key==='Enter') checkPasscode()">
+    <button class="check-btn" onclick="checkPasscode()">Vào xem</button>
+    <div class="gate-error" id="gate-error" style="display:none">Sai mật khẩu, vui lòng thử lại.</div>
+    <div class="gate-hint">Lớp mật khẩu này chỉ để tránh học sinh vô tình mở nhầm trang, không thay thế cho đăng nhập thật.</div>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="wrap" id="dashboard" style="display:none">
+
+  <div class="header">
+    <span class="badge">📊 GIÁO VIÊN</span>
+    <h1>Kết quả bài làm — 5 Topics</h1>
+    <p>Theo dõi bài nộp, điểm điền từ, câu dịch và bài nói của từng học sinh.</p>
+  </div>
+
+  <div class="stats-row" id="stats-row"></div>
+
+  <div class="toolbar">
+    <input type="text" id="search-box" placeholder="🔍 Tìm theo tên học sinh..." oninput="renderTable()">
+    <select id="sort-select" onchange="renderTable()">
+      <option value="newest">Mới nhất</option>
+      <option value="score-desc">Điểm cao → thấp</option>
+      <option value="score-asc">Điểm thấp → cao</option>
+      <option value="name">Tên A → Z</option>
+    </select>
+    <button class="check-btn reset" onclick="loadSubmissions()">🔄 Làm mới</button>
+  </div>
+  <div class="last-updated" id="last-updated"></div>
+
+  <div class="section">
+    <div class="empty-state" id="empty-state" style="display:none">
+      <div class="big">📭</div>
+      <div id="empty-state-text">Chưa có bài nộp nào.</div>
+    </div>
+    <table class="results-table" id="results-table" style="display:none">
+      <thead>
+        <tr>
+          <th>Học sinh</th>
+          <th>Thời gian nộp</th>
+          <th>5 chủ đề (điền từ)</th>
+          <th>Tổng điểm</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="results-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===== DETAIL MODAL ===== -->
+<div class="modal-overlay" id="detail-modal" style="display:none" onclick="if(event.target===this) closeDetail()">
+  <div class="detail-card">
+    <button class="modal-close" onclick="closeDetail()">✕</button>
+    <div class="detail-header">
+      <h3 id="detail-name"></h3>
+      <div class="detail-time" id="detail-time"></div>
+      <div class="detail-total" id="detail-total"></div>
+    </div>
+    <div class="detail-tabs" id="detail-tabs"></div>
+    <div class="detail-body" id="detail-body"></div>
+  </div>
+</div>
+
+<script>
+  // ⚠️ Đổi mật khẩu này trước khi gửi link cho học sinh hoặc đưa lên mạng.
+  // Đây chỉ là lớp chắn phía trình duyệt, không phải bảo mật thật sự
+  // (xem ghi chú trong supabase-schema.sql).
+  const TEACHER_PASSCODE = "passcode2026";
+
+  const ALL_TOPICS = (window.WORKSHEET_TOPICS) || ["houses","food","firstjob","travel","shopping"];
+  const TOPIC_META = {
+    houses:   { label: "Dream House",   icon: "🏡" },
+    food:     { label: "Favorite Food", icon: "🍜" },
+    firstjob: { label: "First Job",     icon: "💼" },
+    travel:   { label: "Travel",        icon: "✈️" },
+    shopping: { label: "Shopping",      icon: "🛍️" }
+  };
+
+  let allSubmissions = [];
+  let currentDetailIndex = null;
+  let currentDetailTopic = ALL_TOPICS[0];
+
+  function escapeHtml(str){
+    const div = document.createElement("div");
+    div.textContent = (str === null || str === undefined) ? "" : String(str);
+    return div.innerHTML;
+  }
+
+  function scoreColor(pct){
+    if(pct >= 80) return "var(--green)";
+    if(pct >= 50) return "var(--amber)";
+    return "var(--red)";
+  }
+
+  function formatTime(iso){
+    const d = new Date(iso);
+    return d.toLocaleString("vi-VN", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
+  }
+
+  // ===== GATE =====
+  function checkPasscode(){
+    const val = document.getElementById("gate-passcode").value;
+    if(val === TEACHER_PASSCODE){
+      sessionStorage.setItem("teacher_unlocked", "1");
+      unlockDashboard();
+    } else {
+      document.getElementById("gate-error").style.display = "block";
+    }
+  }
+
+  function unlockDashboard(){
+    document.getElementById("gate-overlay").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    loadSubmissions();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if(sessionStorage.getItem("teacher_unlocked") === "1"){
+      unlockDashboard();
+    }
+  });
+
+  // ===== LOAD DATA =====
+  async function loadSubmissions(){
+    document.getElementById("last-updated").textContent = "Đang tải...";
+    try{
+      if(!window.supabaseClient){
+        throw new Error("missing-config");
+      }
+      const { data, error } = await window.supabaseClient
+        .from("submissions")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if(error) throw error;
+
+      allSubmissions = data || [];
+      document.getElementById("last-updated").textContent =
+        "Cập nhật lúc " + new Date().toLocaleTimeString("vi-VN");
+      renderStats();
+      renderTable();
+    }catch(e){
+      console.error("Load submissions error:", e);
+      document.getElementById("last-updated").textContent = "";
+      document.getElementById("stats-row").innerHTML = "";
+      document.getElementById("results-table").style.display = "none";
+      const empty = document.getElementById("empty-state");
+      empty.style.display = "block";
+      document.getElementById("empty-state-text").textContent =
+        (e && e.message === "missing-config")
+          ? "Chưa cấu hình Supabase — mở file config.js và điền SUPABASE_URL / SUPABASE_ANON_KEY."
+          : "Không tải được dữ liệu. Kiểm tra lại kết nối mạng hoặc cấu hình Supabase (bảng submissions, RLS).";
+    }
+  }
+
+  // Tự động làm mới mỗi 30 giây để giáo viên xem bài nộp gần như theo thời gian thực
+  setInterval(() => {
+    if(document.getElementById("dashboard").style.display !== "none"){
+      loadSubmissions();
+    }
+  }, 30000);
+
+  // ===== STATS =====
+  function renderStats(){
+    const total = allSubmissions.length;
+    const uniqueNames = new Set(allSubmissions.map(s => (s.student_name || "").trim().toLowerCase())).size;
+    const avgPercent = total ? Math.round(
+      allSubmissions.reduce((sum, s) => sum + (s.max_score ? s.total_score / s.max_score : 0), 0) / total * 100
+    ) : 0;
+    const best = allSubmissions.reduce((max, s) => {
+      const p = s.max_score ? s.total_score / s.max_score : 0;
+      return p > max.p ? { p, name: s.student_name } : max;
+    }, { p: -1, name: "—" });
+
+    document.getElementById("stats-row").innerHTML =
+      '<div class="stat-card"><div class="stat-num">' + total + '</div><div class="stat-label">Lượt nộp bài</div></div>' +
+      '<div class="stat-card"><div class="stat-num">' + uniqueNames + '</div><div class="stat-label">Học sinh</div></div>' +
+      '<div class="stat-card"><div class="stat-num">' + avgPercent + '%</div><div class="stat-label">Điểm TB (điền từ)</div></div>' +
+      '<div class="stat-card"><div class="stat-num">' + (best.p >= 0 ? Math.round(best.p * 100) + '%' : '—') + '</div><div class="stat-label">Cao nhất' + (best.p >= 0 ? ' — ' + escapeHtml(best.name) : '') + '</div></div>';
+  }
+
+  // ===== TABLE =====
+  function renderTable(){
+    const q = document.getElementById("search-box").value.trim().toLowerCase();
+    const sortBy = document.getElementById("sort-select").value;
+
+    let rows = allSubmissions.filter(s => (s.student_name || "").toLowerCase().includes(q));
+
+    rows.sort((a, b) => {
+      const pa = a.max_score ? a.total_score / a.max_score : 0;
+      const pb = b.max_score ? b.total_score / b.max_score : 0;
+      if(sortBy === "score-desc") return pb - pa;
+      if(sortBy === "score-asc") return pa - pb;
+      if(sortBy === "name") return (a.student_name || "").localeCompare(b.student_name || "", "vi");
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+
+    const tbody = document.getElementById("results-tbody");
+    const table = document.getElementById("results-table");
+    const empty = document.getElementById("empty-state");
+
+    if(!rows.length){
+      table.style.display = "none";
+      empty.style.display = "block";
+      document.getElementById("empty-state-text").textContent =
+        allSubmissions.length ? "Không tìm thấy học sinh nào khớp." : "Chưa có bài nộp nào.";
+      tbody.innerHTML = "";
+      return;
+    }
+    empty.style.display = "none";
+    table.style.display = "table";
+
+    tbody.innerHTML = rows.map(s => {
+      const pct = s.max_score ? Math.round(s.total_score / s.max_score * 100) : 0;
+      const fib = (s.data && s.data.fib) || {};
+      const chips = ALL_TOPICS.map(t => {
+        const d = fib[t] || { correct: 0, total: 0 };
+        const meta = TOPIC_META[t] || { label: t, icon: "•" };
+        return '<span class="topic-chip" title="' + escapeHtml(meta.label) + '">' + meta.icon + ' ' + d.correct + '/' + d.total + '</span>';
+      }).join("");
+      const realIndex = allSubmissions.indexOf(s);
+      return (
+        '<tr>' +
+          '<td class="cell-name">' + escapeHtml(s.student_name) + '</td>' +
+          '<td class="cell-time">' + formatTime(s.created_at) + '</td>' +
+          '<td><div class="cell-chips">' + chips + '</div></td>' +
+          '<td class="cell-total" style="color:' + scoreColor(pct) + '">' + s.total_score + '/' + s.max_score + ' <span class="pct">(' + pct + '%)</span></td>' +
+          '<td><button class="check-btn detail-btn" onclick="openDetail(' + realIndex + ')">Xem chi tiết</button></td>' +
+        '</tr>'
+      );
+    }).join("");
+  }
+
+  // ===== DETAIL MODAL =====
+  function openDetail(index){
+    currentDetailIndex = index;
+    currentDetailTopic = ALL_TOPICS[0];
+    const s = allSubmissions[index];
+    const pct = s.max_score ? Math.round(s.total_score / s.max_score * 100) : 0;
+
+    document.getElementById("detail-name").textContent = s.student_name;
+    document.getElementById("detail-time").textContent = "Nộp lúc " + formatTime(s.created_at);
+    const totalEl = document.getElementById("detail-total");
+    totalEl.textContent = "Tổng điền từ: " + s.total_score + "/" + s.max_score + " (" + pct + "%)";
+    totalEl.style.color = scoreColor(pct);
+
+    document.getElementById("detail-tabs").innerHTML = ALL_TOPICS.map(t => {
+      const meta = TOPIC_META[t] || { label: t, icon: "•" };
+      return '<button class="detail-tab-btn' + (t === currentDetailTopic ? ' active' : '') + '" data-topic="' + t + '" onclick="switchDetailTopic(\'' + t + '\')">' + meta.icon + ' ' + escapeHtml(meta.label) + '</button>';
+    }).join("");
+
+    renderDetailBody();
+    document.getElementById("detail-modal").style.display = "flex";
+  }
+
+  function switchDetailTopic(t){
+    currentDetailTopic = t;
+    document.querySelectorAll(".detail-tab-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.topic === t);
+    });
+    renderDetailBody();
+  }
+
+  function renderDetailBody(){
+    const s = allSubmissions[currentDetailIndex];
+    const t = currentDetailTopic;
+    const d = (s && s.data) || {};
+    const fib = (d.fib && d.fib[t]) || { items: [], correct: 0, total: 0 };
+    const translations = (d.translations && d.translations[t]) || [];
+    const speaking = (d.speaking && d.speaking[t]) || "";
+
+    let html = "";
+
+    html += '<div class="detail-block"><h4>✏️ Điền từ — ' + fib.correct + '/' + fib.total + ' đúng</h4><div class="detail-fib-list">';
+    if(fib.items.length){
+      fib.items.forEach((it, i) => {
+        html += (
+          '<div class="detail-fib-item ' + (it.is_correct ? 'is-correct' : 'is-wrong') + '">' +
+            '<span class="fib-index">' + (i + 1) + '</span>' +
+            '<div>' +
+              '<div class="fib-student">' + (it.student_answer ? escapeHtml(it.student_answer) : '<i>(bỏ trống)</i>') + '</div>' +
+              (!it.is_correct ? '<div class="fib-key">Đáp án đúng: ' + escapeHtml(it.answer_key) + '</div>' : '') +
+            '</div>' +
+            '<span class="fib-mark">' + (it.is_correct ? '✓' : '✗') + '</span>' +
+          '</div>'
+        );
+      });
+    } else {
+      html += '<div style="color:var(--gray);font-size:13px;">Không có dữ liệu.</div>';
+    }
+    html += '</div></div>';
+
+    html += '<div class="detail-block"><h4>🔤 Dịch câu (Bước 02)</h4><div class="detail-trans-list">';
+    if(translations.length){
+      translations.forEach(tr => {
+        html += (
+          '<div class="detail-trans-item">' +
+            '<div class="trans-prompt">' + escapeHtml(tr.prompt) + '</div>' +
+            '<div class="trans-answer">' + (tr.answer ? escapeHtml(tr.answer) : '<i>(bỏ trống)</i>') + '</div>' +
+          '</div>'
+        );
+      });
+    } else {
+      html += '<div style="color:var(--gray);font-size:13px;">Không có dữ liệu.</div>';
+    }
+    html += '</div></div>';
+
+    html += (
+      '<div class="detail-block"><h4>🗣️ Bài nói / dàn ý (Bước 04)</h4>' +
+      '<div class="detail-speaking">' + (speaking ? escapeHtml(speaking) : '<i>(bỏ trống)</i>') + '</div></div>'
+    );
+
+    document.getElementById("detail-body").innerHTML = html;
+  }
+
+  function closeDetail(){
+    document.getElementById("detail-modal").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
