@@ -4,31 +4,26 @@ import { useState } from "react";
 
 // Câu hỏi hiển thị cho học sinh — CHỈ CÓ CÂU HỎI, KHÔNG CÓ ĐÁP ÁN.
 const QUESTIONS = [
-  { id: 1, text: "Many people love to _____ and cheer for their favorite teams." },
-  { id: 2, text: "Exercising when we're young can _____." },
-  { id: 3, text: "Physical activity helps _____." },
-  { id: 4, text: "Regular exercise can _____, high blood pressure, and diabetes." },
-  { id: 5, text: "Endorphins released during exercise can _____ and improve your mood and memory." },
-  { id: 6, text: "Being part of a team makes it easier to _____." },
-  { id: 7, text: "School sport participation has been shown to _____ for up to four years." },
-  { id: 8, text: "Training with a good coach helps you _____." },
-  { id: 9, text: "Coming to terms with defeat helps you _____." },
-  { id: 10, text: "Being on a team means you become part of a _____." },
+  { id: 1, text: "I usually go to _____, although they can be a little expensive." },
+  { id: 2, text: "I also enjoy looking around _____." },
+  { id: 3, text: "I'm usually very _____ with buying things, except with jewelry." },
+  { id: 4, text: "It always _____, and then I end up spending too much money." },
+  { id: 5, text: "I hate shopping. I try to _____ because I find it so boring." },
 ];
 
 const TRANSLATION_PROMPTS = [
-  "1. Nhiều người thích tôn vinh chiến thắng trên sân đấu và cổ vũ đội bóng yêu thích của mình.",
-  "2. Tập thể dục khi còn trẻ giúp xương chắc khỏe hơn và giảm cholesterol xấu trong động mạch.",
-  "3. Vận động thường xuyên giúp giảm nguy cơ đột quỵ, huyết áp cao và tiểu đường.",
-  "4. Chơi thể thao trong trường học giúp học sinh giảm nguy cơ trầm cảm trong nhiều năm.",
-  "5. Khi bạn thua cuộc, bạn học cách xây dựng sự kiên cường và nhận thức về bản thân.",
+  "1. Tôi thường đi mua sắm ở các trung tâm thương mại (department stores) và cả chợ trời (flea markets).",
+  "2. Tôi dễ chán (easily bored) khi mua sắm, trừ khi món đồ đó thu hút sự chú ý của tôi (catches my attention).",
+  "3. Tôi cố gắng tránh mua sắm quần áo (avoid clothes shopping) và thường dựa vào (rely on) bạn gái để mua đồ giúp.",
+  "4. Tôi thích mua đồ ở các cửa hàng từ thiện (charity shops) vì có nhiều váy đẹp mà lạ.",
+  "5. Tôi không thích đi dạo xem hàng (browse) hay ngắm cửa hàng (window shop), nhưng tôi thích mua đồ ăn.",
 ];
 
 const SPEAKING_QUESTIONS = [
-  "Do you play any sports? Which one, and why do you like it?",
-  "According to the video, how can sports help your body? Name two benefits.",
-  "How can playing on a team help your mental health and confidence?",
-  "Have you ever learned something important from losing a game? What was it?",
+  "Em có thích mua sắm không? Vì sao? (easily bored / catches my attention...)",
+  "Em thường mua sắm ở đâu? (department stores / flea markets / charity shops...)",
+  "Em thích mua loại đồ gì nhất? (jewelry / clothes / food...)",
+  "Dùng cấu trúc \"I'd rather\" hoặc \"tend to\" ít nhất 1 lần.",
 ];
 
 type GradeResult = {
@@ -42,7 +37,7 @@ type GradeResult = {
   }[];
 };
 
-export default function SportsBenefits3Worksheet() {
+export default function ShoppingWorksheet() {
   const [studentName, setStudentName] = useState("");
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [translations, setTranslations] = useState<Record<number, string>>({});
@@ -62,7 +57,7 @@ export default function SportsBenefits3Worksheet() {
       answer: translations[idx] || "",
     }));
 
-    const res = await fetch("/api/worksheets/sports-benefits-3/grade", {
+    const res = await fetch("/api/worksheets/shopping/grade", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -82,12 +77,9 @@ export default function SportsBenefits3Worksheet() {
     <main className="mx-auto max-w-2xl px-6 py-10">
       <div className="mb-8 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-400 p-8 text-white shadow-lg">
         <span className="mb-2 inline-block rounded-full bg-white/25 px-4 py-1 text-sm">
-          CHỦ ĐỀ: THỂ THAO
+          CHỦ ĐỀ • MY SHOPPING HABITS
         </span>
-        <h1 className="text-2xl font-bold">🏆 Playing Sports: Benefits for Body &amp; Brain</h1>
-        <p className="mt-2 text-sm text-white/90">
-          Học từ vựng và luyện tập nói về lợi ích của thể thao
-        </p>
+        <h1 className="text-2xl font-bold">🛍️ My Shopping Habits</h1>
       </div>
 
       <input

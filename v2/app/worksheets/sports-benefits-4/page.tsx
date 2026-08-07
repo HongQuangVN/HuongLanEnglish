@@ -42,7 +42,7 @@ type GradeResult = {
   }[];
 };
 
-export default function SportsBenefits3Worksheet() {
+export default function SportsBenefits4Worksheet() {
   const [studentName, setStudentName] = useState("");
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [translations, setTranslations] = useState<Record<number, string>>({});
@@ -62,7 +62,7 @@ export default function SportsBenefits3Worksheet() {
       answer: translations[idx] || "",
     }));
 
-    const res = await fetch("/api/worksheets/sports-benefits-3/grade", {
+    const res = await fetch("/api/worksheets/sports-benefits-4/grade", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

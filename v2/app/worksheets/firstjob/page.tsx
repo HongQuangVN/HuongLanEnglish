@@ -4,31 +4,26 @@ import { useState } from "react";
 
 // Câu hỏi hiển thị cho học sinh — CHỈ CÓ CÂU HỎI, KHÔNG CÓ ĐÁP ÁN.
 const QUESTIONS = [
-  { id: 1, text: "Many people love to _____ and cheer for their favorite teams." },
-  { id: 2, text: "Exercising when we're young can _____." },
-  { id: 3, text: "Physical activity helps _____." },
-  { id: 4, text: "Regular exercise can _____, high blood pressure, and diabetes." },
-  { id: 5, text: "Endorphins released during exercise can _____ and improve your mood and memory." },
-  { id: 6, text: "Being part of a team makes it easier to _____." },
-  { id: 7, text: "School sport participation has been shown to _____ for up to four years." },
-  { id: 8, text: "Training with a good coach helps you _____." },
-  { id: 9, text: "Coming to terms with defeat helps you _____." },
-  { id: 10, text: "Being on a team means you become part of a _____." },
+  { id: 1, text: "My first _____ was washing dishes in a restaurant." },
+  { id: 2, text: "It wasn't very _____, but it was hard physical labor." },
+  { id: 3, text: "It taught me _____." },
+  { id: 4, text: "My first job was as a cashier. I hated it because I had to _____ for basically eight hours a day." },
+  { id: 5, text: "My first job was at McDonald's, _____ and doing fries." },
 ];
 
 const TRANSLATION_PROMPTS = [
-  "1. Nhiều người thích tôn vinh chiến thắng trên sân đấu và cổ vũ đội bóng yêu thích của mình.",
-  "2. Tập thể dục khi còn trẻ giúp xương chắc khỏe hơn và giảm cholesterol xấu trong động mạch.",
-  "3. Vận động thường xuyên giúp giảm nguy cơ đột quỵ, huyết áp cao và tiểu đường.",
-  "4. Chơi thể thao trong trường học giúp học sinh giảm nguy cơ trầm cảm trong nhiều năm.",
-  "5. Khi bạn thua cuộc, bạn học cách xây dựng sự kiên cường và nhận thức về bản thân.",
+  "1. Công việc bán thời gian (part-time job) đầu tiên của tôi không hề hào nhoáng (glamorous), nhưng nó dạy tôi giá trị của đồng tiền (the value of money).",
+  "2. Tôi đã làm việc tại một bảo tàng khoa học thực hành (hands-on) và giúp trẻ em mở mang tầm mắt về (open their eyes to) toán học.",
+  "3. Tôi ghét công việc đó vì phải đứng suốt (stand on my feet) tám tiếng mỗi ngày.",
+  "4. Tôi thích công việc chiên bánh burger (flipping burgers) lúc đầu, nhưng sau đó tôi dần mất hứng thú với nó (losing interest in it).",
+  "5. Phần hay nhất là chúng tôi được mang bánh mì thừa (leftover bread) về nhà cho gia đình.",
 ];
 
 const SPEAKING_QUESTIONS = [
-  "Do you play any sports? Which one, and why do you like it?",
-  "According to the video, how can sports help your body? Name two benefits.",
-  "How can playing on a team help your mental health and confidence?",
-  "Have you ever learned something important from losing a game? What was it?",
+  "Công việc bán thời gian đầu tiên của em là gì (hoặc em muốn làm gì)?",
+  "Công việc đó có khó không? (hard physical labor / stand on my feet...)",
+  "Em học được điều gì từ công việc đó? (taught me...)",
+  "Dùng cấu trúc \"it taught me\" hoặc \"start + V-ing\" ít nhất 1 lần.",
 ];
 
 type GradeResult = {
@@ -42,7 +37,7 @@ type GradeResult = {
   }[];
 };
 
-export default function SportsBenefits3Worksheet() {
+export default function FirstjobWorksheet() {
   const [studentName, setStudentName] = useState("");
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [translations, setTranslations] = useState<Record<number, string>>({});
@@ -62,7 +57,7 @@ export default function SportsBenefits3Worksheet() {
       answer: translations[idx] || "",
     }));
 
-    const res = await fetch("/api/worksheets/sports-benefits-3/grade", {
+    const res = await fetch("/api/worksheets/firstjob/grade", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -82,12 +77,9 @@ export default function SportsBenefits3Worksheet() {
     <main className="mx-auto max-w-2xl px-6 py-10">
       <div className="mb-8 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-400 p-8 text-white shadow-lg">
         <span className="mb-2 inline-block rounded-full bg-white/25 px-4 py-1 text-sm">
-          CHỦ ĐỀ: THỂ THAO
+          CHỦ ĐỀ • MY FIRST PART-TIME JOB
         </span>
-        <h1 className="text-2xl font-bold">🏆 Playing Sports: Benefits for Body &amp; Brain</h1>
-        <p className="mt-2 text-sm text-white/90">
-          Học từ vựng và luyện tập nói về lợi ích của thể thao
-        </p>
+        <h1 className="text-2xl font-bold">💼 My First Part-time Job</h1>
       </div>
 
       <input

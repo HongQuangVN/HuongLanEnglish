@@ -1,12 +1,10 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import ResultsTable from "./ResultsTable";
 
 // Server Component: chạy trên server TRƯỚC KHI gửi HTML về browser.
 // Nếu chưa đăng nhập → redirect ngay, học sinh (hoặc bất kỳ ai chưa
 // đăng nhập) sẽ KHÔNG BAO GIỜ nhận được HTML có chứa dữ liệu điểm số.
-// So với bản cũ: bản cũ luôn gửi toàn bộ trang (kể cả logic đọc DB)
-// xuống browser rồi mới hỏi passcode — dữ liệu vẫn có đường bị đọc
-// trước khi qua "gate". Cách này chặn ngay tại nguồn.
 export default async function TeacherResultsPage() {
   const supabase = await createClient();
 
@@ -16,8 +14,7 @@ export default async function TeacherResultsPage() {
   }
 
   // RLS trên bảng submissions cần có policy SELECT cho phép
-  // role authenticated (hoặc cụ thể user này) đọc — xem hướng dẫn
-  // SQL migration đi kèm.
+  // role authenticated đọc — xem hướng dẫn SQL migration đi kèm.
   const { data: submissions, error } = await supabase
     .from("submissions")
     .select("*")
@@ -41,11 +38,11 @@ export default async function TeacherResultsPage() {
   const total = submissions?.length ?? 0;
   const avgPercent = total
     ? Math.round(
-        submissions!.reduce(
+        (submissions!.reduce(
           (sum, s) => sum + (s.max_score ? s.total_score / s.max_score : 0),
           0
         ) /
-          total *
+          total) *
           100
       )
     : 0;
@@ -67,38 +64,7 @@ export default async function TeacherResultsPage() {
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl bg-white p-2 shadow-sm">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-left text-xs uppercase text-gray-400">
-              <th className="p-3">Học sinh</th>
-              <th className="p-3">Thời gian</th>
-              <th className="p-3">Điểm</th>
-            </tr>
-          </thead>
-          <tbody>
-            {submissions?.map((s) => {
-              const pct = s.max_score
-                ? Math.round((s.total_score / s.max_score) * 100)
-                : 0;
-              return (
-                <tr key={s.id} className="border-t border-dotted border-pink-100">
-                  <td className="p-3 font-bold">{s.student_name}</td>
-                  <td className="p-3 text-gray-500">
-                    {new Date(s.created_at).toLocaleString("vi-VN")}
-                  </td>
-                  <td className="p-3 font-bold">
-                    {s.total_score}/{s.max_score} ({pct}%)
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        {total === 0 && (
-          <p className="p-8 text-center text-gray-400">Chưa có bài nộp nào.</p>
-        )}
-      </div>
+      <ResultsTable submissions={submissions || []} />
     </main>
   );
 }

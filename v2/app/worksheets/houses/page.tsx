@@ -4,31 +4,26 @@ import { useState } from "react";
 
 // Câu hỏi hiển thị cho học sinh — CHỈ CÓ CÂU HỎI, KHÔNG CÓ ĐÁP ÁN.
 const QUESTIONS = [
-  { id: 1, text: "Many people love to _____ and cheer for their favorite teams." },
-  { id: 2, text: "Exercising when we're young can _____." },
-  { id: 3, text: "Physical activity helps _____." },
-  { id: 4, text: "Regular exercise can _____, high blood pressure, and diabetes." },
-  { id: 5, text: "Endorphins released during exercise can _____ and improve your mood and memory." },
-  { id: 6, text: "Being part of a team makes it easier to _____." },
-  { id: 7, text: "School sport participation has been shown to _____ for up to four years." },
-  { id: 8, text: "Training with a good coach helps you _____." },
-  { id: 9, text: "Coming to terms with defeat helps you _____." },
-  { id: 10, text: "Being on a team means you become part of a _____." },
+  { id: 1, text: "You _____ the ocean and the beach." },
+  { id: 2, text: "It should be a big house with maybe _____, three cars, and a cinema." },
+  { id: 3, text: "My dream house would be _____." },
+  { id: 4, text: "It would have really _____ because I like places that are airy and spacious." },
+  { id: 5, text: "I don't want a big house, just as long as it's _____." },
 ];
 
 const TRANSLATION_PROMPTS = [
-  "1. Nhiều người thích tôn vinh chiến thắng trên sân đấu và cổ vũ đội bóng yêu thích của mình.",
-  "2. Tập thể dục khi còn trẻ giúp xương chắc khỏe hơn và giảm cholesterol xấu trong động mạch.",
-  "3. Vận động thường xuyên giúp giảm nguy cơ đột quỵ, huyết áp cao và tiểu đường.",
-  "4. Chơi thể thao trong trường học giúp học sinh giảm nguy cơ trầm cảm trong nhiều năm.",
-  "5. Khi bạn thua cuộc, bạn học cách xây dựng sự kiên cường và nhận thức về bản thân.",
+  "1. Nhà mơ ước của tôi sẽ nằm ngay cạnh đại dương (next to the ocean).",
+  "2. Nó sẽ có trần nhà rất cao (high ceilings) vì tôi thích những nơi thoáng đãng và rộng rãi (airy and spacious).",
+  "3. Tôi sẽ không chọn một ngôi nhà quá lớn, miễn là nó được bao quanh bởi thiên nhiên (surrounded by nature).",
+  "4. Nhà mơ ước của tôi sẽ cao hai tầng (two stories high), được làm từ sàn gỗ (wooden floor boards) và tường trắng đơn giản (plain white walls).",
+  "5. Nó sẽ không ở gần thành phố ồn ào — nó sẽ ở rất xa thành phố (far away from the city).",
 ];
 
 const SPEAKING_QUESTIONS = [
-  "Do you play any sports? Which one, and why do you like it?",
-  "According to the video, how can sports help your body? Name two benefits.",
-  "How can playing on a team help your mental health and confidence?",
-  "Have you ever learned something important from losing a game? What was it?",
+  "Ngôi nhà mơ ước của em ở đâu? (near the beach / surrounded by nature / next to...)",
+  "Nó trông như thế nào? (two stories high / high ceilings / a lot of windows...)",
+  "Em muốn có gì trong nhà? (a jacuzzi / an elevator / a cinema...)",
+  "Dùng cấu trúc \"would\" hoặc \"as long as\" ít nhất 1 lần.",
 ];
 
 type GradeResult = {
@@ -42,7 +37,7 @@ type GradeResult = {
   }[];
 };
 
-export default function SportsBenefits3Worksheet() {
+export default function HousesWorksheet() {
   const [studentName, setStudentName] = useState("");
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [translations, setTranslations] = useState<Record<number, string>>({});
@@ -62,7 +57,7 @@ export default function SportsBenefits3Worksheet() {
       answer: translations[idx] || "",
     }));
 
-    const res = await fetch("/api/worksheets/sports-benefits-3/grade", {
+    const res = await fetch("/api/worksheets/houses/grade", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -82,12 +77,9 @@ export default function SportsBenefits3Worksheet() {
     <main className="mx-auto max-w-2xl px-6 py-10">
       <div className="mb-8 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-400 p-8 text-white shadow-lg">
         <span className="mb-2 inline-block rounded-full bg-white/25 px-4 py-1 text-sm">
-          CHỦ ĐỀ: THỂ THAO
+          CHỦ ĐỀ • MY DREAM HOUSE
         </span>
-        <h1 className="text-2xl font-bold">🏆 Playing Sports: Benefits for Body &amp; Brain</h1>
-        <p className="mt-2 text-sm text-white/90">
-          Học từ vựng và luyện tập nói về lợi ích của thể thao
-        </p>
+        <h1 className="text-2xl font-bold">🏡 My Dream House</h1>
       </div>
 
       <input

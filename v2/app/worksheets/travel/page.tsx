@@ -4,31 +4,26 @@ import { useState } from "react";
 
 // Câu hỏi hiển thị cho học sinh — CHỈ CÓ CÂU HỎI, KHÔNG CÓ ĐÁP ÁN.
 const QUESTIONS = [
-  { id: 1, text: "Many people love to _____ and cheer for their favorite teams." },
-  { id: 2, text: "Exercising when we're young can _____." },
-  { id: 3, text: "Physical activity helps _____." },
-  { id: 4, text: "Regular exercise can _____, high blood pressure, and diabetes." },
-  { id: 5, text: "Endorphins released during exercise can _____ and improve your mood and memory." },
-  { id: 6, text: "Being part of a team makes it easier to _____." },
-  { id: 7, text: "School sport participation has been shown to _____ for up to four years." },
-  { id: 8, text: "Training with a good coach helps you _____." },
-  { id: 9, text: "Coming to terms with defeat helps you _____." },
-  { id: 10, text: "Being on a team means you become part of a _____." },
+  { id: 1, text: "The one country I would most like to visit is New Zealand. It looks like an _____ country." },
+  { id: 2, text: "I've never been _____ and I'd like to see if the water flushes in reverse." },
+  { id: 3, text: "One country I'd like to visit is France. My parents went there on their _____." },
+  { id: 4, text: "It would be nice to _____." },
+  { id: 5, text: "I'd love to visit Canada. _____, Canada is our neighbor and I've never been there." },
 ];
 
 const TRANSLATION_PROMPTS = [
-  "1. Nhiều người thích tôn vinh chiến thắng trên sân đấu và cổ vũ đội bóng yêu thích của mình.",
-  "2. Tập thể dục khi còn trẻ giúp xương chắc khỏe hơn và giảm cholesterol xấu trong động mạch.",
-  "3. Vận động thường xuyên giúp giảm nguy cơ đột quỵ, huyết áp cao và tiểu đường.",
-  "4. Chơi thể thao trong trường học giúp học sinh giảm nguy cơ trầm cảm trong nhiều năm.",
-  "5. Khi bạn thua cuộc, bạn học cách xây dựng sự kiên cường và nhận thức về bản thân.",
+  "1. New Zealand trông tuyệt đẹp (absolutely gorgeous) và tôi chưa bao giờ đến phía nam đường xích đạo (south of the equator).",
+  "2. Bố mẹ tôi đã đi tuần trăng mật (honeymoon) ở Pháp, nên tôi muốn đi để luyện tập thêm (get some practice) tiếng Pháp.",
+  "3. Tin hay không thì tùy (believe it or not), tôi rất muốn đến Canada dù tôi đã đi rất nhiều nước.",
+  "4. Tôi đã xem nhiều đoạn phim tư liệu (footage) về Việt Nam và muốn đi du thuyền (boat cruises) qua các đầm phá.",
+  "5. Cuba có khí hậu nhiệt đới (tropical weather) và kiến trúc (architecture) rất thú vị.",
 ];
 
 const SPEAKING_QUESTIONS = [
-  "Do you play any sports? Which one, and why do you like it?",
-  "According to the video, how can sports help your body? Name two benefits.",
-  "How can playing on a team help your mental health and confidence?",
-  "Have you ever learned something important from losing a game? What was it?",
+  "Đất nước em muốn đến nhất là gì? (the one country I would most like to visit...)",
+  "Vì sao em muốn đến đó? (gorgeous / tropical weather / architecture...)",
+  "Em đã biết gì về nơi đó rồi? (footage / honeymoon / boat cruises...)",
+  "Dùng cấu trúc \"the one country I would most like to visit\" ít nhất 1 lần.",
 ];
 
 type GradeResult = {
@@ -42,7 +37,7 @@ type GradeResult = {
   }[];
 };
 
-export default function SportsBenefits3Worksheet() {
+export default function TravelWorksheet() {
   const [studentName, setStudentName] = useState("");
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [translations, setTranslations] = useState<Record<number, string>>({});
@@ -62,7 +57,7 @@ export default function SportsBenefits3Worksheet() {
       answer: translations[idx] || "",
     }));
 
-    const res = await fetch("/api/worksheets/sports-benefits-3/grade", {
+    const res = await fetch("/api/worksheets/travel/grade", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -82,12 +77,9 @@ export default function SportsBenefits3Worksheet() {
     <main className="mx-auto max-w-2xl px-6 py-10">
       <div className="mb-8 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-400 p-8 text-white shadow-lg">
         <span className="mb-2 inline-block rounded-full bg-white/25 px-4 py-1 text-sm">
-          CHỦ ĐỀ: THỂ THAO
+          CHỦ ĐỀ • PLACES I WANT TO VISIT
         </span>
-        <h1 className="text-2xl font-bold">🏆 Playing Sports: Benefits for Body &amp; Brain</h1>
-        <p className="mt-2 text-sm text-white/90">
-          Học từ vựng và luyện tập nói về lợi ích của thể thao
-        </p>
+        <h1 className="text-2xl font-bold">✈️ Places I Want to Visit</h1>
       </div>
 
       <input
