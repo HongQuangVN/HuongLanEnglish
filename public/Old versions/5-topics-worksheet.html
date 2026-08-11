@@ -27,7 +27,6 @@
     line-height:1.6;
   }
   .wrap{max-width:900px;margin:0 auto;padding:24px 32px 60px;}
-  img{max-width:100%;}
 
   /* HEADER */
   .header{
@@ -193,15 +192,8 @@
   }
 
   /* FILL IN BLANK TABLE */
-  .table-scroll{
-    width:100%;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    border-radius:14px;
-  }
   .fib-table{
     width:100%;
-    min-width:480px;
     border-collapse:separate;
     border-spacing:0;
     border-radius:14px;
@@ -231,7 +223,6 @@
   .blank-input{
     display:inline-block;
     width:150px;
-    max-width:100%;
     border:none;
     border-bottom:2px solid var(--dark);
     margin:0 3px;
@@ -390,7 +381,6 @@
   }
   .struct-table{
     width:100%;
-    min-width:420px;
     border-collapse:collapse;
     margin-top:10px;
     font-size:14px;
@@ -478,7 +468,6 @@
   /* GLOSSARY TABLE */
   .glossary-table{
     width:100%;
-    min-width:420px;
     border-collapse:separate;
     border-spacing:0;
     border-radius:14px;
@@ -512,34 +501,11 @@
   }
 
   @media(max-width:600px){
-    .wrap{padding:16px 14px 90px;}
-    .header{padding:22px 18px;border-radius:18px;}
-    .header h1{font-size:21px;}
-    .header p{font-size:13.5px;}
-    .intro-box{padding:18px 16px;border-radius:16px;}
-    .intro-box p{font-size:14px;}
-    .section{padding:18px 16px 22px;border-radius:16px;}
-    h2.sec-title{font-size:18px;}
-    .tab-nav{gap:6px;padding:8px;top:8px;}
-    .tab-btn{min-width:0;flex:1 1 30%;font-size:12px;padding:8px 8px;gap:4px;}
-    .tab-icon{font-size:16px;}
-    .tab-label{display:none;}
-    .audio-card{flex-direction:column;align-items:flex-start;padding:16px;}
+    .header h1{font-size:24px;}
     .fib-table{font-size:13px;}
-    .fib-table th,.fib-table td{padding:10px 12px;}
-    .blank-input{width:110px;font-size:13px;}
-    .check-btn{width:100%;justify-content:center;margin-right:0;}
-    .check-btn.reset{margin-top:8px;}
-    .name-field{max-width:100%;}
-    .grammar-box{padding:14px;}
-    .struct-table{font-size:12.5px;}
-    .glossary-table{font-size:13px;}
-    .glossary-table th,.glossary-table td{padding:10px 12px;}
-    .gloss-en{width:auto;}
-    .speak-box{padding:16px;}
-    .modal-card{padding:24px 18px;}
-    .modal-actions{flex-direction:column;}
-    .modal-actions .check-btn{width:100%;}
+    .blank-input{width:110px;}
+    .tab-btn{min-width:100px;font-size:12px;padding:8px 12px;}
+    .tab-label{display:none;}
   }
 
   /* STUDENT INFO / SUBMIT */
@@ -699,8 +665,7 @@
     <h2 class="sec-title">Nghe và điền từ còn thiếu</h2>
     <p class="sec-sub">Nghe audio và điền <mark class="hl">cụm từ</mark> đúng vào chỗ trống để hoàn thành nội dung.</p>
 
-    <div class="table-scroll">
-<table class="fib-table">
+    <table class="fib-table">
       <tr>
         <th class="who">Người nói</th>
         <th>Nội dung (điền từ vào chỗ trống)</th>
@@ -726,7 +691,6 @@
         <td>I would like my house near the beach. It should have <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="houses" data-answer="a lot of windows"><span class="answer-hint"></span></span> so I can have a view of the ocean, and it should be <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="houses" data-answer="far away from the city"><span class="answer-hint"></span></span> to stay away from the noise.</td>
       </tr>
     </table>
-</div>
 
     <button class="check-btn" onclick="checkFIB('houses')">✓ Kiểm tra đáp án <span id="fib-score-houses" class="score-display"></span></button>
     <button class="check-btn reset" onclick="resetFIB('houses')">↺ Làm lại</button>
@@ -792,12 +756,10 @@
       <div class="rule">
         <h3>1. WOULD để nói về mong ước / giả định (not real now)</h3>
         <p>Dùng <b>would</b> khi diễn tả điều mình <b>mong muốn/tưởng tượng</b>, không phải sự thật hiện tại — rất hay dùng khi nói về "dream house", "dream job"...</p>
-        <div class="table-scroll">
-<table class="struct-table">
+        <table class="struct-table">
           <tr><th>Subject</th><th>would (+not)</th><th>Verb (base form)</th><th>Rest of sentence</th></tr>
           <tr><td>My dream house</td><td>would</td><td>be</td><td>next to the ocean.</td></tr><tr><td>It</td><td>wouldn't</td><td>be</td><td>too big.</td></tr>
         </table>
-</div>
         <div class="ex">Ví dụ: "My dream house <b>would</b> definitely <b>have</b> a jacuzzi and a big balcony."</div>
       </div>
 
@@ -838,8 +800,7 @@
     <h2 class="sec-title">Bảng từ vựng mục tiêu (Target Words)</h2>
     <p class="sec-sub">Tổng hợp toàn bộ cụm từ mục tiêu của chủ đề này kèm nghĩa tiếng Việt.</p>
 
-    <div class="table-scroll">
-<table class="glossary-table">
+    <table class="glossary-table">
       <tr><th>English</th><th>Tiếng Việt</th></tr>
       <tr>
         <td class="gloss-en">have a great view of</td>
@@ -901,7 +862,6 @@
         <td class="gloss-vn">cách xa thành phố</td>
       </tr>
     </table>
-</div>
   </div>
 
   <!-- MINDMAP -->
@@ -980,8 +940,7 @@
     <h2 class="sec-title">Nghe và điền từ còn thiếu</h2>
     <p class="sec-sub">Nghe audio và điền <mark class="hl">cụm từ</mark> đúng vào chỗ trống để hoàn thành nội dung.</p>
 
-    <div class="table-scroll">
-<table class="fib-table">
+    <table class="fib-table">
       <tr>
         <th class="who">Người nói</th>
         <th>Nội dung (điền từ vào chỗ trống)</th>
@@ -1007,7 +966,6 @@
         <td>I suppose I would have to say curry — Thai curry especially. I like Mexican food too. I guess <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="food" data-answer="spicy food in general"><span class="answer-hint"></span></span> it would be curry.</td>
       </tr>
     </table>
-</div>
 
     <button class="check-btn" onclick="checkFIB('food')">✓ Kiểm tra đáp án <span id="fib-score-food" class="score-display"></span></button>
     <button class="check-btn reset" onclick="resetFIB('food')">↺ Làm lại</button>
@@ -1071,12 +1029,10 @@
       <div class="rule">
         <h3>1. WOULD HAVE TO / WOULD SAY để đưa ra lựa chọn khó</h3>
         <p>Dùng <b>would have to say</b> khi phải chọn một đáp án dù không chắc chắn — rất hay dùng để trả lời câu hỏi "món ăn yêu thích của bạn là gì?"</p>
-        <div class="table-scroll">
-<table class="struct-table">
+        <table class="struct-table">
           <tr><th>Subject</th><th>would have to</th><th>Verb (base form)</th><th>Rest of sentence</th></tr>
           <tr><td>I</td><td>would have to</td><td>say</td><td>curry.</td></tr><tr><td>I</td><td>would</td><td>eat</td><td>spicy food every day.</td></tr>
         </table>
-</div>
         <div class="ex">Ví dụ: "I suppose I <b>would have to say</b> curry, but I don't have one especially that's a favorite."</div>
       </div>
 
@@ -1117,8 +1073,7 @@
     <h2 class="sec-title">Bảng từ vựng mục tiêu (Target Words)</h2>
     <p class="sec-sub">Tổng hợp toàn bộ cụm từ mục tiêu của chủ đề này kèm nghĩa tiếng Việt.</p>
 
-    <div class="table-scroll">
-<table class="glossary-table">
+    <table class="glossary-table">
       <tr><th>English</th><th>Tiếng Việt</th></tr>
       <tr>
         <td class="gloss-en">spicy food</td>
@@ -1170,7 +1125,6 @@
         <td class="gloss-vn">món cà ri</td>
       </tr>
     </table>
-</div>
   </div>
 
   <!-- MINDMAP -->
@@ -1237,8 +1191,7 @@
     <h2 class="sec-title">Nghe và điền từ còn thiếu</h2>
     <p class="sec-sub">Nghe audio và điền <mark class="hl">cụm từ</mark> đúng vào chỗ trống để hoàn thành nội dung.</p>
 
-    <div class="table-scroll">
-<table class="fib-table">
+    <table class="fib-table">
       <tr>
         <th class="who">Người nói</th>
         <th>Nội dung (điền từ vào chỗ trống)</th>
@@ -1268,7 +1221,6 @@
         <td>I worked at Chucky Cheese. Sometimes I was a waiter, but sometimes I got to <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="firstjob" data-answer="dress up as Chucky"><span class="answer-hint"></span></span> — a big mouse costume — entertaining little kids.</td>
       </tr>
     </table>
-</div>
 
     <button class="check-btn" onclick="checkFIB('firstjob')">✓ Kiểm tra đáp án <span id="fib-score-firstjob" class="score-display"></span></button>
     <button class="check-btn reset" onclick="resetFIB('firstjob')">↺ Làm lại</button>
@@ -1333,12 +1285,10 @@
       <div class="rule">
         <h3>1. IT TAUGHT ME + danh từ (bài học rút ra từ công việc)</h3>
         <p>Dùng cấu trúc này để nói công việc đã dạy cho mình điều gì — rất hay dùng khi kể về trải nghiệm làm việc đầu tiên.</p>
-        <div class="table-scroll">
-<table class="struct-table">
+        <table class="struct-table">
           <tr><th>Subject</th><th>taught</th><th>Object</th><th>Rest of sentence</th></tr>
           <tr><td>It</td><td>taught</td><td>me</td><td>the value of money.</td></tr><tr><td>The job</td><td>taught</td><td>me</td><td>how to work hard.</td></tr>
         </table>
-</div>
         <div class="ex">Ví dụ: "It was hard physical labor, but it <b>taught me the value of money</b>."</div>
       </div>
 
@@ -1379,8 +1329,7 @@
     <h2 class="sec-title">Bảng từ vựng mục tiêu (Target Words)</h2>
     <p class="sec-sub">Tổng hợp toàn bộ cụm từ mục tiêu của chủ đề này kèm nghĩa tiếng Việt.</p>
 
-    <div class="table-scroll">
-<table class="glossary-table">
+    <table class="glossary-table">
       <tr><th>English</th><th>Tiếng Việt</th></tr>
       <tr>
         <td class="gloss-en">part-time job</td>
@@ -1437,7 +1386,6 @@
         <td class="gloss-vn">hóa trang thành, mặc trang phục thành</td>
       </tr>
     </table>
-</div>
   </div>
 
   <!-- MINDMAP -->
@@ -1503,8 +1451,7 @@
     <h2 class="sec-title">Nghe và điền từ còn thiếu</h2>
     <p class="sec-sub">Nghe audio và điền <mark class="hl">cụm từ</mark> đúng vào chỗ trống để hoàn thành nội dung.</p>
 
-    <div class="table-scroll">
-<table class="fib-table">
+    <table class="fib-table">
       <tr>
         <th class="who">Người nói</th>
         <th>Nội dung (điền từ vào chỗ trống)</th>
@@ -1534,7 +1481,6 @@
         <td>I'd like to visit Cuba again. It has <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="travel" data-answer="tropical"><span class="answer-hint"></span></span> weather, interesting Latin culture and music, plus the <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="travel" data-answer="architecture"><span class="answer-hint"></span></span>.</td>
       </tr>
     </table>
-</div>
 
     <button class="check-btn" onclick="checkFIB('travel')">✓ Kiểm tra đáp án <span id="fib-score-travel" class="score-display"></span></button>
     <button class="check-btn reset" onclick="resetFIB('travel')">↺ Làm lại</button>
@@ -1597,12 +1543,10 @@
       <div class="rule">
         <h3>1. THE ONE COUNTRY I WOULD MOST LIKE TO VISIT (so sánh nhất với would)</h3>
         <p>Dùng cấu trúc này để nói về nơi mình muốn đến NHẤT trong tất cả — rất phổ biến khi nói về du lịch mơ ước.</p>
-        <div class="table-scroll">
-<table class="struct-table">
+        <table class="struct-table">
           <tr><th>The one country</th><th>I would</th><th>most like to</th><th>visit</th></tr>
           <tr><td>The one country</td><td>I would</td><td>most like to</td><td>visit is New Zealand.</td></tr><tr><td>The one place</td><td>I'd</td><td>really like to</td><td>go is Cuba.</td></tr>
         </table>
-</div>
         <div class="ex">Ví dụ: "The one country I <b>would most like to visit</b> would have to be New Zealand."</div>
       </div>
     </div>
@@ -1637,8 +1581,7 @@
     <h2 class="sec-title">Bảng từ vựng mục tiêu (Target Words)</h2>
     <p class="sec-sub">Tổng hợp toàn bộ cụm từ mục tiêu của chủ đề này kèm nghĩa tiếng Việt.</p>
 
-    <div class="table-scroll">
-<table class="glossary-table">
+    <table class="glossary-table">
       <tr><th>English</th><th>Tiếng Việt</th></tr>
       <tr>
         <td class="gloss-en">absolutely gorgeous</td>
@@ -1690,7 +1633,6 @@
         <td class="gloss-vn">nước láng giềng</td>
       </tr>
     </table>
-</div>
   </div>
 
   <!-- MINDMAP -->
@@ -1756,8 +1698,7 @@
     <h2 class="sec-title">Nghe và điền từ còn thiếu</h2>
     <p class="sec-sub">Nghe audio và điền <mark class="hl">cụm từ</mark> đúng vào chỗ trống để hoàn thành nội dung.</p>
 
-    <div class="table-scroll">
-<table class="fib-table">
+    <table class="fib-table">
       <tr>
         <th class="who">Người nói</th>
         <th>Nội dung (điền từ vào chỗ trống)</th>
@@ -1787,7 +1728,6 @@
         <td>I don't really like to <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="shopping" data-answer="browse"><span class="answer-hint"></span></span> or <span class="fib-wrap"><input type="text" class="blank-input fib" data-topic="shopping" data-answer="window shop"><span class="answer-hint"></span></span>, but I do enjoy food shopping — everyone has to food shop at least once a week.</td>
       </tr>
     </table>
-</div>
 
     <button class="check-btn" onclick="checkFIB('shopping')">✓ Kiểm tra đáp án <span id="fib-score-shopping" class="score-display"></span></button>
     <button class="check-btn reset" onclick="resetFIB('shopping')">↺ Làm lại</button>
@@ -1851,12 +1791,10 @@
       <div class="rule">
         <h3>1. I'D RATHER + V (thà làm gì hơn)</h3>
         <p>Dùng <b>I'd rather + V (nguyên mẫu không "to")</b> để nói về điều mình thích làm hơn — rất hay dùng khi so sánh sở thích mua sắm.</p>
-        <div class="table-scroll">
-<table class="struct-table">
+        <table class="struct-table">
           <tr><th>Subject</th><th>'d rather</th><th>Verb (base form)</th><th>Rest of sentence</th></tr>
           <tr><td>I</td><td>'d rather</td><td>go</td><td>to the store and get out quickly.</td></tr><tr><td>I</td><td>'d rather</td><td>not</td><td>browse too much.</td></tr>
         </table>
-</div>
         <div class="ex">Ví dụ: "I'd rather go to the store, know what I want, get it, and get out."</div>
       </div>
 
@@ -1897,8 +1835,7 @@
     <h2 class="sec-title">Bảng từ vựng mục tiêu (Target Words)</h2>
     <p class="sec-sub">Tổng hợp toàn bộ cụm từ mục tiêu của chủ đề này kèm nghĩa tiếng Việt.</p>
 
-    <div class="table-scroll">
-<table class="glossary-table">
+    <table class="glossary-table">
       <tr><th>English</th><th>Tiếng Việt</th></tr>
       <tr>
         <td class="gloss-en">department stores</td>
@@ -1950,7 +1887,6 @@
         <td class="gloss-vn">ngắm hàng qua cửa kính (không mua)</td>
       </tr>
     </table>
-</div>
   </div>
 
   <!-- MINDMAP -->

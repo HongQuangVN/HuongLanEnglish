@@ -17,7 +17,6 @@
     color:var(--ink); padding-bottom:60px;
   }
   .wrap{max-width:840px;margin:0 auto;padding:0 40px;}
-  img{max-width:100%;}
   .header{
     background:linear-gradient(135deg,#ff5c8a,#ff8fa3);
     color:#fff; padding:34px 18px 46px; text-align:center;
@@ -95,10 +94,8 @@
   @keyframes pulse{from{transform:scale(1);} to{transform:scale(1.15);}}
   table.glossary td:first-child{width:44px; text-align:center;}
 
-  .table-scroll{width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:12px;}
-
   /* GRAMMAR FOCUS TABLE — cột riêng, không dùng chung width với glossary */
-  table.grammar{width:100%; min-width:420px; border-collapse:collapse; font-size:14px; table-layout:fixed;}
+  table.grammar{width:100%; border-collapse:collapse; font-size:14px; table-layout:fixed;}
   table.grammar th, table.grammar td{
     text-align:left; padding:12px 14px; border-bottom:1px solid var(--border);
     vertical-align:top; word-wrap:break-word;
@@ -131,7 +128,7 @@
   .fib-list li b{color:var(--pink); margin-right:6px;}
   .blank-input{
     border:none; border-bottom:2px dashed var(--pink); background:transparent;
-    font-size:15px; font-family:inherit; padding:2px 6px; width:230px; max-width:100%; text-align:center;
+    font-size:15px; font-family:inherit; padding:2px 6px; width:230px; text-align:center;
     outline:none; color:var(--ink); font-weight:600;
   }
   .blank-input:focus{background:#fff; border-bottom-color:#d63a68;}
@@ -164,7 +161,7 @@
     padding:10px; font-family:inherit; font-size:14px; resize:vertical;
   }
 
-  table.glossary{width:100%; min-width:520px; border-collapse:collapse; font-size:14px;}
+  table.glossary{width:100%; border-collapse:collapse; font-size:14px;}
   table.glossary th, table.glossary td{
     text-align:left; padding:9px 10px; border-bottom:1px solid var(--border);
   }
@@ -181,33 +178,11 @@
 
   .mindmap-wrap{text-align:center; overflow-x:auto;}
   .mindmap-wrap svg{max-width:55%; min-width:320px; height:auto;}
-
-  footer{text-align:center; color:var(--muted); font-size:12px; margin-top:30px;}
-
   @media(max-width:600px){
     .mindmap-wrap svg{max-width:85%;}
-    .wrap{padding:0 14px;}
-    .header{padding:26px 16px 40px;}
-    .header h1{font-size:21px;}
-    .header p{font-size:13.5px;}
-    .video-card{margin:-26px auto 20px;padding:12px;border-radius:16px;}
-    .student-card{padding:14px 16px;gap:10px;}
-    .student-card label{white-space:normal;}
-    .step{padding:18px 16px;border-radius:16px;margin:16px 0;}
-    .step h2{font-size:17px;}
-    .fib-list li{font-size:14px;padding:10px 12px;}
-    .blank-input{width:100%;max-width:220px;}
-    .btn-row{gap:8px;}
-    .btn-row button.action{flex:1 1 auto;text-align:center;}
-    .btn-row .score{flex-basis:100%;text-align:center;margin-left:0;}
-    table.grammar th:first-child, table.grammar td:first-child{width:44%;}
-    table.grammar th:last-child, table.grammar td:last-child{width:56%;}
-    .submit-card{padding:20px 16px;}
-    .btn-submit{width:100%;}
-    .modal-card{padding:24px 18px;}
-    .modal-actions{flex-direction:column;}
-    .modal-actions .action{width:100%;}
   }
+
+  footer{text-align:center; color:var(--muted); font-size:12px; margin-top:30px;}
 
   /* SUBMIT MODAL */
   .modal-overlay{
@@ -284,7 +259,7 @@
       <p>And then there's learning through failure, one of the most transformative, long-term benefits of playing sports. The experience of coming to terms with defeat can build the resilience and self-awareness necessary to manage academic, social, and physical hurdles. So even if your team isn't winning all the time, or at all, there's a real benefit to your experience.</p>
       <p>Now, not everyone will enjoy every sport. Perhaps one team is too competitive, or not competitive enough. It can also take time to find a sport that plays to your strengths. That's completely okay. But if you spend some time looking, you'll be able to find a sport that fits your individual needs, and if you do, there are so many benefits. You'll be a part of a supportive community, you'll be building your confidence, you'll be exercising your body, and you'll be nurturing your mind, not to mention having fun.</p>
     </div>
-  </div>
+  </div
 
   <div class="student-card">
     <label for="studentName">👤 Họ và tên HV:</label>
@@ -363,13 +338,11 @@
     <div class="step-num">BƯỚC 03 • NGỮ PHÁP</div>
     <h2>Grammar Focus</h2>
     <div class="sub">Hai cấu trúc thường gặp khi nói về lợi ích (benefits).</div>
-    <div class="table-scroll">
     <table class="grammar" style="margin-bottom:14px;">
       <tr><th>Cấu trúc</th><th>Ví dụ trong video</th></tr>
       <tr><td><b>Verb + Noun phrase</b> để diễn tả tác động<br><small>(strengthen / decrease / reduce / build + noun)</small></td><td>"...can <i>strengthen our bones</i>", "...can <i>decrease the risk of stroke</i>"</td></tr>
       <tr><td><b>Modal "can" + verb</b> khi nói về khả năng/lợi ích tiềm năng</td><td>"Exercise <i>can sharpen your focus</i> and <i>improve your mood</i>."</td></tr>
     </table>
-    </div>
   </div>
 
   <!-- STEP 4: SPEAKING -->
@@ -393,7 +366,6 @@
   <div class="step">
     <div class="step-num">TỪ VỰNG</div>
     <h2>Glossary</h2>
-    <div class="table-scroll">
     <table class="glossary">
       <tr><th>Nghe</th><th>Từ / Cụm từ</th><th>Phiên âm (IPA)</th><th>Nghĩa tiếng Việt</th></tr>
       <tr><td><button class="btn-audio" onclick="speakWord('glorify victory')" title="Nghe phát âm">🔊</button></td><td>glorify victory</td><td>/ˈɡlɔːrɪfaɪ ˈvɪktəri/</td><td>tôn vinh/ca ngợi chiến thắng</td></tr>
@@ -409,7 +381,6 @@
       <tr><td><button class="btn-audio" onclick="speakWord('self-awareness')" title="Nghe phát âm">🔊</button></td><td>self-awareness</td><td>/sɛlf əˈwɛrnəs/</td><td>nhận thức về bản thân</td></tr>
       <tr><td><button class="btn-audio" onclick="speakWord('supportive community')" title="Nghe phát âm">🔊</button></td><td>supportive community</td><td>/səˈpɔːrtɪv kəˈmjuːnəti/</td><td>cộng đồng hỗ trợ lẫn nhau</td></tr>
     </table>
-    </div>
   </div>
 
   <!-- MINDMAP -->
