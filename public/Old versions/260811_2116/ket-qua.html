@@ -243,114 +243,7 @@
     outline:none;
     cursor:pointer;
   }
-  .select-row{display:flex;gap:10px;}
   .last-updated{font-size:12px;color:var(--gray-soft);margin-bottom:18px;}
-
-  /* ===== KEBAB MENU (⋯) ===== */
-  .sc-kebab-wrap{position:relative;flex-shrink:0;}
-  .kebab-btn{
-    width:34px;height:34px;
-    border-radius:10px;
-    border:1.5px solid var(--border);
-    background:var(--card-bg);
-    color:var(--gray);
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    line-height:1;
-    transition:background .15s ease, color .15s ease, border-color .15s ease;
-  }
-  .kebab-btn:hover{background:var(--canvas);color:var(--ink-soft);border-color:var(--gray-soft);}
-  .kebab-menu{
-    position:absolute;
-    top:calc(100% + 6px);
-    right:0;
-    background:var(--card-bg);
-    border:1px solid var(--border);
-    border-radius:14px;
-    box-shadow:0 12px 32px rgba(23,24,38,0.14);
-    min-width:170px;
-    padding:6px;
-    z-index:20;
-    display:none;
-  }
-  .kebab-menu.open{display:block;}
-  .kebab-menu button{
-    width:100%;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    background:none;
-    border:none;
-    text-align:left;
-    padding:10px 12px;
-    border-radius:10px;
-    font-size:13px;
-    font-weight:700;
-    font-family:inherit;
-    color:var(--ink-soft);
-    cursor:pointer;
-  }
-  .kebab-menu button:hover{background:var(--canvas);}
-  .kebab-menu button.danger{color:#dc2626;}
-  .kebab-menu button.danger:hover{background:var(--red-light);}
-
-  /* ===== SELECT MODE (chọn nhiều để xóa) ===== */
-  .sc-checkbox{
-    display:none;
-    flex-shrink:0;
-    width:22px;height:22px;
-    border-radius:7px;
-    border:2px solid var(--border);
-    background:var(--card-bg);
-    cursor:pointer;
-    position:relative;
-    transition:background .15s ease, border-color .15s ease;
-  }
-  .select-mode .sc-checkbox{display:block;}
-  .sc-checkbox.checked{background:linear-gradient(135deg,var(--pink),var(--violet));border-color:transparent;}
-  .sc-checkbox.checked::after{
-    content:"✓";
-    position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    color:white;font-size:13px;font-weight:800;
-  }
-  .select-mode .sc-kebab-wrap{display:none;}
-  .select-mode .student-card{cursor:pointer;}
-  .student-card.is-checked{border-color:var(--pink);box-shadow:0 0 0 3px rgba(236,72,153,0.12);}
-
-  .bulk-bar{
-    position:fixed;
-    left:50%;
-    bottom:22px;
-    transform:translateX(-50%) translateY(120%);
-    opacity:0;
-    background:var(--ink);
-    color:white;
-    border-radius:18px;
-    padding:12px 14px 12px 20px;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    box-shadow:0 16px 40px rgba(0,0,0,0.3);
-    z-index:300;
-    transition:transform .2s ease, opacity .2s ease;
-    max-width:calc(100vw - 24px);
-  }
-  .bulk-bar.visible{transform:translateX(-50%) translateY(0);opacity:1;}
-  .bulk-bar .bulk-count{font-size:13.5px;font-weight:700;white-space:nowrap;}
-  .bulk-bar .btn.danger{
-    background:linear-gradient(135deg,#ef4444,#dc2626);
-    box-shadow:none;
-  }
-  .bulk-bar .btn.ghost-dark{
-    background:rgba(255,255,255,0.1);
-    color:white;
-    border:1.5px solid rgba(255,255,255,0.18);
-    box-shadow:none;
-  }
-  .bulk-bar .btn.ghost-dark:hover{background:rgba(255,255,255,0.18);}
 
   /* ===== RESULTS: CARD LIST ===== */
   .results-list{
@@ -593,11 +486,7 @@
 
     .toolbar{flex-direction:column;align-items:stretch;}
     .toolbar select,.toolbar .btn{width:100%;justify-content:center;}
-    .toolbar .select-row{display:flex;gap:8px;}
-    .toolbar .select-row select{flex:1 1 0;min-width:0;}
 
-    .sc-checkbox{width:20px;height:20px;}
-    .sc-kebab-wrap{order:4;}
     .student-card{
       flex-wrap:wrap;
       padding:16px;
@@ -607,7 +496,6 @@
     .sc-avatar{width:40px;height:40px;font-size:14px;border-radius:12px;}
     .sc-name{font-size:14.5px;}
     .sc-main{flex-basis:100%;order:1;}
-    .select-mode .sc-main{flex-basis:calc(100% - 34px);}
     .sc-score{
       order:2;
       flex-direction:row;
@@ -618,17 +506,6 @@
     .sc-score-ring{width:44px;height:44px;font-size:12px;}
     .sc-action{order:3;margin-left:auto;}
     .sc-action .btn{width:100%;}
-
-    .bulk-bar{
-      left:12px;right:12px;
-      transform:translateY(120%);
-      bottom:14px;
-      max-width:none;
-      flex-wrap:wrap;
-      padding:12px 14px;
-    }
-    .bulk-bar.visible{transform:translateY(0);}
-    .bulk-bar .bulk-count{flex:1 1 100%;}
 
     .gate-card{padding:30px 22px;}
     .detail-card{border-radius:20px;max-height:92vh;}
@@ -677,21 +554,13 @@
       <span class="icon">🔍</span>
       <input type="text" id="search-box" placeholder="Tìm theo tên học sinh..." oninput="renderTable()">
     </div>
-    <div class="select-row">
-      <select id="filter-select" onchange="renderTable()">
-        <option value="all">Tất cả bài tập</option>
-        <option value="5-topics">📚 5 Topics</option>
-        <option value="sports-benefits">🏆 Sports Benefits</option>
-      </select>
-      <select id="sort-select" onchange="renderTable()">
-        <option value="newest">Mới nhất</option>
-        <option value="score-desc">Điểm cao → thấp</option>
-        <option value="score-asc">Điểm thấp → cao</option>
-        <option value="name">Tên A → Z</option>
-      </select>
-    </div>
+    <select id="sort-select" onchange="renderTable()">
+      <option value="newest">Mới nhất</option>
+      <option value="score-desc">Điểm cao → thấp</option>
+      <option value="score-asc">Điểm thấp → cao</option>
+      <option value="name">Tên A → Z</option>
+    </select>
     <button class="btn ghost" onclick="loadSubmissions()">🔄 Làm mới</button>
-    <button class="btn ghost" id="select-mode-btn" onclick="toggleSelectMode()">☑️ Chọn</button>
     <button class="btn ghost" onclick="handleLogout()">🚪 Đăng xuất</button>
   </div>
   <div class="last-updated" id="last-updated"></div>
@@ -703,13 +572,6 @@
 
   <div class="results-list" id="results-list" style="display:none"></div>
 
-</div>
-
-<!-- ===== BULK DELETE BAR ===== -->
-<div class="bulk-bar" id="bulk-bar">
-  <span class="bulk-count" id="bulk-count">Đã chọn 0</span>
-  <button class="btn ghost-dark sm" onclick="clearSelection()">Bỏ chọn</button>
-  <button class="btn danger sm" onclick="confirmBulkDelete()">🗑️ Xóa</button>
 </div>
 
 <!-- ===== DETAIL MODAL ===== -->
@@ -755,9 +617,6 @@
   let allSubmissions = [];
   let currentDetailIndex = null;
   let currentDetailTopic = ALL_TOPICS[0];
-  let selectMode = false;
-  let selectedIds = new Set();
-  let openKebabId = null;
 
   function escapeHtml(str){
     const div = document.createElement("div");
@@ -942,12 +801,8 @@
   function renderTable(){
     const q = document.getElementById("search-box").value.trim().toLowerCase();
     const sortBy = document.getElementById("sort-select").value;
-    const wsFilter = document.getElementById("filter-select").value;
 
     let rows = allSubmissions.filter(s => (s.student_name || "").toLowerCase().includes(q));
-    if(wsFilter !== "all"){
-      rows = rows.filter(s => getWorksheetKey(s) === wsFilter);
-    }
 
     rows.sort((a, b) => {
       const pa = a.max_score ? a.total_score / a.max_score : 0;
@@ -992,10 +847,8 @@
         chips = '<span class="topic-chip ' + cls + '" title="Điền từ">✏️ <span class="frac">' + fib.correct + '/' + fib.total + '</span></span>';
       }
       const realIndex = allSubmissions.indexOf(s);
-      const isChecked = selectedIds.has(s.id);
       return (
-        '<div class="student-card' + (isChecked ? ' is-checked' : '') + '" data-id="' + escapeHtml(s.id) + '" onclick="handleCardClick(event, ' + realIndex + ')">' +
-          '<div class="sc-checkbox' + (isChecked ? ' checked' : '') + '" onclick="event.stopPropagation(); toggleCardSelect(\'' + s.id + '\')"></div>' +
+        '<div class="student-card">' +
           '<div class="sc-avatar">' + escapeHtml(initials(s.student_name)) + '</div>' +
           '<div class="sc-main">' +
             '<div class="sc-top-row">' +
@@ -1009,128 +862,10 @@
             '<div class="sc-score-ring" style="color:' + color + '">' + scoreRingSvg(pct, color) + '<span>' + pct + '%</span></div>' +
             '<div class="sc-score-frac">' + s.total_score + '/' + s.max_score + '</div>' +
           '</div>' +
-          '<div class="sc-action"><button class="btn sm" onclick="event.stopPropagation(); openDetail(' + realIndex + ')">Xem chi tiết</button></div>' +
-          '<div class="sc-kebab-wrap">' +
-            '<button class="kebab-btn" onclick="event.stopPropagation(); toggleKebab(\'' + s.id + '\')">⋯</button>' +
-            '<div class="kebab-menu" id="kebab-' + escapeHtml(s.id) + '">' +
-              '<button onclick="event.stopPropagation(); deleteFromKebab(\'' + s.id + '\')" class="danger">🗑️ Xóa bài này</button>' +
-            '</div>' +
-          '</div>' +
+          '<div class="sc-action"><button class="btn sm" onclick="openDetail(' + realIndex + ')">Xem chi tiết</button></div>' +
         '</div>'
       );
     }).join("");
-  }
-
-  // ===== KEBAB MENU (⋯) =====
-  function toggleKebab(id){
-    // Đóng kebab đang mở khác (nếu có) trước khi mở/đóng cái được bấm
-    if(openKebabId && openKebabId !== id){
-      const prev = document.getElementById("kebab-" + openKebabId);
-      if(prev) prev.classList.remove("open");
-    }
-    const menu = document.getElementById("kebab-" + id);
-    if(!menu) return;
-    const willOpen = !menu.classList.contains("open");
-    menu.classList.toggle("open", willOpen);
-    openKebabId = willOpen ? id : null;
-  }
-  // Đóng kebab menu khi bấm ra ngoài
-  document.addEventListener("click", (e) => {
-    if(openKebabId && !e.target.closest(".sc-kebab-wrap")){
-      const menu = document.getElementById("kebab-" + openKebabId);
-      if(menu) menu.classList.remove("open");
-      openKebabId = null;
-    }
-  });
-
-  // Bấm "Xóa bài này" trong menu ⋯ → bật chế độ chọn và tick sẵn dòng đó,
-  // để giáo viên có thể chọn thêm các dòng khác rồi xóa hàng loạt.
-  function deleteFromKebab(id){
-    const menu = document.getElementById("kebab-" + id);
-    if(menu) menu.classList.remove("open");
-    openKebabId = null;
-    if(!selectMode) enterSelectMode();
-    selectedIds.add(id);
-    renderTable();
-    updateBulkBar();
-  }
-
-  // ===== SELECT MODE (chọn nhiều để xóa) =====
-  function toggleSelectMode(){
-    if(selectMode){
-      exitSelectMode();
-    } else {
-      enterSelectMode();
-    }
-  }
-  function enterSelectMode(){
-    selectMode = true;
-    document.body.classList.add("select-mode");
-    document.getElementById("select-mode-btn").textContent = "✕ Hủy chọn";
-    updateBulkBar();
-  }
-  function exitSelectMode(){
-    selectMode = false;
-    selectedIds.clear();
-    document.body.classList.remove("select-mode");
-    document.getElementById("select-mode-btn").textContent = "☑️ Chọn";
-    updateBulkBar();
-    renderTable();
-  }
-  function clearSelection(){
-    exitSelectMode();
-  }
-
-  function toggleCardSelect(id){
-    if(selectedIds.has(id)) selectedIds.delete(id);
-    else selectedIds.add(id);
-    renderTable();
-    updateBulkBar();
-  }
-
-  // Khi ở chế độ chọn, bấm vào bất kỳ đâu trên card cũng tick/bỏ tick dòng đó
-  // (ngoài trừ các nút hành động đã tự stopPropagation).
-  function handleCardClick(evt, realIndex){
-    if(selectMode){
-      const s = allSubmissions[realIndex];
-      toggleCardSelect(s.id);
-      return;
-    }
-  }
-
-  function updateBulkBar(){
-    const bar = document.getElementById("bulk-bar");
-    const count = selectedIds.size;
-    document.getElementById("bulk-count").textContent = "Đã chọn " + count;
-    bar.classList.toggle("visible", selectMode && count > 0);
-  }
-
-  async function confirmBulkDelete(){
-    const count = selectedIds.size;
-    if(!count) return;
-    const ok = confirm(
-      "Xóa " + count + " kết quả đã chọn?\n" +
-      "Hành động này không thể hoàn tác."
-    );
-    if(!ok) return;
-
-    const ids = Array.from(selectedIds);
-    try{
-      if(!window.supabaseClient) throw new Error("Chưa kết nối Supabase.");
-      const { error } = await window.supabaseClient
-        .from("submissions")
-        .delete()
-        .in("id", ids);
-      if(error) throw error;
-
-      allSubmissions = allSubmissions.filter(s => !selectedIds.has(s.id));
-      exitSelectMode();
-      renderStats();
-      renderTable();
-    }catch(e){
-      console.error("Delete submissions error:", e);
-      alert("Không xóa được: " + (e && e.message ? e.message : "Lỗi không xác định."));
-    }
   }
 
   // ===== DETAIL MODAL =====
