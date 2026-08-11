@@ -16,7 +16,7 @@
     background:linear-gradient(180deg,#fff8fa,#fdf2f6 40%,#fff);
     color:var(--ink); padding-bottom:60px;
   }
-  .wrap{max-width:900px;margin:0 auto;padding:0 18px;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 32px;}
   .header{
     background:linear-gradient(135deg,#ff5c8a,#ff8fa3);
     color:#fff; padding:34px 18px 46px; text-align:center;
@@ -94,6 +94,17 @@
   @keyframes pulse{from{transform:scale(1);} to{transform:scale(1.15);}}
   table.glossary td:first-child{width:44px; text-align:center;}
 
+  /* GRAMMAR FOCUS TABLE — cột riêng, không dùng chung width với glossary */
+  table.grammar{width:100%; border-collapse:collapse; font-size:14px; table-layout:fixed;}
+  table.grammar th, table.grammar td{
+    text-align:left; padding:12px 14px; border-bottom:1px solid var(--border);
+    vertical-align:top; word-wrap:break-word;
+  }
+  table.grammar th{color:var(--pink); font-size:12.5px; text-transform:uppercase; letter-spacing:.5px;}
+  table.grammar th:first-child, table.grammar td:first-child{width:38%;}
+  table.grammar th:last-child, table.grammar td:last-child{width:62%;}
+  table.grammar tr:nth-child(even){background:var(--pink-soft);}
+  table.grammar small{color:var(--muted); display:inline-block; margin-top:4px;}
 
 
 
@@ -166,7 +177,10 @@
   .word-count{font-size:12.5px; color:var(--muted); text-align:right; margin-top:4px;}
 
   .mindmap-wrap{text-align:center; overflow-x:auto;}
-  .mindmap-wrap svg{max-width:100%; height:auto;}
+  .mindmap-wrap svg{max-width:55%; min-width:320px; height:auto;}
+  @media(max-width:600px){
+    .mindmap-wrap svg{max-width:85%;}
+  }
 
   footer{text-align:center; color:var(--muted); font-size:12px; margin-top:30px;}
 
@@ -324,7 +338,7 @@
     <div class="step-num">BƯỚC 03 • NGỮ PHÁP</div>
     <h2>Grammar Focus</h2>
     <div class="sub">Hai cấu trúc thường gặp khi nói về lợi ích (benefits).</div>
-    <table class="glossary" style="margin-bottom:14px;">
+    <table class="grammar" style="margin-bottom:14px;">
       <tr><th>Cấu trúc</th><th>Ví dụ trong video</th></tr>
       <tr><td><b>Verb + Noun phrase</b> để diễn tả tác động<br><small>(strengthen / decrease / reduce / build + noun)</small></td><td>"...can <i>strengthen our bones</i>", "...can <i>decrease the risk of stroke</i>"</td></tr>
       <tr><td><b>Modal "can" + verb</b> khi nói về khả năng/lợi ích tiềm năng</td><td>"Exercise <i>can sharpen your focus</i> and <i>improve your mood</i>."</td></tr>
@@ -374,33 +388,33 @@
     <div class="step-num">SƠ ĐỒ TƯ DUY</div>
     <h2>Mindmap: Benefits of Sports</h2>
     <div class="mindmap-wrap">
-      <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="350" cy="210" r="70" fill="#ff5c8a"/>
-        <text x="350" y="205" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">SPORTS</text>
-        <text x="350" y="224" text-anchor="middle" fill="#fff" font-size="12">Benefits</text>
+      <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Nhánh vẽ trước để nằm dưới vòng tròn trung tâm -->
+        <line x1="350" y1="200" x2="120" y2="80" stroke="#ffb3c6" stroke-width="3"/>
+        <line x1="350" y1="200" x2="580" y2="80" stroke="#ffb3c6" stroke-width="3"/>
+        <line x1="350" y1="200" x2="120" y2="320" stroke="#ffb3c6" stroke-width="3"/>
+        <line x1="350" y1="200" x2="580" y2="320" stroke="#ffb3c6" stroke-width="3"/>
 
-        <line x1="350" y1="210" x2="120" y2="80" stroke="#ffb3c6" stroke-width="3"/>
         <circle cx="120" cy="80" r="55" fill="#ffe3ec"/>
         <text x="120" y="76" text-anchor="middle" fill="#c93465" font-size="12" font-weight="700">Physical</text>
         <text x="120" y="92" text-anchor="middle" fill="#c93465" font-size="11">bones · heart</text>
 
-        <line x1="350" y1="210" x2="580" y2="80" stroke="#ffb3c6" stroke-width="3"/>
         <circle cx="580" cy="80" r="55" fill="#ffe3ec"/>
         <text x="580" y="76" text-anchor="middle" fill="#c93465" font-size="12" font-weight="700">Brain</text>
         <text x="580" y="92" text-anchor="middle" fill="#c93465" font-size="11">focus · mood</text>
 
-        <line x1="350" y1="210" x2="120" y2="340" stroke="#ffb3c6" stroke-width="3"/>
-        <circle cx="120" cy="340" r="55" fill="#ffe3ec"/>
-        <text x="120" y="336" text-anchor="middle" fill="#c93465" font-size="12" font-weight="700">Teamwork</text>
-        <text x="120" y="352" text-anchor="middle" fill="#c93465" font-size="11">trust · help</text>
+        <circle cx="120" cy="320" r="55" fill="#ffe3ec"/>
+        <text x="120" y="316" text-anchor="middle" fill="#c93465" font-size="12" font-weight="700">Teamwork</text>
+        <text x="120" y="332" text-anchor="middle" fill="#c93465" font-size="11">trust · help</text>
 
-        <line x1="350" y1="210" x2="580" y2="340" stroke="#ffb3c6" stroke-width="3"/>
-        <circle cx="580" cy="340" r="55" fill="#ffe3ec"/>
-        <text x="580" y="336" text-anchor="middle" fill="#c93465" font-size="12" font-weight="700">Confidence</text>
-        <text x="580" y="352" text-anchor="middle" fill="#c93465" font-size="11">growth mindset</text>
+        <circle cx="580" cy="320" r="55" fill="#ffe3ec"/>
+        <text x="580" y="316" text-anchor="middle" fill="#c93465" font-size="12" font-weight="700">Confidence</text>
+        <text x="580" y="332" text-anchor="middle" fill="#c93465" font-size="11">growth mindset</text>
 
-        <line x1="350" y1="210" x2="350" y2="30" stroke="#ffb3c6" stroke-width="3"/>
-        <circle cx="350" cy="30" r="0"/>
+        <!-- Vòng tròn trung tâm vẽ sau cùng để luôn nổi trên các nhánh -->
+        <circle cx="350" cy="200" r="70" fill="#ff5c8a"/>
+        <text x="350" y="195" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">SPORTS</text>
+        <text x="350" y="214" text-anchor="middle" fill="#fff" font-size="12">Benefits</text>
       </svg>
     </div>
   </div>

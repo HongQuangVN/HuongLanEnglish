@@ -26,7 +26,7 @@
     color:var(--dark);
     line-height:1.6;
   }
-  .wrap{max-width:900px;margin:0 auto;padding:24px 20px 60px;}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 32px 60px;}
 
   /* HEADER */
   .header{
@@ -495,7 +495,10 @@
     text-align:center;
     overflow-x:auto;
   }
-  .mindmap-wrap svg{max-width:100%;height:auto;}
+  .mindmap-wrap svg{max-width:60%;min-width:340px;height:auto;}
+  @media(max-width:600px){
+    .mindmap-wrap svg{max-width:90%;}
+  }
 
   @media(max-width:600px){
     .header h1{font-size:24px;}
@@ -869,38 +872,47 @@
 
     <div class="mindmap-wrap">
       <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
-        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY</text>
-        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">DREAM HOUSE</text>
         <line x1="450" y1="310" x2="450" y2="80" stroke="#3b5bfd" stroke-width="3"/>
+        <line x1="450" y1="310" x2="649" y2="195" stroke="#2ec27e" stroke-width="3"/>
+        <line x1="450" y1="310" x2="649" y2="425" stroke="#c98a00" stroke-width="3"/>
+        <line x1="450" y1="310" x2="450" y2="540" stroke="#e8483c" stroke-width="3"/>
+        <line x1="450" y1="310" x2="251" y2="425" stroke="#8a4bd8" stroke-width="3"/>
+        <line x1="450" y1="310" x2="251" y2="195" stroke="#0aa6a6" stroke-width="3"/>
+
         <rect x="335" y="57" width="230" height="46" rx="23" fill="#3b5bfd"/>
         <text x="450" y="85" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">📍 LOCATION</text>
         <text x="450" y="125" text-anchor="middle" font-size="12" fill="#3b5bfd" font-family="Segoe UI, Arial">next to the ocean · surrounded by nature</text>
         <text x="450" y="143" text-anchor="middle" font-size="12" fill="#3b5bfd" font-family="Segoe UI, Arial">far away from the city</text>
-        <line x1="450" y1="310" x2="649" y2="195" stroke="#2ec27e" stroke-width="3"/>
+
         <rect x="534" y="172" width="230" height="46" rx="23" fill="#2ec27e"/>
         <text x="649" y="200" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🏠 STRUCTURE</text>
         <text x="649" y="240" text-anchor="middle" font-size="12" fill="#2ec27e" font-family="Segoe UI, Arial">two stories high</text>
         <text x="649" y="258" text-anchor="middle" font-size="12" fill="#2ec27e" font-family="Segoe UI, Arial">high ceilings · a lot of windows</text>
         <text x="649" y="276" text-anchor="middle" font-size="12" fill="#2ec27e" font-family="Segoe UI, Arial">wooden floor boards</text>
-        <line x1="450" y1="310" x2="649" y2="425" stroke="#c98a00" stroke-width="3"/>
+
         <rect x="534" y="402" width="230" height="46" rx="23" fill="#c98a00"/>
         <text x="649" y="430" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🎨 DECOR</text>
         <text x="649" y="470" text-anchor="middle" font-size="12" fill="#c98a00" font-family="Segoe UI, Arial">plain white walls</text>
         <text x="649" y="488" text-anchor="middle" font-size="12" fill="#c98a00" font-family="Segoe UI, Arial">Thai style decor · airy and spacious</text>
-        <line x1="450" y1="310" x2="450" y2="540" stroke="#e8483c" stroke-width="3"/>
+
         <rect x="335" y="517" width="230" height="46" rx="23" fill="#e8483c"/>
         <text x="450" y="545" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">✨ FEATURES</text>
         <text x="450" y="585" text-anchor="middle" font-size="12" fill="#e8483c" font-family="Segoe UI, Arial">a jacuzzi · an elevator · a big balcony</text>
-        <line x1="450" y1="310" x2="251" y2="425" stroke="#8a4bd8" stroke-width="3"/>
+
         <rect x="136" y="402" width="230" height="46" rx="23" fill="#8a4bd8"/>
         <text x="251" y="430" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🌊 VIEW</text>
         <text x="251" y="470" text-anchor="middle" font-size="12" fill="#8a4bd8" font-family="Segoe UI, Arial">have a great view of the ocean</text>
-        <line x1="450" y1="310" x2="251" y2="195" stroke="#0aa6a6" stroke-width="3"/>
+
         <rect x="136" y="172" width="230" height="46" rx="23" fill="#0aa6a6"/>
         <text x="251" y="200" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🧘 FEEL</text>
         <text x="251" y="240" text-anchor="middle" font-size="12" fill="#0aa6a6" font-family="Segoe UI, Arial">quiet · meditate</text>
         <text x="251" y="258" text-anchor="middle" font-size="12" fill="#0aa6a6" font-family="Segoe UI, Arial">airy and spacious</text>
+
+        <!-- Tâm vẽ sau cùng để không bị các nhánh đè lên -->
+      
+<circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
+        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY</text>
+        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">DREAM HOUSE</text>
       </svg>
     </div>
   </div>
@@ -1123,9 +1135,6 @@
 
     <div class="mindmap-wrap">
       <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
-        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY</text>
-        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">FAVORITE FOOD</text>
         <line x1="450" y1="310" x2="450" y2="80" stroke="#e8483c" stroke-width="3"/>
         <rect x="335" y="57" width="230" height="46" rx="23" fill="#e8483c"/>
         <text x="450" y="85" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🌶️ FLAVOR</text>
@@ -1151,6 +1160,10 @@
         <text x="231" y="244" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">❤️ PREFERENCE</text>
         <text x="231" y="284" text-anchor="middle" font-size="12" fill="#c98a00" font-family="Segoe UI, Arial">some of my favorites</text>
         <text x="231" y="302" text-anchor="middle" font-size="12" fill="#c98a00" font-family="Segoe UI, Arial">cut that out</text>
+      
+<circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
+        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY</text>
+        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">FAVORITE FOOD</text>
       </svg>
     </div>
   </div>
@@ -1383,9 +1396,6 @@
 
     <div class="mindmap-wrap">
       <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
-        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY FIRST</text>
-        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">PART-TIME JOB</text>
         <line x1="450" y1="310" x2="450" y2="80" stroke="#e8483c" stroke-width="3"/>
         <rect x="335" y="57" width="230" height="46" rx="23" fill="#e8483c"/>
         <text x="450" y="85" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">💪 EFFORT</text>
@@ -1410,6 +1420,10 @@
         <rect x="116" y="216" width="230" height="46" rx="23" fill="#8a4bd8"/>
         <text x="231" y="244" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🎁 PERKS</text>
         <text x="231" y="284" text-anchor="middle" font-size="12" fill="#8a4bd8" font-family="Segoe UI, Arial">leftover bread to take home</text>
+      
+<circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
+        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY FIRST</text>
+        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">PART-TIME JOB</text>
       </svg>
     </div>
   </div>
@@ -1629,9 +1643,6 @@
 
     <div class="mindmap-wrap">
       <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
-        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">PLACES I</text>
-        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">WANT TO VISIT</text>
         <line x1="450" y1="310" x2="450" y2="80" stroke="#2ec27e" stroke-width="3"/>
         <rect x="335" y="57" width="230" height="46" rx="23" fill="#2ec27e"/>
         <text x="450" y="85" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🌴 CLIMATE</text>
@@ -1656,6 +1667,10 @@
         <rect x="116" y="216" width="230" height="46" rx="23" fill="#e8483c"/>
         <text x="231" y="244" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🚤 ACTIVITY</text>
         <text x="231" y="284" text-anchor="middle" font-size="12" fill="#e8483c" font-family="Segoe UI, Arial">boat cruises through lagoons</text>
+      
+<circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
+        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">PLACES I</text>
+        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">WANT TO VISIT</text>
       </svg>
     </div>
   </div>
@@ -1882,9 +1897,6 @@
 
     <div class="mindmap-wrap">
       <svg viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
-        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY</text>
-        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">SHOPPING HABITS</text>
         <line x1="450" y1="310" x2="450" y2="80" stroke="#3b5bfd" stroke-width="3"/>
         <rect x="335" y="57" width="230" height="46" rx="23" fill="#3b5bfd"/>
         <text x="450" y="85" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🏬 PLACES</text>
@@ -1909,6 +1921,10 @@
         <text x="231" y="244" text-anchor="middle" fill="white" font-size="15" font-weight="700" font-family="Segoe UI, Arial">🛒 TYPE</text>
         <text x="231" y="284" text-anchor="middle" font-size="12" fill="#8a4bd8" font-family="Segoe UI, Arial">used clothes</text>
         <text x="231" y="302" text-anchor="middle" font-size="12" fill="#8a4bd8" font-family="Segoe UI, Arial">food shopping</text>
+      
+<circle cx="450" cy="310" r="80" fill="#ff5c9a"/>
+        <text x="450" y="303" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">MY</text>
+        <text x="450" y="326" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Segoe UI, Arial">SHOPPING HABITS</text>
       </svg>
     </div>
   </div>
