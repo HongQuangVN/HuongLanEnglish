@@ -340,9 +340,23 @@
   }
 
   @media(max-width:640px){
-    .stats-row{grid-template-columns:repeat(2,1fr);}
-    .header h1{font-size:22px;}
-    .detail-header h3{font-size:17px;}
+    .wrap{padding:16px 12px 70px;}
+    .header{padding:22px 18px;border-radius:18px;}
+    .stats-row{grid-template-columns:repeat(2,1fr);gap:10px;}
+    .header h1{font-size:20px;}
+    .header p{font-size:13.5px;}
+    .stat-card{padding:14px 10px;border-radius:14px;}
+    .stat-num{font-size:21px;}
+    .toolbar{flex-direction:column;align-items:stretch;}
+    .toolbar input[type="text"],.toolbar select,.toolbar .check-btn{width:100%;flex:1 1 auto;justify-content:center;}
+    .gate-card{padding:28px 20px;}
+    .section{padding:6px;border-radius:16px;}
+    .detail-card{border-radius:18px;max-height:92vh;}
+    .detail-header{padding:20px 18px 12px;}
+    .detail-header h3{font-size:17px;padding-right:36px;}
+    .detail-tabs{padding:10px 14px;}
+    .detail-body{padding:16px 18px 22px;}
+    .modal-overlay{padding:10px;}
   }
 </style>
 </head>
