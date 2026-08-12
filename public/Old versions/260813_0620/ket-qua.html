@@ -215,10 +215,9 @@
   .search-field{
     position:relative;
     flex:1 1 240px;
-    min-width:0;
   }
   .search-field .icon{
-    position:absolute;right:16px;left:auto;top:50%;transform:translateY(-50%);
+    position:absolute;left:16px;top:50%;transform:translateY(-50%);
     font-size:14px;opacity:0.5;pointer-events:none;
   }
   .toolbar input[type="text"]{
@@ -226,7 +225,7 @@
     border:1.5px solid var(--border);
     background:var(--card-bg);
     border-radius:14px;
-    padding:12px 40px 12px 16px;
+    padding:12px 16px 12px 40px;
     font-size:14px;
     font-family:inherit;
     outline:none;
@@ -245,33 +244,24 @@
     cursor:pointer;
   }
   .select-row{display:flex;gap:10px;}
-  .toolbar-actions{display:flex;gap:10px;}
   .last-updated{font-size:12px;color:var(--gray-soft);margin-bottom:18px;}
 
-  /* ===== KEBAB MENU (⋮) ===== */
+  /* ===== KEBAB MENU (⋯) ===== */
   .sc-kebab-wrap{position:relative;flex-shrink:0;}
   .kebab-btn{
     width:34px;height:34px;
     border-radius:10px;
-    border:1.5px solid transparent;
-    background:transparent;
-    color:var(--gray-soft);
-    font-size:18px;
+    border:1.5px solid var(--border);
+    background:var(--card-bg);
+    color:var(--gray);
+    font-size:16px;
     font-weight:800;
     cursor:pointer;
     display:flex;align-items:center;justify-content:center;
     line-height:1;
-    opacity:0.5;
-    transition:background .15s ease, color .15s ease, border-color .15s ease, opacity .15s ease;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
   }
-  .kebab-btn:hover,
-  .kebab-btn:focus-visible,
-  .kebab-btn.open{
-    background:var(--canvas);
-    color:var(--ink-soft);
-    border-color:var(--gray-soft);
-    opacity:1;
-  }
+  .kebab-btn:hover{background:var(--canvas);color:var(--ink-soft);border-color:var(--gray-soft);}
   .kebab-menu{
     position:absolute;
     top:calc(100% + 6px);
@@ -398,15 +388,10 @@
   }
 
   .sc-main{flex:1 1 auto;min-width:0;}
-  .sc-row-1{
+  .sc-top-row{
     display:flex;
     align-items:center;
-    margin-bottom:4px;
-  }
-  .sc-row-2{
-    display:flex;
-    align-items:center;
-    gap:8px;
+    gap:10px;
     flex-wrap:wrap;
     margin-bottom:6px;
   }
@@ -464,7 +449,7 @@
     font-weight:800;
     position:relative;
   }
-  .sc-score-ring svg{position:absolute;top:0;left:0;width:100%;height:100%;transform:rotate(-90deg);}
+  .sc-score-ring svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
   .sc-score-ring span{position:relative;z-index:1;}
   .sc-score-frac{font-size:11px;color:var(--gray-soft);font-weight:700;margin-top:2px;white-space:nowrap;}
 
@@ -606,20 +591,10 @@
     .stat-card{padding:15px 14px;border-radius:16px;}
     .stat-num{font-size:20px;}
 
-    .toolbar{flex-direction:column;align-items:stretch;gap:8px;}
-    .search-field{flex:1 1 auto;width:100%;}
+    .toolbar{flex-direction:column;align-items:stretch;}
+    .toolbar select,.toolbar .btn{width:100%;justify-content:center;}
     .toolbar .select-row{display:flex;gap:8px;}
-    .toolbar .select-row select{flex:1 1 0;min-width:0;font-size:13px;padding:11px 10px;}
-    .toolbar-actions{display:flex;gap:8px;width:100%;}
-    .toolbar-actions .btn{
-      flex:1 1 0;
-      min-width:0;
-      width:auto;
-      justify-content:center;
-      padding:11px 8px;
-      font-size:12.5px;
-      white-space:nowrap;
-    }
+    .toolbar .select-row select{flex:1 1 0;min-width:0;}
 
     .sc-checkbox{width:20px;height:20px;}
     .student-card{
@@ -717,11 +692,9 @@
         <option value="name">Tên A → Z</option>
       </select>
     </div>
-    <div class="toolbar-actions">
-      <button class="btn ghost" onclick="loadSubmissions()">🔄 Làm mới</button>
-      <button class="btn ghost" id="select-mode-btn" onclick="toggleSelectMode()">☑️ Chọn</button>
-      <button class="btn ghost" onclick="handleLogout()">🚪 Đăng xuất</button>
-    </div>
+    <button class="btn ghost" onclick="loadSubmissions()">🔄 Làm mới</button>
+    <button class="btn ghost" id="select-mode-btn" onclick="toggleSelectMode()">☑️ Chọn</button>
+    <button class="btn ghost" onclick="handleLogout()">🚪 Đăng xuất</button>
   </div>
   <div class="last-updated" id="last-updated"></div>
 
@@ -925,6 +898,7 @@
       allSubmissions = data || [];
       document.getElementById("last-updated").textContent =
         "Cập nhật lúc " + new Date().toLocaleTimeString("vi-VN");
+      renderStats();
       renderTable();
     }catch(e){
       console.error("Load submissions error:", e);
@@ -948,15 +922,13 @@
   }, 30000);
 
   // ===== STATS =====
-  // rows: mảng bài nộp đã lọc (theo ô tìm kiếm + loại bài tập). Mặc định dùng toàn bộ.
-  function renderStats(rows){
-    const data = rows || allSubmissions;
-    const total = data.length;
-    const uniqueNames = new Set(data.map(s => (s.student_name || "").trim().toLowerCase())).size;
+  function renderStats(){
+    const total = allSubmissions.length;
+    const uniqueNames = new Set(allSubmissions.map(s => (s.student_name || "").trim().toLowerCase())).size;
     const avgPercent = total ? Math.round(
-      data.reduce((sum, s) => sum + (s.max_score ? s.total_score / s.max_score : 0), 0) / total * 100
+      allSubmissions.reduce((sum, s) => sum + (s.max_score ? s.total_score / s.max_score : 0), 0) / total * 100
     ) : 0;
-    const best = data.reduce((max, s) => {
+    const best = allSubmissions.reduce((max, s) => {
       const p = s.max_score ? s.total_score / s.max_score : 0;
       return p > max.p ? { p, name: s.student_name } : max;
     }, { p: -1, name: "—" });
@@ -978,9 +950,6 @@
     if(wsFilter !== "all"){
       rows = rows.filter(s => getWorksheetKey(s) === wsFilter);
     }
-
-    // Thống kê cập nhật theo bộ lọc hiện tại (tìm tên + loại bài tập), không phụ thuộc sắp xếp
-    renderStats(rows);
 
     rows.sort((a, b) => {
       const pa = a.max_score ? a.total_score / a.max_score : 0;
@@ -1031,10 +1000,8 @@
           '<div class="sc-checkbox' + (isChecked ? ' checked' : '') + '" onclick="event.stopPropagation(); toggleCardSelect(\'' + s.id + '\')"></div>' +
           '<div class="sc-avatar">' + escapeHtml(initials(s.student_name)) + '</div>' +
           '<div class="sc-main">' +
-            '<div class="sc-row-1">' +
+            '<div class="sc-top-row">' +
               '<span class="sc-name">' + escapeHtml(s.student_name) + '</span>' +
-            '</div>' +
-            '<div class="sc-row-2">' +
               '<span class="ws-chip">' + wsMeta.icon + ' ' + escapeHtml(wsMeta.label) + '</span>' +
               '<span class="sc-time">🕒 ' + formatTime(s.created_at) + '</span>' +
             '</div>' +
@@ -1046,7 +1013,7 @@
           '</div>' +
           '<div class="sc-action"><button class="btn sm" onclick="event.stopPropagation(); openDetail(' + realIndex + ')">Xem chi tiết</button></div>' +
           '<div class="sc-kebab-wrap">' +
-            '<button class="kebab-btn" id="kebab-btn-' + escapeHtml(s.id) + '" onclick="event.stopPropagation(); toggleKebab(\'' + s.id + '\')">⋮</button>' +
+            '<button class="kebab-btn" onclick="event.stopPropagation(); toggleKebab(\'' + s.id + '\')">⋯</button>' +
             '<div class="kebab-menu" id="kebab-' + escapeHtml(s.id) + '">' +
               '<button onclick="event.stopPropagation(); deleteFromKebab(\'' + s.id + '\')" class="danger">🗑️ Xóa bài này</button>' +
             '</div>' +
@@ -1056,30 +1023,24 @@
     }).join("");
   }
 
-  // ===== KEBAB MENU (⋮) =====
+  // ===== KEBAB MENU (⋯) =====
   function toggleKebab(id){
     // Đóng kebab đang mở khác (nếu có) trước khi mở/đóng cái được bấm
     if(openKebabId && openKebabId !== id){
-      const prevMenu = document.getElementById("kebab-" + openKebabId);
-      const prevBtn = document.getElementById("kebab-btn-" + openKebabId);
-      if(prevMenu) prevMenu.classList.remove("open");
-      if(prevBtn) prevBtn.classList.remove("open");
+      const prev = document.getElementById("kebab-" + openKebabId);
+      if(prev) prev.classList.remove("open");
     }
     const menu = document.getElementById("kebab-" + id);
-    const btn = document.getElementById("kebab-btn-" + id);
     if(!menu) return;
     const willOpen = !menu.classList.contains("open");
     menu.classList.toggle("open", willOpen);
-    if(btn) btn.classList.toggle("open", willOpen);
     openKebabId = willOpen ? id : null;
   }
   // Đóng kebab menu khi bấm ra ngoài
   document.addEventListener("click", (e) => {
     if(openKebabId && !e.target.closest(".sc-kebab-wrap")){
       const menu = document.getElementById("kebab-" + openKebabId);
-      const btn = document.getElementById("kebab-btn-" + openKebabId);
       if(menu) menu.classList.remove("open");
-      if(btn) btn.classList.remove("open");
       openKebabId = null;
     }
   });
@@ -1166,6 +1127,7 @@
 
       allSubmissions = allSubmissions.filter(s => !selectedIds.has(s.id));
       exitSelectMode();
+      renderStats();
       renderTable();
     }catch(e){
       console.error("Delete submissions error:", e);
