@@ -46,6 +46,16 @@ export default async function TeacherResultsPage() {
           100
       )
     : 0;
+  const uniqueStudents = new Set(
+    (submissions || []).map((s) => (s.student_name || "").trim().toLowerCase())
+  ).size;
+  const bestPercent = total
+    ? Math.max(
+        ...submissions!.map((s) =>
+          s.max_score ? Math.round((s.total_score / s.max_score) * 100) : 0
+        )
+      )
+    : 0;
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
@@ -53,14 +63,22 @@ export default async function TeacherResultsPage() {
         <h1 className="text-2xl font-bold">Kết quả bài làm học sinh</h1>
       </div>
 
-      <div className="mb-6 grid grid-cols-2 gap-4">
+      <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
           <p className="text-2xl font-bold text-pink-500">{total}</p>
           <p className="text-xs text-gray-500">Lượt nộp bài</p>
         </div>
         <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
+          <p className="text-2xl font-bold text-pink-500">{uniqueStudents}</p>
+          <p className="text-xs text-gray-500">Học sinh</p>
+        </div>
+        <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
           <p className="text-2xl font-bold text-pink-500">{avgPercent}%</p>
           <p className="text-xs text-gray-500">Điểm trung bình</p>
+        </div>
+        <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
+          <p className="text-2xl font-bold text-pink-500">{bestPercent}%</p>
+          <p className="text-xs text-gray-500">Điểm cao nhất</p>
         </div>
       </div>
 

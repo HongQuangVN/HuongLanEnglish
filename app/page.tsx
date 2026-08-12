@@ -2,46 +2,16 @@ import Link from "next/link";
 
 const WORKSHEETS = [
   {
-    href: "/worksheets/houses",
-    icon: "🏡",
-    title: "My Dream House",
-    desc: "Từ vựng & luyện nói về ngôi nhà mơ ước",
+    href: "/worksheets/five-topics",
+    icon: "🎧",
+    title: "5 Topics - Authentic Listening",
+    desc: "5 chủ đề: Dream House · Favorite Food · First Job · Travel · Shopping",
   },
   {
-    href: "/worksheets/food",
-    icon: "🍜",
-    title: "My Favorite Food",
-    desc: "Từ vựng & luyện nói về món ăn yêu thích",
-  },
-  {
-    href: "/worksheets/firstjob",
-    icon: "💼",
-    title: "My First Part-time Job",
-    desc: "Từ vựng & luyện nói về công việc bán thời gian",
-  },
-  {
-    href: "/worksheets/travel",
-    icon: "✈️",
-    title: "Places I Want to Visit",
-    desc: "Từ vựng & luyện nói về những nơi muốn đến",
-  },
-  {
-    href: "/worksheets/shopping",
-    icon: "🛍️",
-    title: "My Shopping Habits",
-    desc: "Từ vựng & luyện nói về thói quen mua sắm",
-  },
-  {
-    href: "/worksheets/sports-benefits-3",
+    href: "/worksheets/sports-benefits",
     icon: "🏅",
-    title: "Sports & Health Benefits (bản 3)",
-    desc: "Lợi ích của thể thao — bản cơ bản",
-  },
-  {
-    href: "/worksheets/sports-benefits-4",
-    icon: "🏅",
-    title: "Sports & Health Benefits (bản 4)",
-    desc: "Lợi ích của thể thao — bản có audio phát âm",
+    title: "Sports & Health Benefits",
+    desc: "Lợi ích của thể thao đối với cơ thể và trí não",
   },
 ];
 

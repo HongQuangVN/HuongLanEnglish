@@ -1,8 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/worksheets/sports-benefits-3/grade/route": "app/api/worksheets/sports-benefits-3/grade/route.js",
-  "/giao-vien/dang-nhap/page": "app/giao-vien/dang-nhap/page.js",
-  "/giao-vien/ket-qua/page": "app/giao-vien/ket-qua/page.js",
-  "/page": "app/page.js",
-  "/worksheets/sports-benefits-3/page": "app/worksheets/sports-benefits-3/page.js"
-}

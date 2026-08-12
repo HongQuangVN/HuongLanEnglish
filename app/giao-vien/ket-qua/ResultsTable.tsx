@@ -26,6 +26,9 @@ type FibItem = {
 type FibData = { items: FibItem[]; correct: number; total: number };
 type TranslationItem = { prompt: string; answer: string };
 
+// Dữ liệu submission có 2 dạng tùy loại phiếu:
+// - "5-topics": fib/translations/speaking LỒNG theo từng topic (Record<topic, ...>)
+// - "sports-benefits": fib/translations/speaking PHẲNG (không lồng theo topic)
 type Submission = {
   id: string | number;
   student_name: string;
@@ -33,11 +36,39 @@ type Submission = {
   total_score: number;
   max_score: number;
   data?: {
-    fib?: Record<string, FibData>;
-    translations?: Record<string, TranslationItem[]>;
-    speaking?: Record<string, string>;
+    worksheet?: string;
+    fib?: Record<string, FibData> | FibData;
+    translations?: Record<string, TranslationItem[]> | TranslationItem[];
+    speaking?: Record<string, string> | string;
   };
 };
+
+// Chuẩn hóa data.fib/translations/speaking về dạng Record<topic, ...>
+// dù submission gốc là dạng lồng (5-topics) hay phẳng (sports-benefits).
+function normalizeTopics(sub: Submission): {
+  fib: Record<string, FibData>;
+  translations: Record<string, TranslationItem[]>;
+  speaking: Record<string, string>;
+} {
+  const d = sub.data;
+  if (!d) return { fib: {}, translations: {}, speaking: {} };
+
+  const isFlatFib = d.fib && "items" in (d.fib as FibData);
+  if (isFlatFib) {
+    const key = "sports-benefits";
+    return {
+      fib: { [key]: d.fib as FibData },
+      translations: { [key]: (d.translations as TranslationItem[]) || [] },
+      speaking: { [key]: (d.speaking as string) || "" },
+    };
+  }
+
+  return {
+    fib: (d.fib as Record<string, FibData>) || {},
+    translations: (d.translations as Record<string, TranslationItem[]>) || {},
+    speaking: (d.speaking as Record<string, string>) || {},
+  };
+}
 
 function scoreColor(pct: number): string {
   if (pct >= 80) return "#2ec27e";
@@ -76,7 +107,9 @@ export default function ResultsTable({ submissions }: { submissions: Submission[
 
   function openDetail(index: number) {
     setDetailIndex(index);
-    setDetailTopic(ALL_TOPICS[0]);
+    const { fib } = normalizeTopics(submissions[index]);
+    const firstAvailable = ALL_TOPICS.find((t) => fib[t]) || ALL_TOPICS[0];
+    setDetailTopic(firstAvailable);
   }
 
   return (
@@ -120,7 +153,7 @@ export default function ResultsTable({ submissions }: { submissions: Submission[
             <tbody>
               {rows.map((s) => {
                 const pct = s.max_score ? Math.round((s.total_score / s.max_score) * 100) : 0;
-                const fib = s.data?.fib || {};
+                const { fib } = normalizeTopics(s);
                 const realIndex = submissions.indexOf(s);
                 return (
                   <tr key={s.id} className="border-t border-dotted border-pink-100">
@@ -189,10 +222,15 @@ function DetailModal({
     ? Math.round((submission.total_score / submission.max_score) * 100)
     : 0;
 
-  const availableTopics = ALL_TOPICS.filter((t) => submission.data?.fib?.[t]);
-  const fib = submission.data?.fib?.[topic] || { items: [], correct: 0, total: 0 };
-  const translations = submission.data?.translations?.[topic] || [];
-  const speaking = submission.data?.speaking?.[topic] || "";
+  const {
+    fib: fibByTopic,
+    translations: translationsByTopic,
+    speaking: speakingByTopic,
+  } = normalizeTopics(submission);
+  const availableTopics = ALL_TOPICS.filter((t) => fibByTopic[t]);
+  const fib = fibByTopic[topic] || { items: [], correct: 0, total: 0 };
+  const translations = translationsByTopic[topic] || [];
+  const speaking = speakingByTopic[topic] || "";
 
   return (
     <div
