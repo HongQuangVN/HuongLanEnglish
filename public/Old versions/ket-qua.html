@@ -597,29 +597,27 @@
     .toolbar .select-row select{flex:1 1 0;min-width:0;}
 
     .sc-checkbox{width:20px;height:20px;}
+    .sc-kebab-wrap{order:4;}
     .student-card{
       flex-wrap:wrap;
       padding:16px;
       border-radius:18px;
-      gap:10px 12px;
+      gap:12px;
     }
     .sc-avatar{width:40px;height:40px;font-size:14px;border-radius:12px;}
     .sc-name{font-size:14.5px;}
-    .sc-main{flex-basis:calc(100% - 52px);order:1;min-width:0;}
-    .select-mode .sc-main{flex-basis:calc(100% - 86px);}
-    .sc-kebab-wrap{order:2;flex-shrink:0;}
+    .sc-main{flex-basis:100%;order:1;}
+    .select-mode .sc-main{flex-basis:calc(100% - 34px);}
     .sc-score{
-      order:3;
+      order:2;
       flex-direction:row;
       align-items:center;
       gap:10px;
       min-width:0;
-      flex:1 1 auto;
     }
-    .sc-score-ring{width:44px;height:44px;font-size:12px;flex-shrink:0;}
-    .sc-action{order:4;flex:0 0 auto;margin-left:auto;}
-    .sc-action .btn{width:auto;white-space:nowrap;}
-    .select-mode .sc-action{display:none;}
+    .sc-score-ring{width:44px;height:44px;font-size:12px;}
+    .sc-action{order:3;margin-left:auto;}
+    .sc-action .btn{width:100%;}
 
     .bulk-bar{
       left:12px;right:12px;

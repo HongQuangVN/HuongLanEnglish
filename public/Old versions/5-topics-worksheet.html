@@ -504,10 +504,11 @@
   /* MINDMAP */
   .mindmap-wrap{
     text-align:center;
+    overflow-x:auto;
   }
-  .mindmap-wrap svg{width:100%;max-width:540px;height:auto;display:inline-block;}
+  .mindmap-wrap svg{max-width:60%;min-width:340px;height:auto;}
   @media(max-width:600px){
-    .mindmap-wrap svg{max-width:100%;}
+    .mindmap-wrap svg{max-width:90%;}
   }
 
   @media(max-width:600px){
@@ -520,7 +521,7 @@
     .section{padding:18px 16px 22px;border-radius:16px;}
     h2.sec-title{font-size:18px;}
     .tab-nav{gap:6px;padding:8px;top:8px;}
-    .tab-btn{min-width:0;flex:1 1 calc(33.333% - 6px);font-size:12px;padding:8px 6px;gap:4px;}
+    .tab-btn{min-width:0;flex:1 1 30%;font-size:12px;padding:8px 8px;gap:4px;}
     .tab-icon{font-size:16px;}
     .tab-label{display:none;}
     .audio-card{flex-direction:column;align-items:flex-start;padding:16px;}

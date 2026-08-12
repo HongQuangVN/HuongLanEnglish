@@ -58,7 +58,7 @@
   }
   .student-card label{font-weight:700; color:var(--pink); font-size:14px; white-space:nowrap;}
   .student-card input{
-    flex:1 1 160px; min-width:0; border:1px solid var(--border); border-radius:10px;
+    flex:1; min-width:200px; border:1px solid var(--border); border-radius:10px;
     padding:10px 14px; font-family:inherit; font-size:14.5px; outline:none;
   }
   .student-card input:focus{border-color:var(--pink);}
@@ -179,13 +179,13 @@
   }
   .word-count{font-size:12.5px; color:var(--muted); text-align:right; margin-top:4px;}
 
-  .mindmap-wrap{text-align:center;}
-  .mindmap-wrap svg{width:100%; max-width:520px; height:auto; display:inline-block;}
+  .mindmap-wrap{text-align:center; overflow-x:auto;}
+  .mindmap-wrap svg{max-width:55%; min-width:320px; height:auto;}
 
   footer{text-align:center; color:var(--muted); font-size:12px; margin-top:30px;}
 
   @media(max-width:600px){
-    .mindmap-wrap svg{max-width:100%;}
+    .mindmap-wrap svg{max-width:85%;}
     .wrap{padding:0 14px;}
     .header{padding:26px 16px 40px;}
     .header h1{font-size:21px;}
@@ -193,8 +193,7 @@
     .video-card{margin:-26px auto 20px;padding:12px;border-radius:16px;}
     .student-card{padding:14px 16px;gap:10px;}
     .student-card label{white-space:normal;}
-    .step{padding:16px 14px;border-radius:16px;margin:14px 0;}
-    .step-num{padding:5px 12px;font-size:12px;margin-bottom:12px;}
+    .step{padding:18px 16px;border-radius:16px;margin:16px 0;}
     .step h2{font-size:17px;}
     .fib-list li{font-size:14px;padding:10px 12px;}
     .blank-input{width:100%;max-width:220px;}
@@ -203,11 +202,6 @@
     .btn-row .score{flex-basis:100%;text-align:center;margin-left:0;}
     table.grammar th:first-child, table.grammar td:first-child{width:44%;}
     table.grammar th:last-child, table.grammar td:last-child{width:56%;}
-    table.grammar{font-size:12.5px; min-width:0;}
-    table.glossary{font-size:12.5px; min-width:460px;}
-    table.grammar th, table.grammar td, table.glossary th, table.glossary td{padding:8px 10px;}
-    .word-bank{padding:12px;gap:6px;}
-    .chip{font-size:12px;padding:5px 10px;}
     .submit-card{padding:20px 16px;}
     .btn-submit{width:100%;}
     .modal-card{padding:24px 18px;}
