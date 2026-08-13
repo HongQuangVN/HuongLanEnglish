@@ -13,6 +13,12 @@ const TESTS = [
     title: "Sports & Health Benefits",
     desc: "Lợi ích của thể thao đối với cơ thể và trí não",
   },
+  {
+    href: "/tests/field-notes-worksheet.html",
+    icon: "📝",
+    title: "Field Notes: Resilient Communities",
+    desc: "Từ vựng & ngữ pháp thì hiện tại hoàn thành, luyện nghe cộng đồng bền vững",
+  },
 ];
 
 const FEATURES = [
@@ -71,7 +77,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 rounded-2xl bg-white p-6 shadow-sm">
-              <p className="text-3xl font-black text-[#c0392b]">2</p>
+              <p className="text-3xl font-black text-[#c0392b]">3</p>
               <p className="text-sm text-gray-500">Bộ đề nghe – nói miễn phí</p>
             </div>
             <div className="rounded-2xl bg-[#1c2b39] p-6 text-white shadow-sm">
@@ -95,7 +101,7 @@ export default function HomePage() {
           <div className="mx-auto mt-2 h-1 w-16 rounded-full bg-[#c0392b]" />
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TESTS.map((t) => (
             <Link
               key={t.href}
