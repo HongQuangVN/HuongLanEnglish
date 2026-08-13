@@ -5,20 +5,23 @@ export default function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-[#eee1c6] bg-white">
       <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div>
+            <h3 className="mb-3 text-sm font-bold text-[#1c2b39]">
+              Hương Lan English
+            </h3>
             <Link href="/" className="inline-block">
               <Image
                 src="/brand/logo-footer.png"
                 alt="Hương Lan Talks — Hương Lan English"
                 width={700}
                 height={250}
-                className="h-auto w-full max-w-[320px] sm:max-w-[360px]"
+                className="h-auto w-full max-w-[300px]"
               />
             </Link>
             <p className="mt-3 max-w-sm text-sm text-gray-500">
-              Khóa học Tiếng Anh – Giao tiếp online: nghe, nói, đọc, viết.
+              Khóa học Tiếng Anh – Giao tiếp online: nghe, nói, đọc,{"\u00A0"}viết.
             </p>
           </div>
 
@@ -41,7 +44,7 @@ export default function SiteFooter() {
                   0368 344 648
                 </a>
               </li>
-              <li>Phường Bình Thạnh, TP. HCM</li>
+              <li>Phường Bình Thạnh, TP.{"\u00A0"}HCM</li>
             </ul>
           </div>
 
