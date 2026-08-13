@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Notes: Resilient Communities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #1D3327;
+    --bg-2: #16281D;
+    --chalk: #F3EFE1;
+    --paper: #F6EFD8;
+    --paper-line: #d9cfa8;
+    --gold: #E8B93F;
+    --pink: #E28F83;
+    --blue: #86BFD3;
+    --green-ok: #7FBF7F;
+    --ink: #23301F;
+    --muted: #A9BBAA;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.035), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(255,255,255,0.03), transparent 45%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color:var(--chalk);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.55;
+    padding:0 0 80px;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 24px;}
+
+  header.hero{
+    padding:56px 24px 40px;
+    text-align:center;
+    border-bottom:2px dashed rgba(243,239,225,0.25);
+    margin-bottom:44px;
+  }
+  header.hero .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--gold);
+  }
+  header.hero h1{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:clamp(42px,7vw,72px);
+    margin:8px 0 6px;
+    color:var(--chalk);
+  }
+  header.hero p{color:var(--muted); max-width:560px; margin:0 auto; font-size:15px;}
+
+  .section-title{
+    font-family:'Caveat', cursive;
+    font-size:34px;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 6px;
+  }
+  .section-title .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    background:rgba(232,185,63,0.14);
+    border:1px solid rgba(232,185,63,0.4);
+    color:var(--gold);
+    padding:3px 8px;
+    border-radius:3px;
+    text-transform:uppercase;
+  }
+  .section-sub{color:var(--muted); font-size:14px; margin:0 0 22px;}
+  section{margin-bottom:64px;}
+
+  /* vocab cards */
+  .vocab-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:18px;
+  }
+  .card{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:2px;
+    padding:16px 16px 14px;
+    position:relative;
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    transform:rotate(var(--r,0deg));
+  }
+  .vocab-grid .card:nth-child(3n+1){--r:-0.6deg;}
+  .vocab-grid .card:nth-child(3n+2){--r:0.5deg;}
+  .vocab-grid .card:nth-child(3n){--r:-0.3deg;}
+  .card::before{
+    content:"";
+    position:absolute; top:-8px; left:20px;
+    width:36px; height:14px;
+    background:rgba(232,185,63,0.55);
+    transform:rotate(-4deg);
+    border-radius:1px;
+  }
+  .card-top{display:flex; align-items:center; gap:8px; margin-bottom:2px;}
+  .word{font-weight:700; font-size:17px;}
+  .pos{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:#6b6045;
+    text-transform:uppercase;
+    background:rgba(35,48,31,0.08);
+    padding:2px 6px;
+    border-radius:2px;
+  }
+  .say-btn{
+    margin-left:auto;
+    border:none;
+    background:var(--ink);
+    color:var(--paper);
+    width:26px; height:26px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .say-btn:hover{background:#3a4a34;}
+  .phon{font-family:'JetBrains Mono', monospace; font-size:12.5px; color:#7a6f4e; margin:2px 0 8px;}
+  .vi{font-weight:600; font-size:13.5px; margin-bottom:6px;}
+  .ex{font-size:13px; font-style:italic; color:#4a4a3c; border-top:1px dashed var(--paper-line); padding-top:8px;}
+
+  /* generic panel */
+  .panel{
+    background:rgba(246,239,216,0.05);
+    border:1px solid rgba(243,239,225,0.15);
+    border-radius:6px;
+    padding:22px 24px;
+  }
+
+  /* matching game */
+  #match-game{display:grid; grid-template-columns:1fr 1fr; gap:14px 28px;}
+  .match-item{
+    background:var(--paper);
+    color:var(--ink);
+    padding:10px 14px;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:14px;
+    border:2px solid transparent;
+    user-select:none;
+  }
+  .match-item.selected{border-color:var(--gold);}
+  .match-item.correct{background:var(--green-ok); cursor:default; opacity:.85;}
+  .match-item.wrong{animation:shake .3s;}
+  @keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .match-status{margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--gold);}
+  .reset-btn{
+    margin-top:12px;
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    padding:6px 14px;
+    border-radius:4px;
+    cursor:pointer;
+    font-family:'Work Sans',sans-serif;
+    font-size:13px;
+  }
+  .reset-btn:hover{background:rgba(232,185,63,0.12);}
+
+  /* cloze */
+  .cloze-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    padding:12px 0;
+    border-bottom:1px dashed rgba(243,239,225,0.18);
+  }
+  .cloze-row:last-child{border-bottom:none;}
+  .cloze-num{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:13px; width:22px;}
+  .cloze-text{font-size:14.5px; flex:1; min-width:220px;}
+  .cloze-input{
+    background:var(--paper);
+    border:2px solid var(--paper-line);
+    border-radius:3px;
+    padding:5px 9px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    width:150px;
+    color:var(--ink);
+  }
+  .cloze-input.ok{border-color:var(--green-ok); background:#e9f5e2;}
+  .cloze-input.bad{border-color:var(--pink); background:#fbeae7;}
+  .wordbank{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    margin:12px 0 6px;
+    letter-spacing:.02em;
+  }
+  .wordbank span{color:var(--blue);}
+
+  .btn{
+    background:var(--gold);
+    color:var(--ink);
+    border:none;
+    padding:9px 18px;
+    border-radius:4px;
+    font-weight:600;
+    font-size:13.5px;
+    cursor:pointer;
+    margin-top:16px;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn.secondary{
+    background:transparent;
+    border:1px solid var(--blue);
+    color:var(--blue);
+  }
+
+  /* grammar */
+  .formula-box{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:6px;
+    padding:18px 20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    margin:14px 0 20px;
+    border-left:6px solid var(--gold);
+  }
+  .struct-box{
+    background:rgba(134,191,211,0.08);
+    border:1px solid rgba(134,191,211,0.35);
+    border-radius:6px;
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .struct-box h4{
+    margin:0 0 6px;
+    color:var(--blue);
+    font-family:'JetBrains Mono',monospace;
+    font-size:13.5px;
+  }
+  .struct-box .meaning{font-size:13.5px; color:var(--muted); margin-bottom:8px;}
+  .struct-box .example{font-size:14px; font-style:italic; color:var(--chalk);}
+
+  /* translation */
+  .tr-item{margin-bottom:22px;}
+  .tr-vi{font-size:14.5px; margin-bottom:8px;}
+  .tr-vi b{color:var(--gold);}
+  textarea.tr-input{
+    width:100%;
+    background:var(--paper);
+    color:var(--ink);
+    border:2px solid var(--paper-line);
+    border-radius:4px;
+    padding:8px 10px;
+    font-family:'Work Sans',sans-serif;
+    font-size:14px;
+    resize:vertical;
+    min-height:44px;
+  }
+  .reveal{
+    display:none;
+    margin-top:8px;
+    font-size:13.5px;
+    background:rgba(127,191,127,0.1);
+    border-left:4px solid var(--green-ok);
+    padding:8px 12px;
+    border-radius:3px;
+    color:var(--chalk);
+  }
+  .reveal.show{display:block;}
+  .toggle-link{
+    background:none; border:none; color:var(--blue);
+    text-decoration:underline; cursor:pointer; font-size:12.5px; padding:0;
+    font-family:'Work Sans',sans-serif;
+  }
+
+  /* video */
+  .video-wrap{
+    position:relative; padding-bottom:56.25%; height:0; overflow:hidden;
+    border-radius:8px; margin-bottom:20px; border:1px solid rgba(243,239,225,0.2);
+  }
+  .video-wrap iframe{position:absolute; top:0; left:0; width:100%; height:100%; border:0;}
+  .q-item{margin-bottom:16px; font-size:14px;}
+  .q-item .qn{color:var(--gold); font-weight:600;}
+  .q-item input[type=text]{
+    width:100%;
+    margin-top:6px;
+    background:var(--paper);
+    border:2px solid var(--paper-line);
+    border-radius:4px;
+    padding:7px 10px;
+    font-size:13.5px;
+    color:var(--ink);
+  }
+
+  footer{text-align:center; color:var(--muted); font-size:12px; margin-top:40px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Vocabulary &amp; Grammar Field Notes</div>
+  <h1>Resilient Communities</h1>
+  <p>Từ vựng, ngữ pháp thì hiện tại hoàn thành và bài luyện nghe — bấm 🔊 để nghe phát âm, hoàn thành các bài tập bên dưới theo thứ tự.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 1. VOCAB -->
+  <section id="vocab">
+    <h2 class="section-title"><span class="tag">01</span>Vocabulary Bank</h2>
+    <p class="section-sub">Bấm vào nút 🔊 cạnh mỗi từ để nghe phát âm chuẩn.</p>
+    <div class="vocab-grid" id="vocab-grid"></div>
+  </section>
+
+  <!-- 2. MATCHING -->
+  <section id="matching">
+    <h2 class="section-title"><span class="tag">02</span>Matching Game</h2>
+    <p class="section-sub">Nối từ tiếng Anh bên trái với nghĩa tiếng Việt bên phải — bấm 1 từ ở mỗi cột.</p>
+    <div class="panel">
+      <div id="match-game"></div>
+      <div class="match-status" id="match-status">Đã nối: 0 / 8</div>
+      <button class="reset-btn" onclick="initMatching()">↺ Làm lại</button>
+    </div>
+  </section>
+
+  <!-- 3. LISTENING CLOZE -->
+  <section id="cloze">
+    <h2 class="section-title"><span class="tag">03</span>Listening Cloze</h2>
+    <p class="section-sub">Bấm 🔊 để nghe cả câu, sau đó điền từ còn thiếu vào chỗ trống.</p>
+    <div class="panel">
+      <div class="wordbank">Word bank: <span id="cloze-bank"></span></div>
+      <div id="cloze-list"></div>
+      <button class="btn" onclick="checkCloze()">Kiểm tra đáp án</button>
+    </div>
+  </section>
+
+  <!-- 4. GRAMMAR -->
+  <section id="grammar">
+    <h2 class="section-title"><span class="tag">04</span>Grammar Focus — Present Perfect</h2>
+    <p class="section-sub">Công thức chung và 2 cấu trúc trọng tâm.</p>
+
+    <div class="formula-box">
+      (+) S + have/has + V3/Ved &nbsp;&nbsp;|&nbsp;&nbsp;
+      (–) S + have/has + not + V3/Ved &nbsp;&nbsp;|&nbsp;&nbsp;
+      (?) Have/Has + S + V3/Ved ?
+    </div>
+
+    <div class="struct-box">
+      <h4>Structure 1 — It has been + [time] + since + S + last + V-ed</h4>
+      <div class="meaning">🇻🇳 Đã <b>khoảng bao lâu</b> kể từ lần cuối ai đó làm gì.</div>
+      <div class="example">It has been three years since I last visited my hometown.</div>
+    </div>
+
+    <div class="struct-box">
+      <h4>Structure 2 — This is the first time + S + have/has + V3/Ved</h4>
+      <div class="meaning">🇻🇳 Đây là <b>lần đầu tiên</b> ai đó làm gì.</div>
+      <div class="example">This is the first time I have tried Vietnamese sticky rice.</div>
+    </div>
+  </section>
+
+  <!-- 5. TRANSLATION -->
+  <section id="translation">
+    <h2 class="section-title"><span class="tag">05</span>Translation Practice</h2>
+    <p class="section-sub">Dịch 6 câu sau sang tiếng Anh, dùng từ vựng và cấu trúc đã học ở trên.</p>
+    <div class="panel" id="tr-list"></div>
+  </section>
+
+
+</div>
+
+<footer>Field Notes worksheet · made for classroom practice</footer>
+
+<script>
+/* ---------- DATA ---------- */
+const vocab = [
+  {w:"resilient", p:"/rɪˈzɪliənt/", pos:"adj", vi:"kiên cường, dễ phục hồi", ex:"Even after losing his job, he stayed resilient and started a new business."},
+  {w:"euphoria", p:"/juːˈfɔːriə/", pos:"n", vi:"cảm giác hưng phấn tột độ", ex:"She felt a wave of euphoria when she crossed the finish line."},
+  {w:"individual", p:"/ˌɪndɪˈvɪdʒuəl/", pos:"n", vi:"cá nhân", ex:"The programme focuses on the needs of each individual, not just the group."},
+  {w:"self-awareness", p:"/ˌself əˈweənəs/", pos:"n", vi:"sự tự nhận thức", ex:"Meditation can help you develop greater self-awareness."},
+  {w:"source", p:"/sɔːrs/", pos:"n", vi:"nguồn (thông tin, tài nguyên)", ex:"Always check the source before you believe a piece of news."},
+  {w:"sort", p:"/sɔːrt/", pos:"n", vi:"loại, kiểu", ex:"What sort of activities do you enjoy at the weekend?"},
+  {w:"communal", p:"/kəˈmjuːnəl/", pos:"adj", vi:"(thuộc về) chung, cộng đồng", ex:"The residents share a communal garden behind the building."},
+  {w:"facilities", p:"/fəˈsɪlətiz/", pos:"n (pl)", vi:"tiện nghi, cơ sở vật chất", ex:"The new sports centre has excellent facilities for swimming and climbing."},
+  {w:"within reach", p:"/wɪˈðɪn riːtʃ/", pos:"phrase", vi:"trong tầm với", ex:"With the new metro line, the city centre is finally within reach."},
+  {w:"daily commute", p:"/ˈdeɪli kəˈmjuːt/", pos:"n phrase", vi:"việc đi lại hằng ngày", ex:"Her daily commute takes almost two hours by bus."},
+  {w:"secondary school", p:"/ˈsekəndri skuːl/", pos:"n phrase", vi:"trường cấp 2 (THCS)", ex:"He made his best friends at secondary school."},
+  {w:"curriculum", p:"/kəˈrɪkjələm/", pos:"n", vi:"chương trình học", ex:"The school is updating its curriculum to include more practical skills."},
+  {w:"revenue", p:"/ˈrevənjuː/", pos:"n", vi:"doanh thu", ex:"Monthly revenue increased by 20% after the new product launch."},
+  {w:"income", p:"/ˈɪnkʌm/", pos:"n", vi:"thu nhập", ex:"Many families rely on a single income to cover their expenses."},
+  {w:"turn ... into ...", p:"/tɜːrn ˈɪntuː/", pos:"phrase", vi:"biến ... thành ...", ex:"The factory turns farm waste into eco-friendly textiles."},
+  {w:"all sorts of benefits", p:"/ɔːl sɔːrts əv ˈbenɪfɪts/", pos:"phrase", vi:"đủ loại lợi ích", ex:"Regular exercise brings all sorts of benefits, from better sleep to a stronger heart."},
+  {w:"It would be a miss if I don't mention...", p:"—", pos:"discourse", vi:"sẽ thật thiếu sót nếu không đề cập đến...", ex:"It would be a miss if I don't mention the volunteers who made this event possible."},
+  {w:"However, it's not always the case", p:"—", pos:"discourse", vi:"tuy nhiên, không phải lúc nào cũng vậy", ex:"Homework is often seen as boring; however, it's not always the case."},
+  {w:"As a result", p:"/æz ə rɪˈzʌlt/", pos:"discourse", vi:"kết quả là, do đó", ex:"The factory reduced waste; as a result, its revenue increased."}
+];
+
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.9;
+  window.speechSynthesis.speak(u);
+}
+
+/* ---------- 1. VOCAB CARDS ---------- */
+const grid = document.getElementById('vocab-grid');
+vocab.forEach(v=>{
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="word">${v.w}</span>
+      <span class="pos">${v.pos}</span>
+      <button class="say-btn" title="Nghe phát âm">🔊</button>
+    </div>
+    <div class="phon">${v.p}</div>
+    <div class="vi">${v.vi}</div>
+    <div class="ex">${v.ex}</div>
+  `;
+  card.querySelector('.say-btn').addEventListener('click', ()=>speak(v.w.replace(/\.\.\./g,'')));
+  grid.appendChild(card);
+});
+
+/* ---------- 2. MATCHING GAME ---------- */
+const matchSet = [
+  {w:"resilient", vi:"kiên cường, dễ phục hồi"},
+  {w:"euphoria", vi:"cảm giác hưng phấn tột độ"},
+  {w:"individual", vi:"cá nhân"},
+  {w:"self-awareness", vi:"sự tự nhận thức"},
+  {w:"communal", vi:"(thuộc về) chung, cộng đồng"},
+  {w:"facilities", vi:"tiện nghi, cơ sở vật chất"},
+  {w:"daily commute", vi:"việc đi lại hằng ngày"},
+  {w:"revenue", vi:"doanh thu"}
+];
+let selLeft=null, selRight=null, matched=0;
+
+function shuffle(arr){return arr.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);}
+
+function initMatching(){
+  const game = document.getElementById('match-game');
+  game.innerHTML='';
+  selLeft=null; selRight=null; matched=0;
+  document.getElementById('match-status').textContent = `Đã nối: 0 / ${matchSet.length}`;
+
+  const left = document.createElement('div');
+  const right = document.createElement('div');
+  shuffle(matchSet).forEach(item=>{
+    const el = document.createElement('div');
+    el.className='match-item'; el.textContent=item.w; el.dataset.key=item.w;
+    el.addEventListener('click', ()=>selectItem(el,'left'));
+    left.appendChild(el);
+  });
+  shuffle(matchSet).forEach(item=>{
+    const el = document.createElement('div');
+    el.className='match-item'; el.textContent=item.vi; el.dataset.key=item.w;
+    el.addEventListener('click', ()=>selectItem(el,'right'));
+    right.appendChild(el);
+  });
+  game.appendChild(left); game.appendChild(right);
+}
+
+function selectItem(el, side){
+  if(el.classList.contains('correct')) return;
+  if(side==='left'){
+    if(selLeft) selLeft.classList.remove('selected');
+    selLeft = el; el.classList.add('selected');
+  } else {
+    if(selRight) selRight.classList.remove('selected');
+    selRight = el; el.classList.add('selected');
+  }
+  if(selLeft && selRight){
+    if(selLeft.dataset.key === selRight.dataset.key){
+      selLeft.classList.add('correct'); selRight.classList.add('correct');
+      selLeft.classList.remove('selected'); selRight.classList.remove('selected');
+      matched++;
+      document.getElementById('match-status').textContent = `Đã nối: ${matched} / ${matchSet.length}`;
+      if(matched===matchSet.length){
+        document.getElementById('match-status').textContent += '  🎉 Hoàn thành!';
+      }
+      selLeft=null; selRight=null;
+    } else {
+      selLeft.classList.add('wrong'); selRight.classList.add('wrong');
+      setTimeout(()=>{
+        selLeft.classList.remove('selected','wrong');
+        selRight.classList.remove('selected','wrong');
+        selLeft=null; selRight=null;
+      },400);
+    }
+  }
+}
+initMatching();
+
+/* ---------- 3. LISTENING CLOZE ---------- */
+const clozeData = [
+  {sentence:"Even after losing his job, he stayed {blank} and started a new business.", answer:"resilient"},
+  {sentence:"She felt a wave of {blank} when she crossed the finish line.", answer:"euphoria"},
+  {sentence:"The new sports centre has excellent {blank} for swimming and climbing.", answer:"facilities"},
+  {sentence:"With the new metro line, the city centre is finally {blank}.", answer:"within reach"},
+  {sentence:"Her daily {blank} takes almost two hours by bus.", answer:"commute"},
+  {sentence:"The school is updating its {blank} to include more practical skills.", answer:"curriculum"},
+  {sentence:"Monthly {blank} increased by 20% after the new product launch.", answer:"revenue"},
+  {sentence:"The factory {blank} farm waste into eco-friendly textiles.", answer:"turns"}
+];
+
+document.getElementById('cloze-bank').innerHTML =
+  clozeData.map(c=>`<span>${c.answer}</span>`).sort(()=>Math.random()-0.5).join(', ');
+
+const clozeList = document.getElementById('cloze-list');
+clozeData.forEach((c,i)=>{
+  const row = document.createElement('div');
+  row.className='cloze-row';
+  const displaySentence = c.sentence.replace('{blank}', '_____');
+  const fullSentence = c.sentence.replace('{blank}', c.answer);
+  row.innerHTML = `
+    <span class="cloze-num">${i+1}.</span>
+    <button class="say-btn" title="Nghe cả câu" style="flex-shrink:0;">🔊</button>
+    <span class="cloze-text">${displaySentence}</span>
+    <input type="text" class="cloze-input" id="cloze-${i}" placeholder="điền từ...">
+  `;
+  row.querySelector('.say-btn').addEventListener('click', ()=>speak(fullSentence));
+  clozeList.appendChild(row);
+});
+
+function checkCloze(){
+  clozeData.forEach((c,i)=>{
+    const input = document.getElementById(`cloze-${i}`);
+    const val = input.value.trim().toLowerCase();
+    input.classList.remove('ok','bad');
+    if(val === c.answer.toLowerCase() || (c.answer==='commute' && val==='daily commute')){
+      input.classList.add('ok');
+    } else {
+      input.classList.add('bad');
+      input.placeholder = c.answer;
+    }
+  });
+}
+
+/* ---------- 5. TRANSLATION ---------- */
+const trData = [
+  {vi:"Cô ấy luôn <b>kiên cường</b> mỗi khi gặp khó khăn trong cuộc sống.",
+   en:"She always stays resilient whenever she faces difficulties in life."},
+  {vi:"Đã ba năm <b>kể từ lần cuối</b> chúng tôi tổ chức <b>hoạt động chung</b> ở làng. (dùng cấu trúc 1)",
+   en:"It has been three years since we last organized communal activities in the village."},
+  {vi:"Đây là <b>lần đầu tiên</b> tôi cảm thấy <b>hưng phấn tột độ</b> như vậy sau khi hoàn thành dự án. (dùng cấu trúc 2)",
+   en:"This is the first time I have felt such euphoria after finishing the project."},
+  {vi:"Nhà máy đã <b>biến phế thải nông nghiệp thành vải</b>, giúp tăng <b>doanh thu hàng tháng</b>.",
+   en:"The factory has turned farm waste into textiles, which has helped increase its monthly revenue."},
+  {vi:"<b>Sẽ thật thiếu sót nếu tôi không đề cập</b> đến những <b>tiện nghi trong tầm với</b> tại khu dân cư này.",
+   en:"It would be a miss if I don't mention the facilities within reach in this residential area."},
+  {vi:"Việc <b>đi lại hằng ngày</b> khá mệt mỏi; <b>tuy nhiên, không phải lúc nào cũng vậy</b>; <b>kết quả là</b>, nhiều người chọn sống gần <b>trường cấp 2</b> của con họ.",
+   en:"The daily commute can be quite tiring; however, it's not always the case; as a result, many people choose to live near their children's secondary school."}
+];
+const trList = document.getElementById('tr-list');
+trData.forEach((t,i)=>{
+  const div = document.createElement('div');
+  div.className='tr-item';
+  div.innerHTML = `
+    <div class="tr-vi"><b>${i+1}.</b> ${t.vi}</div>
+    <textarea class="tr-input" placeholder="Type your translation here..."></textarea>
+    <div><button class="toggle-link" onclick="this.nextElementSibling.classList.toggle('show')">Xem gợi ý đáp án</button>
+    <div class="reveal">${t.en}</div></div>
+  `;
+  trList.appendChild(div);
+});
+
+</script>
+</body>
+</html>
