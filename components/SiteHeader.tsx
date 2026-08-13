@@ -76,7 +76,7 @@ export default function SiteHeader() {
 
           {isTeacher ? (
             <Link
-              href="/giao-vien/ket-qua"
+              href="/giao-vien/ket-qua.html"
               className="shrink-0 rounded-lg bg-[#1c2b39] px-5 py-2 text-sm font-bold text-white transition hover:bg-[#13202b]"
             >
               Khu vực giáo viên
@@ -93,7 +93,7 @@ export default function SiteHeader() {
       </div>
 
       {/* Nav row */}
-      <nav className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-6">
+      <nav className="mx-auto flex max-w-7xl flex-wrap items-center gap-1 px-6">
         {PLACEHOLDER_ITEMS.map((item) => (
           <a
             key={item.label}
@@ -148,8 +148,8 @@ export default function SiteHeader() {
 
         {isTeacher && (
           <Link
-            href="/giao-vien/ket-qua"
-            className="whitespace-nowrap px-4 py-3 text-sm font-bold text-[#c0392b] transition hover:underline"
+            href="/giao-vien/ket-qua.html"
+            className="whitespace-nowrap px-4 py-3 text-sm font-bold text-[#1c2b39] transition hover:text-[#c0392b]"
           >
             Kết quả test
           </Link>

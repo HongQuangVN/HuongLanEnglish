@@ -100,17 +100,19 @@ export default function HomePage() {
             <Link
               key={t.href}
               href={t.href}
-              className="flex items-start gap-4 rounded-2xl border border-[#eee1c6] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="group block rounded-2xl border border-[#eee1c6] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#fbe1de] text-2xl">
-                {t.icon}
-              </span>
-              <div>
-                <h3 className="font-bold text-[#1c2b39]">{t.title}</h3>
-                <p className="mt-1 text-sm text-gray-500">{t.desc}</p>
-                <span className="mt-3 inline-block text-sm font-bold text-[#c0392b]">
-                  Vào thi →
+              <div className="flex items-start gap-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#fbe1de] text-2xl">
+                  {t.icon}
                 </span>
+                <div>
+                  <h3 className="font-bold text-[#1c2b39]">{t.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500">{t.desc}</p>
+                  <span className="mt-3 inline-block text-sm font-bold text-[#c0392b] group-hover:underline">
+                    Vào thi →
+                  </span>
+                </div>
               </div>
             </Link>
           ))}

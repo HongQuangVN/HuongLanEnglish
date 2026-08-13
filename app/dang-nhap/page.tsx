@@ -32,7 +32,7 @@ export default function TeacherLoginPage() {
       return;
     }
 
-    router.push("/giao-vien/ket-qua");
+    router.push("/giao-vien/ket-qua.html");
   }
 
   return (
@@ -52,7 +52,7 @@ export default function TeacherLoginPage() {
           Khu vực giáo viên
         </h1>
         <p className="mb-6 text-sm text-gray-500">
-          Đăng nhập để xem kết quả bài làm của học sinh.
+          Đăng nhập để xem kết quả bài làm của học viên.
         </p>
 
         <input
