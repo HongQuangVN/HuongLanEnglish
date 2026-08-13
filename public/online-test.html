@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề thi trực tuyến — Hương Lan English</title>
+<style>
+  :root{
+    --navy:#1c2b39;
+    --navy-soft:#5b6b78;
+    --red:#c0392b;
+    --red-light:#fbe1de;
+    --cream:#fdf4e3;
+    --border:#eee1c6;
+    --gray:#6b7280;
+    --canvas:#f7f3ec;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+    background:var(--canvas);
+    color:var(--navy);
+    line-height:1.55;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
+
+  /* Top bar */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 4px 24px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px;}
+  .brand .logo{
+    width:40px;height:40px;border-radius:10px;background:var(--red);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .back-link{font-size:13px;font-weight:700;color:var(--red);}
+
+  /* Tabs */
+  .tabs{
+    display:flex;gap:8px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:10px;
+    margin-bottom:36px;
+    box-shadow:0 2px 10px rgba(28,43,57,0.04);
+  }
+  .tab{
+    flex:1;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:16px;
+    border-radius:12px;
+    font-weight:800;
+    font-size:16px;
+    color:var(--navy-soft);
+    cursor:pointer;
+    transition:background .15s ease,color .15s ease;
+  }
+  .tab .icon{font-size:20px;}
+  .tab.active{background:var(--red-light);color:var(--red);}
+  .tab:not(.active):hover{background:#f7f3ec;}
+
+  /* Section title */
+  .section-title{
+    text-align:center;
+    margin-bottom:32px;
+  }
+  .section-title h2{
+    display:inline-block;
+    font-size:24px;
+    font-weight:900;
+    color:var(--navy);
+    border-bottom:3px solid var(--red);
+    padding-bottom:10px;
+    margin:0;
+  }
+
+  /* Grid */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  @media (max-width:720px){
+    .grid{grid-template-columns:1fr;}
+    .topbar{flex-direction:column;align-items:flex-start;gap:10px;}
+  }
+
+  .card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:26px;
+    box-shadow:0 4px 16px rgba(28,43,57,0.05);
+    display:flex;
+    flex-direction:column;
+  }
+  .card-head{
+    display:flex;align-items:flex-start;gap:12px;
+    margin-bottom:6px;
+  }
+  .card-icon{
+    width:34px;height:34px;
+    border-radius:9px;
+    background:var(--red-light);
+    color:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;
+    flex-shrink:0;
+  }
+  .card-head h3{
+    margin:0;
+    font-size:17px;
+    font-weight:800;
+    color:var(--navy);
+  }
+  .card-sub{
+    font-size:13.5px;
+    color:var(--gray);
+    margin:0 0 16px 46px;
+  }
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    background:var(--red-light);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:18px;
+  }
+  .stat{
+    display:flex;align-items:center;gap:6px;
+    font-size:13px;
+    font-weight:700;
+    color:#8a4a3f;
+    white-space:nowrap;
+  }
+  .card-footer{
+    margin-top:auto;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:10px;
+  }
+  .badge-free{
+    background:#eef0f2;
+    color:var(--navy-soft);
+    font-size:12.5px;
+    font-weight:800;
+    padding:8px 14px;
+    border-radius:10px;
+  }
+  .actions{display:flex;gap:8px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:9px 16px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:800;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    white-space:nowrap;
+  }
+  .btn-save{
+    background:#fff;
+    border-color:#dfe3e7;
+    color:var(--navy-soft);
+  }
+  .btn-save:hover{border-color:var(--navy-soft);}
+  .btn-go{
+    background:var(--red-light);
+    color:var(--red);
+  }
+  .btn-go:hover{background:#f6cac5;}
+
+  /* Coming soon cards */
+  .card.soon{opacity:0.6;}
+  .card.soon .card-footer .btn-go{
+    background:#eef0f2;
+    color:#9aa2a9;
+    cursor:not-allowed;
+  }
+  .card.soon .card-footer .btn-go:hover{background:#eef0f2;}
+  .soon-tag{
+    position:absolute;
+    top:16px;right:16px;
+    background:var(--navy);
+    color:#fff;
+    font-size:11px;
+    font-weight:800;
+    padding:4px 10px;
+    border-radius:20px;
+  }
+  .card{position:relative;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="brand" href="/">
+      <span class="logo">HL</span>
+      Hương Lan English
+    </a>
+    <a class="back-link" href="/">← Về trang chủ</a>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">
+      <span class="icon">📋</span> Đề thi trên máy
+    </div>
+    <div class="tab">
+      <span class="icon">📄</span> Tài liệu tải được
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2>Đề thi miễn phí</h2>
+  </div>
+
+  <div class="grid">
+
+    <!-- Real test 1 -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon">🎧</span>
+        <h3>5 TOPICS – AUTHENTIC LISTENING</h3>
+      </div>
+      <p class="card-sub">Dream House · Favorite Food · First Job · Travel · Shopping</p>
+      <div class="stats">
+        <span class="stat">✅ 5 chủ đề</span>
+        <span class="stat">🕐 Không giới hạn</span>
+        <span class="stat">👤 Nghe &amp; Nói</span>
+      </div>
+      <div class="card-footer">
+        <span class="badge-free">Miễn phí</span>
+        <div class="actions">
+          <a class="btn btn-go" href="/tests/5-topics-worksheet.html">Vào thi ›</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real test 2 -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-icon">🏅</span>
+        <h3>SPORTS &amp; HEALTH BENEFITS</h3>
+      </div>
+      <p class="card-sub">Lợi ích của thể thao đối với cơ thể và trí não</p>
+      <div class="stats">
+        <span class="stat">✅ Nghe hiểu</span>
+        <span class="stat">🕐 Không giới hạn</span>
+        <span class="stat">👤 Nghe &amp; Nói</span>
+      </div>
+      <div class="card-footer">
+        <span class="badge-free">Miễn phí</span>
+        <div class="actions">
+          <a class="btn btn-go" href="/tests/sports-benefits-worksheet.html">Vào thi ›</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coming soon -->
+    <div class="card soon">
+      <span class="soon-tag">Sắp ra mắt</span>
+      <div class="card-head">
+        <span class="card-icon">📖</span>
+        <h3>IDIOMS IN USE (ADVANCED)</h3>
+      </div>
+      <p class="card-sub">Luyện thành ngữ tiếng Anh nâng cao</p>
+      <div class="stats">
+        <span class="stat">✅ 30 câu</span>
+        <span class="stat">🕐 60 phút</span>
+      </div>
+      <div class="card-footer">
+        <span class="badge-free">Miễn phí</span>
+        <div class="actions">
+          <span class="btn btn-go">Vào thi ›</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card soon">
+      <span class="soon-tag">Sắp ra mắt</span>
+      <div class="card-head">
+        <span class="card-icon">🎯</span>
+        <h3>KET LISTENING</h3>
+      </div>
+      <p class="card-sub">Đề luyện nghe theo cấu trúc KET</p>
+      <div class="stats">
+        <span class="stat">✅ 25 câu</span>
+        <span class="stat">🕐 25 phút</span>
+      </div>
+      <div class="card-footer">
+        <span class="badge-free">Miễn phí</span>
+        <div class="actions">
+          <span class="btn btn-go">Vào thi ›</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

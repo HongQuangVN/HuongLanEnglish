@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 
@@ -35,9 +36,21 @@ export default function TeacherLoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6">
-      <div className="w-full rounded-3xl bg-white p-10 text-center shadow-lg">
-        <h1 className="mb-2 text-xl font-bold">Khu vực giáo viên</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[#f7f3ec] px-6">
+      <Link
+        href="/"
+        className="mb-6 flex items-center gap-2 text-sm font-bold text-[#c0392b] hover:underline"
+      >
+        <span aria-hidden>←</span> Về trang chủ
+      </Link>
+
+      <div className="w-full max-w-md rounded-3xl border border-[#e7ddc9] bg-white p-10 text-center shadow-lg">
+        <div className="mb-4 inline-flex items-center justify-center rounded-2xl bg-[#c0392b] px-4 py-2 text-lg font-black text-white">
+          Hương Lan English
+        </div>
+        <h1 className="mb-2 text-xl font-bold text-[#1c2b39]">
+          Khu vực giáo viên
+        </h1>
         <p className="mb-6 text-sm text-gray-500">
           Đăng nhập để xem kết quả bài làm của học sinh.
         </p>
@@ -47,7 +60,7 @@ export default function TeacherLoginPage() {
           placeholder="Email giáo viên"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mb-3 w-full rounded-xl border-2 border-pink-100 px-4 py-3 text-center outline-none focus:border-pink-400"
+          className="mb-3 w-full rounded-xl border-2 border-[#eee1c6] px-4 py-3 text-center outline-none focus:border-[#c0392b]"
         />
         <input
           type="password"
@@ -55,13 +68,13 @@ export default function TeacherLoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-          className="mb-4 w-full rounded-xl border-2 border-pink-100 px-4 py-3 text-center outline-none focus:border-pink-400"
+          className="mb-4 w-full rounded-xl border-2 border-[#eee1c6] px-4 py-3 text-center outline-none focus:border-[#c0392b]"
         />
 
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full rounded-full bg-pink-500 py-3 font-bold text-white shadow-md disabled:opacity-50"
+          className="w-full rounded-full bg-[#c0392b] py-3 font-bold text-white shadow-md transition hover:bg-[#a5301f] disabled:opacity-50"
         >
           {loading ? "Đang kiểm tra..." : "Vào xem"}
         </button>

@@ -10,7 +10,7 @@ export default async function TeacherResultsPage() {
 
   const { data: userData } = await supabase.auth.getUser();
   if (!userData.user) {
-    redirect("/giao-vien/dang-nhap");
+    redirect("/dang-nhap");
   }
 
   // RLS trên bảng submissions cần có policy SELECT cho phép
