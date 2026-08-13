@@ -67,7 +67,7 @@ export default function SiteFooter() {
                   >
                     f
                   </span>
-                  Hương Lan English
+                  Hương Lan
                 </a>
               </li>
               <li>
