@@ -709,7 +709,6 @@
         <option value="all">Tất cả bài tập</option>
         <option value="5-topics">📚 5 Topics</option>
         <option value="sports-benefits">🏆 Sports Benefits</option>
-        <option value="field-notes">🗒️ Field Notes</option>
       </select>
       <select id="sort-select" onchange="renderTable()">
         <option value="newest">Mới nhất</option>
@@ -773,8 +772,7 @@
   // (worksheet undefined => bài "5 Topics" cũ, vì đó là phiếu đầu tiên chưa gắn nhãn)
   const WORKSHEET_META = {
     "5-topics":         { label: "5 Topics",         icon: "📚" },
-    "sports-benefits":  { label: "Sports Benefits",  icon: "🏆" },
-    "field-notes":      { label: "Field Notes",      icon: "🗒️" }
+    "sports-benefits":  { label: "Sports Benefits",  icon: "🏆" }
   };
   function getWorksheetKey(s){
     return (s.data && s.data.worksheet) ? s.data.worksheet : "5-topics";
@@ -1236,18 +1234,7 @@
 
     let html = "";
 
-    if(wsKey === "field-notes" && d.matching && d.cloze){
-      html += (
-        '<div class="detail-block"><h4>🧩 Chi tiết điểm</h4>' +
-        '<div style="font-size:13.5px;color:var(--gray);margin-bottom:10px;">' +
-        'Matching Game: <b>' + d.matching.correct + '/' + d.matching.total + '</b>' +
-        ' &nbsp;•&nbsp; Listening Cloze: <b>' + d.cloze.correct + '/' + d.cloze.total + '</b>' +
-        '</div></div>'
-      );
-    }
-
-    const fibTitle = (wsKey === "field-notes") ? "✏️ Listening Cloze + Matching" : "✏️ Điền từ";
-    html += '<div class="detail-block"><h4>' + fibTitle + ' — ' + fib.correct + '/' + fib.total + ' đúng</h4><div class="detail-fib-list">';
+    html += '<div class="detail-block"><h4>✏️ Điền từ — ' + fib.correct + '/' + fib.total + ' đúng</h4><div class="detail-fib-list">';
     if(fib.items.length){
       fib.items.forEach((it, i) => {
         html += (
@@ -1266,8 +1253,7 @@
     }
     html += '</div></div>';
 
-    const transTitle = (wsKey === "field-notes") ? "🔤 Dịch câu (Bước 05)" : "🔤 Dịch câu (Bước 02)";
-    html += '<div class="detail-block"><h4>' + transTitle + '</h4><div class="detail-trans-list">';
+    html += '<div class="detail-block"><h4>🔤 Dịch câu (Bước 02)</h4><div class="detail-trans-list">';
     if(translations.length){
       translations.forEach(tr => {
         html += (
@@ -1282,12 +1268,10 @@
     }
     html += '</div></div>';
 
-    if(wsKey !== "field-notes"){
-      html += (
-        '<div class="detail-block"><h4>🗣️ Bài nói / dàn ý (Bước 04)</h4>' +
-        '<div class="detail-speaking">' + (speaking ? escapeHtml(speaking) : '<i>(bỏ trống)</i>') + '</div></div>'
-      );
-    }
+    html += (
+      '<div class="detail-block"><h4>🗣️ Bài nói / dàn ý (Bước 04)</h4>' +
+      '<div class="detail-speaking">' + (speaking ? escapeHtml(speaking) : '<i>(bỏ trống)</i>') + '</div></div>'
+    );
 
     document.getElementById("detail-body").innerHTML = html;
   }

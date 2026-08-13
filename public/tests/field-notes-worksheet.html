@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Field Notes: Resilient Communities</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -302,6 +304,133 @@
   }
 
   footer{text-align:center; color:var(--muted); font-size:12px; margin-top:40px;}
+
+  /* ===== STUDENT NAME + SUBMIT ===== */
+  .student-card{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 44px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    box-shadow:0 6px 14px rgba(0,0,0,0.2);
+  }
+  .student-card label{font-weight:700; color:var(--ink); font-size:14px; white-space:nowrap; font-family:'JetBrains Mono',monospace;}
+  .student-card input{
+    flex:1 1 160px; min-width:0;
+    border:2px solid var(--paper-line);
+    border-radius:4px;
+    padding:9px 12px;
+    font-family:'Work Sans',sans-serif;
+    font-size:14.5px;
+    outline:none;
+    background:#fffdf5;
+    color:var(--ink);
+  }
+  .student-card input:focus{border-color:var(--gold);}
+
+  .submit-section{
+    background:rgba(232,185,63,0.08);
+    border:1px solid rgba(232,185,63,0.3);
+    border-radius:6px;
+    padding:26px 24px;
+    margin-bottom:0;
+    text-align:center;
+  }
+  .submit-section .btn-submit{
+    background:linear-gradient(135deg,var(--gold),#f0cd6b);
+    color:var(--ink);
+    border:none;
+    padding:12px 30px;
+    border-radius:24px;
+    font-weight:700;
+    font-size:14.5px;
+    font-family:'Work Sans',sans-serif;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(232,185,63,0.3);
+  }
+  .submit-section .btn-submit:hover{filter:brightness(1.05);}
+
+  .result-box{
+    display:none;
+    margin-top:20px;
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:6px;
+    padding:18px 20px;
+    text-align:left;
+  }
+  .result-box.show{display:block;}
+  .result-box h3{margin:0 0 12px; color:var(--ink); font-size:16px;}
+  .result-row{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed var(--paper-line); font-size:14.5px;}
+  .result-row:last-child{border-bottom:none;}
+  .result-row .label{color:#6b6045;}
+  .result-row .value{font-weight:700;}
+
+  /* SUBMIT MODAL */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(13,18,12,0.65);
+    display:flex;align-items:center;justify-content:center;
+    z-index:300;
+    padding:20px;
+  }
+  .modal-card{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:10px;
+    padding:32px 28px;
+    max-width:420px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+    animation:modalPop .18s ease;
+  }
+  @keyframes modalPop{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal-card h3{margin:0 0 14px;font-size:19px;font-family:'Caveat',cursive;font-size:28px;}
+  .modal-name-line{font-size:14px;color:#6b6045;margin:0 0 10px;}
+  .modal-score-preview{
+    background:rgba(232,185,63,0.18);
+    border-radius:8px;
+    padding:14px;
+    font-weight:700;
+    color:#6b5a1f;
+    margin-bottom:14px;
+    font-size:15px;
+  }
+  .modal-note{font-size:12.5px;color:#6b6045;margin:0 0 18px;}
+  .modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .modal-actions .action{
+    border:none; padding:10px 20px; border-radius:24px; font-weight:700;
+    cursor:pointer; font-size:14px; font-family:'Work Sans',sans-serif;
+    margin:0;
+  }
+  .modal-actions .btn-confirm{background:var(--ink); color:var(--paper);}
+  .modal-actions .btn-cancel{background:#e7e0c4; color:var(--ink);}
+  .modal-actions .btn-retry{background:var(--gold); color:var(--ink);}
+  .modal-icon{font-size:44px;margin-bottom:10px;}
+  .spinner{
+    width:36px;height:36px;
+    border:4px solid rgba(232,185,63,0.25);
+    border-top-color:var(--gold);
+    border-radius:50%;
+    margin:0 auto 16px;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media(max-width:600px){
+    .student-card{padding:14px 16px;gap:10px;}
+    .student-card label{white-space:normal;}
+    .submit-section{padding:20px 16px;}
+    .submit-section .btn-submit{width:100%;}
+    .modal-card{padding:24px 18px;}
+    .modal-actions{flex-direction:column;}
+    .modal-actions .action{width:100%;}
+  }
 </style>
 </head>
 <body>
@@ -313,6 +442,11 @@
 </header>
 
 <div class="wrap">
+
+  <div class="student-card">
+    <label for="studentName">👤 Họ và tên HV:</label>
+    <input type="text" id="studentName" placeholder="Nhập họ và tên của bạn...">
+  </div>
 
   <!-- 1. VOCAB -->
   <section id="vocab">
@@ -374,7 +508,66 @@
     <div class="panel" id="tr-list"></div>
   </section>
 
+  <!-- 6. SUBMIT -->
+  <section id="submit" style="margin-bottom:24px;">
+    <h2 class="section-title"><span class="tag">06</span>Nộp bài</h2>
+    <p class="section-sub">Nhập tên và bấm nút bên dưới để nộp bài. Hệ thống sẽ tự động chấm điểm phần Matching Game (Bước 02) và Listening Cloze (Bước 03), rồi lưu bài làm để giáo viên xem.</p>
+    <div class="submit-section">
+      <button class="btn-submit" onclick="openSubmitModal()">📤 Nộp bài &amp; Chấm điểm</button>
 
+      <div class="result-box" id="resultBox">
+        <h3>🎉 Kết quả bài làm</h3>
+        <div class="result-row"><span class="label">Học viên</span><span class="value" id="resultName">—</span></div>
+        <div class="result-row"><span class="label">Điểm Matching (Bước 02)</span><span class="value" id="resultMatchScore">—</span></div>
+        <div class="result-row"><span class="label">Điểm Cloze (Bước 03)</span><span class="value" id="resultClozeScore">—</span></div>
+        <div class="result-row"><span class="label">Tổng điểm</span><span class="value" id="resultScore">—</span></div>
+        <div class="result-row"><span class="label">Thời gian nộp</span><span class="value" id="resultTime">—</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submit-modal" style="display:none">
+  <div class="modal-card">
+
+    <div id="modal-step-confirm">
+      <h3>📤 Xác nhận nộp bài</h3>
+      <p class="modal-name-line">Học sinh: <b id="modal-student-name">—</b></p>
+      <div class="modal-score-preview" id="modal-score-preview">Đang tính điểm...</div>
+      <p class="modal-note">Mỗi lần bấm "Xác nhận nộp" sẽ tạo một bản ghi mới. Nếu làm thêm rồi nộp lại, giáo viên sẽ thấy cả các lần nộp trước đó.</p>
+      <div class="modal-actions">
+        <button class="action btn-cancel" onclick="closeSubmitModal()">Hủy</button>
+        <button class="action btn-confirm" onclick="doSubmit()">✓ Xác nhận nộp</button>
+      </div>
+    </div>
+
+    <div id="modal-step-loading" style="display:none">
+      <div class="spinner"></div>
+      <p>Đang gửi bài làm, vui lòng đợi chút...</p>
+    </div>
+
+    <div id="modal-step-success" style="display:none">
+      <div class="modal-icon">🎉</div>
+      <h3>Nộp bài thành công!</h3>
+      <p id="modal-success-text"></p>
+      <div class="modal-actions">
+        <button class="action btn-confirm" onclick="closeSubmitModal()">Đóng</button>
+      </div>
+    </div>
+
+    <div id="modal-step-error" style="display:none">
+      <div class="modal-icon">⚠️</div>
+      <h3>Không gửi được bài làm</h3>
+      <p id="modal-error-text">Vui lòng kiểm tra kết nối mạng và thử lại.</p>
+      <div class="modal-actions">
+        <button class="action btn-cancel" onclick="closeSubmitModal()">Đóng</button>
+        <button class="action btn-retry" onclick="doSubmit()">↺ Thử lại</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <footer>Field Notes worksheet · made for classroom practice</footer>
@@ -443,6 +636,7 @@ const matchSet = [
   {w:"revenue", vi:"doanh thu"}
 ];
 let selLeft=null, selRight=null, matched=0;
+let matchWrongCount=0;
 
 function shuffle(arr){return arr.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);}
 
@@ -566,12 +760,154 @@ trData.forEach((t,i)=>{
   div.className='tr-item';
   div.innerHTML = `
     <div class="tr-vi"><b>${i+1}.</b> ${t.vi}</div>
-    <textarea class="tr-input" placeholder="Type your translation here..."></textarea>
+    <textarea class="tr-input" data-prompt="${t.vi.replace(/<[^>]*>/g,'').replace(/"/g,'&quot;')}" placeholder="Type your translation here..."></textarea>
     <div><button class="toggle-link" onclick="this.nextElementSibling.classList.toggle('show')">Xem gợi ý đáp án</button>
     <div class="reveal">${t.en}</div></div>
   `;
   trList.appendChild(div);
 });
+
+/* ---------- 6. CHẤM ĐIỂM & NỘP BÀI ---------- */
+
+// Chấm điểm Matching Game: dựa trên số cặp đã nối đúng (biến `matched` toàn cục)
+function gradeMatching(){
+  const total = matchSet.length;
+  const correct = matched;
+  const items = matchSet.map(item => ({
+    answer_key: item.w + ' = ' + item.vi,
+    student_answer: null,
+    is_correct: null
+  }));
+  return { correct, total, items };
+}
+
+// Chấm điểm Listening Cloze: so khớp giá trị người dùng nhập với đáp án
+function gradeCloze(){
+  let correct = 0;
+  const items = [];
+  clozeData.forEach((c,i)=>{
+    const input = document.getElementById(`cloze-${i}`);
+    const val = input ? input.value.trim() : '';
+    const normVal = val.toLowerCase();
+    const normAns = c.answer.toLowerCase();
+    const isCorrect = normVal.length > 0 && (normVal === normAns || (c.answer==='commute' && normVal==='daily commute'));
+    if(isCorrect) correct++;
+    items.push({ answer_key: c.answer, student_answer: val, is_correct: isCorrect });
+  });
+  return { correct, total: clozeData.length, items };
+}
+
+function gatherTranslations(){
+  const result = [];
+  document.querySelectorAll('#tr-list .tr-input').forEach(ta=>{
+    result.push({ prompt: ta.dataset.prompt || '', answer: ta.value });
+  });
+  return result;
+}
+
+function getStudentName(){
+  const el = document.getElementById('studentName');
+  return el ? el.value.trim() : '';
+}
+
+function showModalStep(step){
+  ['confirm','loading','success','error'].forEach(s=>{
+    const el = document.getElementById('modal-step-' + s);
+    if(el) el.style.display = (s === step) ? 'block' : 'none';
+  });
+}
+
+function openSubmitModal(){
+  const nameInput = document.getElementById('studentName');
+  const name = getStudentName();
+  if(!name){
+    alert('Vui lòng nhập họ và tên trước khi nộp bài!');
+    nameInput.focus();
+    return;
+  }
+
+  const matchGrade = gradeMatching();
+  const clozeGrade = gradeCloze();
+  const totalCorrect = matchGrade.correct + clozeGrade.correct;
+  const totalMax = matchGrade.total + clozeGrade.total;
+
+  document.getElementById('modal-student-name').textContent = name;
+  document.getElementById('modal-score-preview').textContent =
+    'Điểm hiện tại: ' + totalCorrect + ' / ' + totalMax +
+    ' (Matching ' + matchGrade.correct + '/' + matchGrade.total +
+    ', Cloze ' + clozeGrade.correct + '/' + clozeGrade.total + ')';
+
+  showModalStep('confirm');
+  document.getElementById('submit-modal').style.display = 'flex';
+}
+
+function closeSubmitModal(){
+  document.getElementById('submit-modal').style.display = 'none';
+}
+
+async function doSubmit(){
+  showModalStep('loading');
+  const name = getStudentName();
+  const matchGrade = gradeMatching();
+  const clozeGrade = gradeCloze();
+  const totalCorrect = matchGrade.correct + clozeGrade.correct;
+  const totalMax = matchGrade.total + clozeGrade.total;
+
+  const payload = {
+    student_name: name,
+    total_score: totalCorrect,
+    max_score: totalMax,
+    data: {
+      worksheet: 'field-notes',
+      fib: {
+        correct: totalCorrect,
+        total: totalMax,
+        items: [...clozeGrade.items.map((it,i)=>({
+          answer_key: 'Cloze #' + (i+1) + ': ' + it.answer_key,
+          student_answer: it.student_answer,
+          is_correct: it.is_correct
+        })), ...matchGrade.items.map(it=>({
+          answer_key: 'Matching: ' + it.answer_key,
+          student_answer: '(đã nối trong trò chơi)',
+          is_correct: null
+        }))]
+      },
+      matching: { correct: matchGrade.correct, total: matchGrade.total },
+      cloze: { correct: clozeGrade.correct, total: clozeGrade.total, items: clozeGrade.items },
+      translations: gatherTranslations(),
+      submitted_at_client: new Date().toISOString()
+    }
+  };
+
+  try{
+    if(!window.supabaseClient){
+      throw new Error('missing-config');
+    }
+    const { error } = await window.supabaseClient.from('submissions').insert(payload);
+    if(error) throw error;
+
+    const now = new Date();
+    document.getElementById('resultName').textContent = name;
+    document.getElementById('resultMatchScore').textContent = matchGrade.correct + '/' + matchGrade.total;
+    document.getElementById('resultClozeScore').textContent = clozeGrade.correct + '/' + clozeGrade.total;
+    document.getElementById('resultScore').textContent = totalCorrect + '/' + totalMax;
+    document.getElementById('resultTime').textContent = now.toLocaleString('vi-VN');
+    const resultBox = document.getElementById('resultBox');
+    resultBox.classList.add('show');
+
+    document.getElementById('modal-success-text').textContent =
+      'Đã lưu bài làm của ' + name + ' — ' + totalCorrect + '/' + totalMax +
+      ' câu đúng (Matching + Cloze). Giáo viên sẽ xem được bài này trong trang kết quả.';
+    showModalStep('success');
+  }catch(e){
+    console.error('Submit error:', e);
+    document.getElementById('modal-error-text').textContent =
+      (e && e.message === 'missing-config')
+        ? 'Trang chưa được cấu hình Supabase (thiếu config.js). Vui lòng báo giáo viên/quản trị trang.'
+        : 'Không gửi được bài làm. Vui lòng kiểm tra kết nối mạng và thử lại.';
+    showModalStep('error');
+  }
+}
 
 </script>
 </body>
