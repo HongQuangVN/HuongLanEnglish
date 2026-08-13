@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase-browser";
 
@@ -81,14 +82,19 @@ export default function SiteHeader() {
       <div className="border-b border-gray-100">
         <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 py-4">
           <Link href="/" className="flex shrink-0 items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#c0392b] text-lg font-black text-white">
-              HL
-            </div>
+            <Image
+              src="/brand/logo-header.jpg"
+              alt="Hương Lan English"
+              width={48}
+              height={48}
+              priority
+              className="h-10 w-10 rounded-full object-cover ring-2 ring-[#fbe1de] sm:h-12 sm:w-12"
+            />
             <div className="leading-tight">
-              <div className="text-lg font-black text-[#1c2b39]">
+              <div className="text-base font-black text-[#1c2b39] sm:text-lg">
                 Hương Lan
               </div>
-              <div className="text-xs font-bold tracking-wide text-[#c0392b]">
+              <div className="text-[10px] font-bold tracking-wide text-[#c0392b] sm:text-xs">
                 ENGLISH
               </div>
             </div>

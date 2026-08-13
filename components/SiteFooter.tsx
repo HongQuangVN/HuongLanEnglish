@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SiteFooter() {
   return (
@@ -7,13 +8,14 @@ export default function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c0392b] text-sm font-black text-white">
-                HL
-              </span>
-              <span className="text-lg font-black text-[#1c2b39]">
-                Hương Lan English
-              </span>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/brand/logo-footer.png"
+                alt="Hương Lan Talks — Hương Lan English"
+                width={700}
+                height={250}
+                className="h-auto w-full max-w-[320px] sm:max-w-[360px]"
+              />
             </Link>
             <p className="mt-3 max-w-sm text-sm text-gray-500">
               Khóa học Tiếng Anh – Giao tiếp online: nghe, nói, đọc, viết.
