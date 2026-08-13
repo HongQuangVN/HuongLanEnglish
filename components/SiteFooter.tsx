@@ -1,0 +1,95 @@
+import Link from "next/link";
+
+export default function SiteFooter() {
+  return (
+    <footer className="mt-auto border-t border-[#eee1c6] bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <Link href="/" className="flex items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c0392b] text-sm font-black text-white">
+                HL
+              </span>
+              <span className="text-lg font-black text-[#1c2b39]">
+                Hương Lan English
+              </span>
+            </Link>
+            <p className="mt-3 max-w-sm text-sm text-gray-500">
+              Khóa học Tiếng Anh – Giao tiếp online: nghe, nói, đọc, viết.
+            </p>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="mb-3 text-sm font-bold text-[#1c2b39]">
+              Liên hệ
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-500">
+              <li>
+                <a
+                  href="mailto:huonglan.workspace@gmail.com"
+                  className="hover:text-[#c0392b]"
+                >
+                  huonglan.workspace@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:0368344648" className="hover:text-[#c0392b]">
+                  0368 344 648
+                </a>
+              </li>
+              <li>Phường Bình Thạnh, TP. HCM</li>
+            </ul>
+          </div>
+
+          {/* Social */}
+          <div>
+            <h3 className="mb-3 text-sm font-bold text-[#1c2b39]">
+              Kết nối với chúng tôi
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-500">
+              <li>
+                <a
+                  href="https://www.facebook.com/huonglan21vt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-[#c0392b]"
+                >
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1877F2] text-xs font-bold text-white"
+                    aria-hidden
+                  >
+                    f
+                  </span>
+                  Hương Lan English
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tiktok.com/@huonglantalks"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-[#c0392b]"
+                >
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1c2b39] text-xs font-bold text-white"
+                    aria-hidden
+                  >
+                    ♪
+                  </span>
+                  @huonglantalks
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 border-t border-[#eee1c6] pt-6 text-center text-xs text-gray-400">
+          © {new Date().getFullYear()} Hương Lan English. All rights
+          reserved.
+        </div>
+      </div>
+    </footer>
+  );
+}
