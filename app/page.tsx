@@ -68,7 +68,7 @@ export default function HomePage() {
             </ul>
 
             <Link
-              href="/online-test.html"
+              href="/online-test"
               className="mt-8 inline-block rounded-lg bg-[#c0392b] px-7 py-3 font-bold text-white shadow-md transition hover:bg-[#a5301f]"
             >
               Xem tất cả đề thi
@@ -126,7 +126,7 @@ export default function HomePage() {
 
         <div className="mt-10 text-center">
           <Link
-            href="/online-test.html"
+            href="/online-test"
             className="inline-block rounded-full bg-[#fbe1de] px-6 py-2 text-sm font-bold text-[#c0392b] hover:bg-[#f6cac5]"
           >
             Xem tất cả đề thi →

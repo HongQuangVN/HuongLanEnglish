@@ -736,8 +736,6 @@
     <div class="select-row">
       <select id="filter-select" onchange="renderTable()">
         <option value="all">Tất cả bài tập</option>
-        <option value="5-topics">📚 5 Topics</option>
-        <option value="sports-benefits">🏆 Sports Benefits</option>
       </select>
       <select id="sort-select" onchange="renderTable()">
         <option value="newest">Mới nhất</option>
@@ -752,7 +750,7 @@
   </div>
   <div class="last-updated" id="last-updated-row">
     <span id="last-updated"></span>
-    <a href="#" class="refresh-link" onclick="event.preventDefault(); loadSubmissions();">🔄 Làm mới</a>
+    <a href="#" class="refresh-link" onclick="event.preventDefault(); loadSubmissions();">Làm mới</a>
   </div>
 
   <div class="empty-state" id="empty-state" style="display:none">
@@ -802,13 +800,51 @@
   // (worksheet undefined => bài "5 Topics" cũ, vì đó là phiếu đầu tiên chưa gắn nhãn)
   const WORKSHEET_META = {
     "5-topics":         { label: "5 Topics",         icon: "📚" },
-    "sports-benefits":  { label: "Sports Benefits",  icon: "🏆" }
+    "sports-benefits":  { label: "Sports Benefits",  icon: "🏆" },
+    "field-notes":      { label: "Field Notes",      icon: "📝" }
   };
   function getWorksheetKey(s){
     return (s.data && s.data.worksheet) ? s.data.worksheet : "5-topics";
   }
   function getWorksheetMeta(key){
     return WORKSHEET_META[key] || { label: key, icon: "📄" };
+  }
+
+  // Xây dựng lại danh sách lựa chọn trong bộ lọc "Tất cả bài tập" dựa trên
+  // các loại bài tập THỰC SỰ xuất hiện trong dữ liệu đã tải — nghĩa là khi
+  // có bài test mới (ví dụ field-notes, hay bất kỳ phiếu nào sau này) và có
+  // học viên đã nộp bài, mục lọc tương ứng sẽ tự xuất hiện ở đây mà không
+  // cần sửa code tay. Nhãn/icon đẹp lấy từ WORKSHEET_META nếu có khai báo,
+  // nếu không sẽ tự dùng chính key làm nhãn (xem getWorksheetMeta ở trên).
+  function populateFilterOptions(){
+    const select = document.getElementById("filter-select");
+    const prevValue = select.value || "all";
+
+    const keysPresent = Array.from(
+      new Set(allSubmissions.map(s => getWorksheetKey(s)))
+    ).sort((a, b) => {
+      // Ưu tiên sắp xếp theo thứ tự đã biết trong WORKSHEET_META, còn lại xếp theo tên
+      const order = Object.keys(WORKSHEET_META);
+      const ia = order.indexOf(a), ib = order.indexOf(b);
+      if(ia !== -1 && ib !== -1) return ia - ib;
+      if(ia !== -1) return -1;
+      if(ib !== -1) return 1;
+      return a.localeCompare(b, "vi");
+    });
+
+    select.innerHTML =
+      '<option value="all">Tất cả bài tập</option>' +
+      keysPresent.map(key => {
+        const meta = getWorksheetMeta(key);
+        return '<option value="' + escapeHtml(key) + '">' + meta.icon + ' ' + escapeHtml(meta.label) + '</option>';
+      }).join("");
+
+    // Giữ nguyên lựa chọn hiện tại nếu vẫn còn tồn tại trong danh sách mới
+    if(prevValue === "all" || keysPresent.includes(prevValue)){
+      select.value = prevValue;
+    } else {
+      select.value = "all";
+    }
   }
 
   let allSubmissions = [];
@@ -953,6 +989,7 @@
       if(error) throw error;
 
       allSubmissions = data || [];
+      populateFilterOptions();
       document.getElementById("last-updated").textContent =
         "Cập nhật lúc " + new Date().toLocaleTimeString("vi-VN");
       renderTable();

@@ -154,7 +154,7 @@ export default function SiteHeader() {
               style={{ top: menuPos.top, left: menuPos.left }}
             >
               <Link
-                href="/online-test.html"
+                href="/online-test"
                 className="block px-4 py-2.5 text-sm font-bold text-[#1c2b39] hover:bg-[#fbe1de] hover:text-[#c0392b]"
                 onClick={() => setTestMenuOpen(false)}
               >

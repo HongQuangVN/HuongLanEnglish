@@ -1,0 +1,37 @@
+{
+  "_comment": "Khai báo tuỳ chỉnh cho từng bài test hiển thị ở /online-test. Key = tên file .html trong public/tests/ (KHÔNG kèm đuôi .html). Nếu một file .html trong thư mục tests/ không có mục khai báo ở đây, hệ thống sẽ TỰ ĐỘNG hiển thị nó với tiêu đề lấy từ thẻ <title> của chính file đó và icon mặc định — bạn không cần sửa file này khi thêm bài test mới, chỉ sửa khi muốn tuỳ chỉnh tiêu đề/mô tả/icon cho đẹp hơn.",
+
+  "5-topics-worksheet": {
+    "title": "5 Topics – Authentic Listening",
+    "desc": "5 chủ đề: Dream House · Favorite Food · First Job · Travel · Shopping",
+    "icon": "🎧",
+    "stats": ["✅ 5 chủ đề", "🕐 Không giới hạn", "👤 Nghe & Nói"]
+  },
+  "sports-benefits-worksheet": {
+    "title": "Sports & Health Benefits",
+    "desc": "Lợi ích của thể thao đối với cơ thể và trí não",
+    "icon": "🏅",
+    "stats": ["✅ Nghe hiểu", "🕐 Không giới hạn", "👤 Nghe & Nói"]
+  },
+  "field-notes-worksheet": {
+    "title": "Field Notes: Resilient Communities",
+    "desc": "Từ vựng & ngữ pháp thì hiện tại hoàn thành, luyện nghe cộng đồng bền vững",
+    "icon": "📝",
+    "stats": ["✅ Từ vựng & ngữ pháp", "🕐 Không giới hạn", "👤 Nghe & Viết"]
+  },
+
+  "_comingSoon": [
+    {
+      "title": "Idioms In Use (Advanced)",
+      "desc": "Luyện thành ngữ tiếng Anh nâng cao",
+      "icon": "📖",
+      "stats": ["✅ 30 câu", "🕐 60 phút"]
+    },
+    {
+      "title": "KET Listening",
+      "desc": "Đề luyện nghe theo cấu trúc KET",
+      "icon": "🎯",
+      "stats": ["✅ 25 câu", "🕐 25 phút"]
+    }
+  ]
+}
