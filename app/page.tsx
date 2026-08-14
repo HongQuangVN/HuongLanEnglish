@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Headphones,
   Trophy,
@@ -57,7 +56,7 @@ export default function HomePage() {
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy to-brand-wine-dark">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-navy to-brand-navy-hover">
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -68,8 +67,8 @@ export default function HomePage() {
           }}
           aria-hidden
         />
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:hero-grid-cols lg:gap-6">
-          <div className="relative z-10 min-w-0">
+        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20">
+          <div className="relative z-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-brand-honey">
               <Sparkles size={13} strokeWidth={2} />
               Học cùng Hương Lan
@@ -89,12 +88,12 @@ export default function HomePage() {
               <span className="sm:text-5xl lg:text-6xl">thực chiến</span>
             </h1>
 
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
               Đề thi bám sát tình huống giao tiếp thật, chấm điểm tự động
               ngay sau khi nộp bài — học đến đâu, biết mình đến đó.
             </p>
 
-            <ul className="mt-7 space-y-3">
+            <ul className="mx-auto mt-7 inline-flex flex-col items-start space-y-3 text-left">
               {FEATURES.map((f) => (
                 <li key={f} className="flex items-start gap-2.5">
                   <CheckCircle2
@@ -107,7 +106,7 @@ export default function HomePage() {
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
               <Link
                 href="/online-test"
                 className="inline-flex items-center gap-2 rounded-lg bg-brand-honey px-6 py-3 text-sm font-bold text-brand-navy shadow-lg shadow-black/20 transition hover:brightness-105 sm:px-7"
@@ -119,25 +118,6 @@ export default function HomePage() {
                 <span className="text-lg font-black text-white">100%</span>
                 {" "}miễn phí, không quảng cáo
               </p>
-            </div>
-          </div>
-
-          {/* Signature element: ảnh thật của Hương Lan, không phải card số liệu chung chung */}
-          <div className="relative z-10 flex justify-center lg:justify-end">
-            <div className="relative">
-              <div
-                className="absolute rounded-full bg-gradient-to-br from-brand-honey/30 to-transparent blur-2xl"
-                style={{ inset: "-1rem" }}
-                aria-hidden
-              />
-              <Image
-                src="/brand/logo-hero.jpg"
-                alt="Cô Hương Lan — Hương Lan English"
-                width={340}
-                height={340}
-                priority
-                className="relative h-56 w-56 rounded-full object-cover ring-4 ring-white/10 sm:h-72 sm:w-72 lg:h-80 lg:w-80"
-              />
             </div>
           </div>
         </div>
