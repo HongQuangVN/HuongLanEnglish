@@ -1,14 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-[#eee1c6] bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
+    <footer className="mt-auto border-t border-brand-sand bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12">
+        <div
+          className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4"
+        >
           {/* Brand */}
-          <div>
-            <h3 className="mb-3 text-sm font-bold text-[#1c2b39]">
+          <div className="lg:col-span-2">
+            <h3 className="mb-3 text-sm font-bold text-brand-navy">
               Hương Lan English
             </h3>
             <Link href="/" className="inline-block">
@@ -17,7 +20,7 @@ export default function SiteFooter() {
                 alt="Hương Lan Talks — Hương Lan English"
                 width={700}
                 height={250}
-                className="h-auto w-full max-w-[300px]"
+                className="h-auto w-full max-w-xs"
               />
             </Link>
             <p className="mt-3 max-w-sm text-sm text-gray-500">
@@ -27,42 +30,50 @@ export default function SiteFooter() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-3 text-sm font-bold text-[#1c2b39]">
+            <h3 className="mb-3 text-sm font-bold text-brand-navy">
               Liên hệ
             </h3>
-            <ul className="space-y-2 text-sm text-gray-500">
+            <ul className="space-y-2.5 text-sm text-gray-500">
               <li>
                 <a
                   href="mailto:huonglan.workspace@gmail.com"
-                  className="hover:text-[#c0392b]"
+                  className="flex items-center gap-2 hover:text-brand-wine"
                 >
+                  <Mail size={15} strokeWidth={2} className="shrink-0 text-gray-400" />
                   huonglan.workspace@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:0368344648" className="hover:text-[#c0392b]">
+                <a
+                  href="tel:0368344648"
+                  className="flex items-center gap-2 hover:text-brand-wine"
+                >
+                  <Phone size={15} strokeWidth={2} className="shrink-0 text-gray-400" />
                   0368 344 648
                 </a>
               </li>
-              <li>Phường Bình Thạnh, TP.{"\u00A0"}HCM</li>
+              <li className="flex items-center gap-2">
+                <MapPin size={15} strokeWidth={2} className="shrink-0 text-gray-400" />
+                Phường Bình Thạnh, TP.{"\u00A0"}HCM
+              </li>
             </ul>
           </div>
 
           {/* Social */}
           <div>
-            <h3 className="mb-3 text-sm font-bold text-[#1c2b39]">
+            <h3 className="mb-3 text-sm font-bold text-brand-navy">
               Kết nối với chúng tôi
             </h3>
-            <ul className="space-y-2 text-sm text-gray-500">
+            <ul className="space-y-2.5 text-sm text-gray-500">
               <li>
                 <a
                   href="https://www.facebook.com/huonglan21vt"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-[#c0392b]"
+                  className="flex items-center gap-2 hover:text-brand-wine"
                 >
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1877F2] text-xs font-bold text-white"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-facebook text-xs font-bold text-white"
                     aria-hidden
                   >
                     f
@@ -75,10 +86,10 @@ export default function SiteFooter() {
                   href="https://www.tiktok.com/@huonglantalks"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-[#c0392b]"
+                  className="flex items-center gap-2 hover:text-brand-wine"
                 >
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1c2b39] text-xs font-bold text-white"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-navy text-xs font-bold text-white"
                     aria-hidden
                   >
                     ♪
@@ -90,7 +101,7 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-[#eee1c6] pt-6 text-center text-xs text-gray-400">
+        <div className="mt-10 border-t border-brand-sand pt-6 text-center text-xs text-gray-400">
           © {new Date().getFullYear()} Hương Lan English. All rights
           reserved.
         </div>

@@ -80,8 +80,8 @@ function cleanAutoTitle(raw: string): string {
     .trim();
 }
 
-const DEFAULT_ICON = "📄";
-const DEFAULT_STATS = ["✅ Miễn phí", "🕐 Không giới hạn"];
+const DEFAULT_ICON = "FileText";
+const DEFAULT_STATS = ["Miễn phí", "Không giới hạn"];
 
 export function getTestCards(): { real: TestCardData[]; comingSoon: ComingSoonCardData[] } {
   const meta = readMetaFile();

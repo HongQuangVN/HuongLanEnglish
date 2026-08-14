@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbf7f0;
+  --foreground: #16232f;
+
+  /* Bảng màu thương hiệu Hương Lan English */
+  --brand-wine: #a8342a;      /* đỏ rượu vang — accent chính, thay cho đỏ gắt trước đây */
+  --brand-wine-dark: #7f2620; /* hover/active state của đỏ */
+  --brand-navy: #16232f;      /* navy sâu — text chính, tiêu đề */
+  --brand-cream: #fbf7f0;     /* nền kem ấm toàn site */
+  --brand-cream-soft: #f3ead9;/* nền phụ, thẻ nổi bật nhẹ */
+  --brand-honey: #e8a33d;     /* vàng mật ong — điểm nhấn phụ, khác biệt hoá */
+  --brand-sand: #e7dcc8;      /* viền, đường phân cách */
+  --brand-cream-hover: #ecdfc4; /* trạng thái hover của nền kem/be đậm hơn */
+  --brand-facebook: #1877f2;  /* màu thương hiệu Facebook, dùng cho icon mạng xã hội */
+  --brand-navy-hover: #0f1922; /* trạng thái hover của nút nền navy */
+  --brand-stat-text: #8a4a3f; /* chữ trong badge thống kê (số câu, thời gian...) */
+  --brand-muted-bg: #eef0f2;   /* nền badge "Miễn phí" trung tính */
+  --brand-muted-text: #5b6b78; /* chữ badge trung tính */
+  --brand-disabled-text: #9aa2a9; /* chữ nút "Vào thi" khi card Sắp ra mắt (không bấm được) */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-wine: var(--brand-wine);
+  --color-brand-wine-dark: var(--brand-wine-dark);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-cream-soft: var(--brand-cream-soft);
+  --color-brand-honey: var(--brand-honey);
+  --color-brand-sand: var(--brand-sand);
+  --color-brand-cream-hover: var(--brand-cream-hover);
+  --color-brand-facebook: var(--brand-facebook);
+  --color-brand-navy-hover: var(--brand-navy-hover);
+  --color-brand-stat-text: var(--brand-stat-text);
+  --color-brand-muted-bg: var(--brand-muted-bg);
+  --color-brand-muted-text: var(--brand-muted-text);
+  --color-brand-disabled-text: var(--brand-disabled-text);
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-mono: ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/* Ẩn thanh cuộn ngang cho thanh menu, giữ khả năng vuốt/cuộn bình thường.
+   Viết bằng CSS thuần thay vì Tailwind arbitrary value vì cú pháp
+   [&::-webkit-scrollbar] bị Turbopack bỏ sót trong bản Next.js hiện tại. */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tỉ lệ 2 cột cho hero trang chủ (nội dung : ảnh) — chỉ áp dụng từ breakpoint
+   lg trở lên; dưới lg, class grid-cols-1 mặc định giữ bố cục xếp dọc trên
+   mobile. Viết bằng CSS thuần vì Tailwind không có sẵn tỉ lệ 1.1fr/0.9fr,
+   và arbitrary value grid-cols-[1.1fr_0.9fr] bị Turbopack bỏ sót. */
+@media (min-width: 1024px) {
+  .hero-grid-cols {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
 }

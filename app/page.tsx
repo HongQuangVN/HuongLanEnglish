@@ -1,21 +1,30 @@
 import Link from "next/link";
+import Image from "next/image";
+import {
+  Headphones,
+  Trophy,
+  NotebookPen,
+  CheckCircle2,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 
 const TESTS = [
   {
     href: "/tests/5-topics-worksheet.html",
-    icon: "🎧",
+    Icon: Headphones,
     title: "5 Topics – Authentic Listening",
     desc: "5 chủ đề: Dream House · Favorite Food · First Job · Travel · Shopping",
   },
   {
     href: "/tests/sports-benefits-worksheet.html",
-    icon: "🏅",
+    Icon: Trophy,
     title: "Sports & Health Benefits",
     desc: "Lợi ích của thể thao đối với cơ thể và trí não",
   },
   {
     href: "/tests/field-notes-worksheet.html",
-    icon: "📝",
+    Icon: NotebookPen,
     title: "Field Notes: Resilient Communities",
     desc: "Từ vựng & ngữ pháp thì hiện tại hoàn thành, luyện nghe cộng đồng bền vững",
   },
@@ -31,92 +40,153 @@ export default function HomePage() {
   return (
     <main className="flex-1">
       {/* Announcement bar */}
-      <div className="border-b border-[#eee1c6] bg-[#fdf4e3]">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 py-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#c0392b] text-lg">
-            📣
-          </div>
-          <p className="text-sm text-[#5a4a2f]">
-            <span className="font-bold">Đã có đề thi mới!</span> Luyện ngay 2
-            bộ đề nghe – nói miễn phí bên dưới, cập nhật thường xuyên.
+      <div className="border-b border-brand-sand bg-brand-cream-soft">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5 sm:gap-4 sm:px-6 sm:py-3">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-wine text-white sm:h-9 sm:w-9">
+            <Sparkles size={16} strokeWidth={2} />
+          </span>
+          <p
+            className="text-sm leading-snug sm:text-sm"
+            style={{ color: "#5a4a2f" }}
+          >
+            <span className="font-bold">Đã có đề thi mới!</span> Luyện ngay
+            3{"\u00A0"}bộ đề nghe – nói miễn phí bên dưới, cập nhật thường
+            xuyên.
           </p>
         </div>
       </div>
 
       {/* Hero */}
-      <section className="bg-[#eaf2f2]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
-          <div>
-            <h1 className="text-4xl font-black leading-tight text-[#c0392b] sm:text-5xl">
-              Hệ thống luyện thi
+      <section className="relative overflow-hidden bg-brand-navy">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            opacity: 0.07,
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+          }}
+          aria-hidden
+        />
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:hero-grid-cols lg:gap-6">
+          <div className="relative z-10 min-w-0">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-brand-honey">
+              <Sparkles size={13} strokeWidth={2} />
+              Học cùng Hương Lan
+            </span>
+
+            <h1
+              className="mt-5 font-black text-white"
+              style={{ fontSize: "2.1rem", lineHeight: 1.1 }}
+            >
+              <span className="sm:text-5xl lg:text-6xl">
+                Luyện Tiếng Anh
+              </span>
               <br />
-              Tiếng Anh trực tuyến
+              <span className="text-brand-honey sm:text-5xl lg:text-6xl">
+                nghe – nói
+              </span>{" "}
+              <span className="sm:text-5xl lg:text-6xl">thực chiến</span>
             </h1>
-            <p className="mt-3 text-2xl font-bold text-[#1c2b39]">
-              Nghe – Nói thực chiến, chấm điểm ngay
+
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
+              Đề thi bám sát tình huống giao tiếp thật, chấm điểm tự động
+              ngay sau khi nộp bài — học đến đâu, biết mình đến đó.
             </p>
 
-            <ul className="mt-8 space-y-4">
+            <ul className="mt-7 space-y-3">
               {FEATURES.map((f) => (
-                <li key={f} className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#c0392b] text-xs font-bold text-white">
-                    ✓
-                  </span>
-                  <span className="text-[#1c2b39]">{f}</span>
+                <li key={f} className="flex items-start gap-2.5">
+                  <CheckCircle2
+                    size={19}
+                    strokeWidth={2}
+                    className="mt-0.5 shrink-0 text-brand-honey"
+                  />
+                  <span className="text-sm text-white/85">{f}</span>
                 </li>
               ))}
             </ul>
 
-            <Link
-              href="/online-test"
-              className="mt-8 inline-block rounded-lg bg-[#c0392b] px-7 py-3 font-bold text-white shadow-md transition hover:bg-[#a5301f]"
-            >
-              Xem tất cả đề thi
-            </Link>
+            <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <Link
+                href="/online-test"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-honey px-6 py-3 text-sm font-bold text-brand-navy shadow-lg shadow-black/20 transition hover:brightness-105 sm:px-7"
+              >
+                Xem tất cả đề thi
+                <ArrowRight size={16} strokeWidth={2.5} />
+              </Link>
+              <p className="basis-full text-sm leading-snug text-white/60 sm:basis-auto">
+                <span className="text-lg font-black text-white">100%</span>
+                {" "}miễn phí, không quảng cáo
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2 rounded-2xl bg-white p-6 shadow-sm">
-              <p className="text-3xl font-black text-[#c0392b]">3</p>
-              <p className="text-sm text-gray-500">Bộ đề nghe – nói miễn phí</p>
-            </div>
-            <div className="rounded-2xl bg-[#1c2b39] p-6 text-white shadow-sm">
-              <p className="text-2xl font-black">100%</p>
-              <p className="text-xs opacity-80">Miễn phí</p>
-            </div>
-            <div className="rounded-2xl bg-white p-6 shadow-sm">
-              <p className="text-2xl font-black text-[#c0392b]">Tự động</p>
-              <p className="text-xs text-gray-500">Chấm điểm</p>
+          {/* Signature element: ảnh thật của Hương Lan, không phải card số liệu chung chung */}
+          <div className="relative z-10 flex justify-center lg:justify-end">
+            <div className="relative">
+              <div
+                className="absolute rounded-full bg-gradient-to-br from-brand-honey/30 to-transparent blur-2xl"
+                style={{ inset: "-1rem" }}
+                aria-hidden
+              />
+              <Image
+                src="/brand/logo-hero.jpg"
+                alt="Cô Hương Lan — Hương Lan English"
+                width={340}
+                height={340}
+                priority
+                className="relative h-56 w-56 rounded-full object-cover ring-4 ring-white/10 sm:h-72 sm:w-72 lg:h-80 lg:w-80"
+              />
+              <div className="absolute left-1/2 w-max -translate-x-1/2 rounded-xl bg-white px-4 py-2.5 text-center shadow-xl" style={{ bottom: "-1rem" }}>
+                <p className="text-sm font-black text-brand-navy">
+                  Hương Lan
+                </p>
+                <p className="text-xs font-medium text-gray-500">
+                  Đồng hành cùng bạn học tiếng Anh
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Tests */}
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-8 text-center">
-          <h2 className="text-2xl font-black text-[#1c2b39]">
-            Đề thi miễn phí
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
+        <div className="mb-9 text-center sm:mb-12">
+          <p className="text-xs font-bold uppercase tracking-widest text-brand-wine">
+            Miễn phí — không giới hạn
+          </p>
+          <h2 className="mt-2 text-2xl font-black text-brand-navy sm:text-3xl">
+            Chọn đề thi để bắt đầu
           </h2>
-          <div className="mx-auto mt-2 h-1 w-16 rounded-full bg-[#c0392b]" />
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {TESTS.map((t) => (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          {TESTS.map(({ href, Icon, title, desc }) => (
             <Link
-              key={t.href}
-              href={t.href}
-              className="group flex h-full flex-col rounded-2xl border border-[#eee1c6] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              key={href}
+              href={href}
+              className="group flex h-full flex-col rounded-2xl border border-brand-sand bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
             >
               <div className="flex flex-1 items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#fbe1de] text-2xl">
-                  {t.icon}
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-cream-soft text-brand-wine sm:h-12 sm:w-12">
+                  <Icon size={22} strokeWidth={1.8} />
                 </span>
                 <div className="flex flex-1 flex-col">
-                  <h3 className="font-bold text-[#1c2b39]">{t.title}</h3>
-                  <p className="mt-1 text-sm text-gray-500">{t.desc}</p>
-                  <span className="mt-auto inline-block self-start pt-3 text-sm font-bold text-[#c0392b] group-hover:underline">
-                    Vào thi →
+                  <h3 className="font-bold leading-snug text-brand-navy">
+                    {title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-500">
+                    {desc}
+                  </p>
+                  <span className="mt-auto inline-flex items-center gap-1 self-start pt-3 text-sm font-bold text-brand-wine">
+                    Vào thi
+                    <ArrowRight
+                      size={15}
+                      strokeWidth={2.5}
+                      className="transition-transform group-hover:translate-x-0.5"
+                    />
                   </span>
                 </div>
               </div>
@@ -127,9 +197,10 @@ export default function HomePage() {
         <div className="mt-10 text-center">
           <Link
             href="/online-test"
-            className="inline-block rounded-full bg-[#fbe1de] px-6 py-2 text-sm font-bold text-[#c0392b] hover:bg-[#f6cac5]"
+            className="inline-flex items-center gap-1.5 rounded-full bg-brand-cream-soft px-6 py-2.5 text-sm font-bold text-brand-wine transition hover:bg-brand-cream-hover"
           >
-            Xem tất cả đề thi →
+            Xem tất cả đề thi
+            <ArrowRight size={15} strokeWidth={2.5} />
           </Link>
         </div>
       </section>
