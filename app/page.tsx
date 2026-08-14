@@ -57,7 +57,7 @@ export default function HomePage() {
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-navy">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy to-brand-wine-dark">
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -138,14 +138,6 @@ export default function HomePage() {
                 priority
                 className="relative h-56 w-56 rounded-full object-cover ring-4 ring-white/10 sm:h-72 sm:w-72 lg:h-80 lg:w-80"
               />
-              <div className="absolute left-1/2 w-max -translate-x-1/2 rounded-xl bg-white px-4 py-2.5 text-center shadow-xl" style={{ bottom: "-1rem" }}>
-                <p className="text-sm font-black text-brand-navy">
-                  Hương Lan
-                </p>
-                <p className="text-xs font-medium text-gray-500">
-                  Đồng hành cùng bạn học tiếng Anh
-                </p>
-              </div>
             </div>
           </div>
         </div>
