@@ -57,39 +57,39 @@ export default function HomePage() {
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-cream-soft">
+      <section className="relative overflow-hidden bg-brand-navy">
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            opacity: 0.5,
+            opacity: 0.07,
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, var(--brand-sand) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
             backgroundSize: "28px 28px",
           }}
           aria-hidden
         />
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:hero-grid-cols lg:gap-6">
           <div className="relative z-10 min-w-0">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-wine/15 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-wine shadow-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-brand-honey">
               <Sparkles size={13} strokeWidth={2} />
               Học cùng Hương Lan
             </span>
 
             <h1
-              className="mt-5 font-black text-brand-navy"
+              className="mt-5 font-black text-white"
               style={{ fontSize: "2.1rem", lineHeight: 1.1 }}
             >
               <span className="sm:text-5xl lg:text-6xl">
                 Luyện Tiếng Anh
               </span>
               <br />
-              <span className="text-brand-wine sm:text-5xl lg:text-6xl">
+              <span className="text-brand-honey sm:text-5xl lg:text-6xl">
                 nghe – nói
               </span>{" "}
               <span className="sm:text-5xl lg:text-6xl">thực chiến</span>
             </h1>
 
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-gray-600 sm:text-base">
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
               Đề thi bám sát tình huống giao tiếp thật, chấm điểm tự động
               ngay sau khi nộp bài — học đến đâu, biết mình đến đó.
             </p>
@@ -100,9 +100,9 @@ export default function HomePage() {
                   <CheckCircle2
                     size={19}
                     strokeWidth={2}
-                    className="mt-0.5 shrink-0 text-brand-wine"
+                    className="mt-0.5 shrink-0 text-brand-honey"
                   />
-                  <span className="text-sm text-brand-navy/80">{f}</span>
+                  <span className="text-sm text-white/85">{f}</span>
                 </li>
               ))}
             </ul>
@@ -110,23 +110,23 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
               <Link
                 href="/online-test"
-                className="inline-flex items-center gap-2 rounded-lg bg-brand-wine px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-wine/20 transition hover:bg-brand-wine-dark sm:px-7"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-honey px-6 py-3 text-sm font-bold text-brand-navy shadow-lg shadow-black/20 transition hover:brightness-105 sm:px-7"
               >
                 Xem tất cả đề thi
                 <ArrowRight size={16} strokeWidth={2.5} />
               </Link>
-              <p className="basis-full text-sm leading-snug text-gray-500 sm:basis-auto">
-                <span className="text-lg font-black text-brand-navy">100%</span>
+              <p className="basis-full text-sm leading-snug text-white/60 sm:basis-auto">
+                <span className="text-lg font-black text-white">100%</span>
                 {" "}miễn phí, không quảng cáo
               </p>
             </div>
           </div>
 
-          {/* Signature element: ảnh thật của Hương Lan */}
+          {/* Signature element: ảnh thật của Hương Lan, không phải card số liệu chung chung */}
           <div className="relative z-10 flex justify-center lg:justify-end">
             <div className="relative">
               <div
-                className="absolute rounded-full bg-gradient-to-br from-brand-honey/40 to-transparent blur-2xl"
+                className="absolute rounded-full bg-gradient-to-br from-brand-honey/30 to-transparent blur-2xl"
                 style={{ inset: "-1rem" }}
                 aria-hidden
               />
@@ -136,8 +136,16 @@ export default function HomePage() {
                 width={340}
                 height={340}
                 priority
-                className="relative h-56 w-56 rounded-full object-cover ring-4 ring-white sm:h-72 sm:w-72 lg:h-80 lg:w-80"
+                className="relative h-56 w-56 rounded-full object-cover ring-4 ring-white/10 sm:h-72 sm:w-72 lg:h-80 lg:w-80"
               />
+              <div className="absolute left-1/2 w-max -translate-x-1/2 rounded-xl bg-white px-4 py-2.5 text-center shadow-xl" style={{ bottom: "-1rem" }}>
+                <p className="text-sm font-black text-brand-navy">
+                  Hương Lan
+                </p>
+                <p className="text-xs font-medium text-gray-500">
+                  Đồng hành cùng bạn học tiếng Anh
+                </p>
+              </div>
             </div>
           </div>
         </div>
