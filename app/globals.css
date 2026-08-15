@@ -19,6 +19,8 @@
   --brand-muted-bg: #eef0f2;   /* nền badge "Miễn phí" trung tính */
   --brand-muted-text: #5b6b78; /* chữ badge trung tính */
   --brand-disabled-text: #9aa2a9; /* chữ nút "Vào thi" khi card Sắp ra mắt (không bấm được) */
+  --brand-hero-start: #243447; /* đầu gradient nền hero — navy nhạt/ấm hơn, gần tông kem hơn brand-navy gốc */
+  --brand-hero-end: #1c2b3a;   /* cuối gradient nền hero */
 }
 
 @theme inline {
@@ -38,6 +40,8 @@
   --color-brand-muted-bg: var(--brand-muted-bg);
   --color-brand-muted-text: var(--brand-muted-text);
   --color-brand-disabled-text: var(--brand-disabled-text);
+  --color-brand-hero-start: var(--brand-hero-start);
+  --color-brand-hero-end: var(--brand-hero-end);
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-mono: ui-monospace, monospace;
