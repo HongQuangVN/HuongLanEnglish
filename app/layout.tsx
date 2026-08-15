@@ -35,9 +35,35 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: "Hương Lan English",
+    url: SITE_URL,
+    description:
+      "Luyện đề Tiếng Anh online miễn phí: nghe, nói, đọc, viết. Đề thi bám sát cấu trúc thực tế, chấm điểm và tổng hợp kết quả tự động.",
+    email: "huonglan.workspace@gmail.com",
+    telephone: "+84368344648",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Phường Bình Thạnh",
+      addressRegion: "TP. HCM",
+      addressCountry: "VN",
+    },
+    sameAs: [
+      "https://www.facebook.com/huonglan21vt",
+      "https://www.tiktok.com/@huonglantalks",
+    ],
+  };
+
   return (
     <html lang="vi" className="h-full antialiased">
       <body className="min-h-full flex flex-col overflow-x-hidden bg-brand-cream font-sans">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <SiteHeader />
         {children}
         <SiteFooter />
