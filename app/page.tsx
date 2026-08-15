@@ -67,7 +67,7 @@ export default function HomePage() {
           }}
           aria-hidden
         />
-        <div className="mx-auto max-w-3xl px-4 pb-20 pt-14 sm:px-6 sm:pb-28 sm:pt-20">
+        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20">
           <div className="relative z-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-brand-honey">
               <Sparkles size={13} strokeWidth={2} />
@@ -88,12 +88,12 @@ export default function HomePage() {
               <span className="sm:text-5xl lg:text-6xl">thực chiến</span>
             </h1>
 
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base">
               Đề thi bám sát tình huống giao tiếp thật, chấm điểm tự động
               ngay sau khi nộp bài — học đến đâu, biết mình đến đó.
             </p>
 
-            <ul className="mt-7 space-y-3">
+            <ul className="mx-auto mt-7 inline-flex flex-col items-start space-y-3 text-left">
               {FEATURES.map((f) => (
                 <li key={f} className="flex items-start gap-2.5">
                   <CheckCircle2
@@ -106,7 +106,7 @@ export default function HomePage() {
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
               <Link
                 href="/online-test"
                 className="inline-flex items-center gap-2 rounded-lg bg-brand-honey px-6 py-3 text-sm font-bold text-brand-navy shadow-lg shadow-black/20 transition hover:brightness-105 sm:px-7"
@@ -116,15 +116,11 @@ export default function HomePage() {
               </Link>
               <p className="basis-full text-sm leading-snug text-white/60 sm:basis-auto">
                 <span className="text-lg font-black text-white">100%</span>
-                {" "}miễn phí
+                {" "}miễn phí, không quảng cáo
               </p>
             </div>
           </div>
         </div>
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-brand-cream sm:h-32"
-          aria-hidden
-        />
       </section>
 
       {/* Tests */}
