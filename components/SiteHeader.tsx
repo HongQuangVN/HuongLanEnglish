@@ -123,36 +123,40 @@ export default function SiteHeader() {
             Luyện đề Tiếng Anh online — nghe, nói, đọc, viết
           </p>
 
-          <div className="hidden flex-1 max-w-xs items-center gap-2 rounded-full border border-brand-sand px-4 py-2 text-sm text-gray-400 lg:flex">
+          <div className="hidden max-w-xs flex-1 items-center gap-2 rounded-full border border-brand-sand px-4 py-2 text-sm text-gray-400 lg:flex">
             <Search size={16} strokeWidth={2} className="shrink-0" />
             Tìm kiếm...
           </div>
 
-          {isTeacher ? (
-            <Link
-              href={teacherHref}
-              className="shrink-0 rounded-lg bg-brand-navy px-3.5 py-2 text-xs font-bold text-white transition hover:bg-brand-navy-hover sm:px-5 sm:text-sm"
-            >
-              <span className="hidden sm:inline">Khu vực giáo viên</span>
-              <span className="sm:hidden">Giáo viên</span>
-            </Link>
-          ) : (
-            <Link
-              href="/dang-nhap"
-              className="shrink-0 rounded-lg bg-brand-cream-soft px-3.5 py-2 text-xs font-bold text-brand-wine transition hover:bg-brand-cream-hover sm:px-5 sm:text-sm"
-            >
-              Đăng nhập
-            </Link>
-          )}
+          {/* Nhóm nút bên phải — ml-auto đảm bảo luôn neo sát lề phải, kể cả khi
+              tagline và ô tìm kiếm đang ẩn trên mobile */}
+          <div className="ml-auto flex shrink-0 items-center gap-3 sm:gap-6">
+            {isTeacher ? (
+              <Link
+                href={teacherHref}
+                className="shrink-0 rounded-lg bg-brand-navy px-3.5 py-2 text-xs font-bold text-white transition hover:bg-brand-navy-hover sm:px-5 sm:text-sm"
+              >
+                <span className="hidden sm:inline">Khu vực giáo viên</span>
+                <span className="sm:hidden">Giáo viên</span>
+              </Link>
+            ) : (
+              <Link
+                href="/dang-nhap"
+                className="shrink-0 rounded-lg bg-brand-cream-soft px-3.5 py-2 text-xs font-bold text-brand-wine transition hover:bg-brand-cream-hover sm:px-5 sm:text-sm"
+              >
+                Đăng nhập
+              </Link>
+            )}
 
-          {/* Nút mở menu — chỉ hiện trên mobile/tablet nhỏ */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="flex shrink-0 items-center justify-center rounded-lg p-2 text-brand-navy hover:bg-brand-cream-soft md:hidden"
-            aria-label="Mở menu"
-          >
-            <Menu size={22} strokeWidth={2} />
-          </button>
+            {/* Nút mở menu — chỉ hiện trên mobile/tablet nhỏ */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="flex shrink-0 items-center justify-center rounded-lg p-2 text-brand-navy hover:bg-brand-cream-soft md:hidden"
+              aria-label="Mở menu"
+            >
+              <Menu size={22} strokeWidth={2} />
+            </button>
+          </div>
         </div>
       </div>
 

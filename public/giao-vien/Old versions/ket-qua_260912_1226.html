@@ -604,13 +604,6 @@
   }
   .detail-fib-item div:nth-child(2){flex:1;min-width:0;}
   .fib-student{font-size:13.5px;font-weight:700;word-break:break-word;}
-  .fib-student.is-empty,
-  .trans-answer.is-empty,
-  .detail-speaking.is-empty{
-    font-weight:400;
-    font-style:normal;
-    color:var(--gray);
-  }
   .fib-key{font-size:12px;color:#b91c1c;margin-top:2px;}
   .fib-mark{font-size:16px;font-weight:800;flex-shrink:0;}
   .is-correct .fib-mark{color:var(--green);}
@@ -902,17 +895,6 @@
     const div = document.createElement("div");
     div.textContent = (str === null || str === undefined) ? "" : String(str);
     return div.innerHTML;
-  }
-
-  // Hiển thị câu trả lời học sinh: nếu bỏ trống thì dùng dấu gạch ngang nhạt
-  // màu, không lặp lại chữ "(bỏ trống)" in đậm/nghiêng ở nhiều nơi (gây rối
-  // mắt khi 1 bài có hàng chục câu bỏ trống liên tiếp).
-  function renderAnswerOrEmpty(value, extraClass){
-    const cls = extraClass ? extraClass + " " : "";
-    if(value){
-      return '<div class="' + cls + '">' + escapeHtml(value) + '</div>';
-    }
-    return '<div class="' + cls + 'is-empty">—</div>';
   }
 
   function scoreColor(pct){
@@ -1366,7 +1348,7 @@
             '<span class="fib-index">' + (i + 1) + '</span>' +
             '<div>' +
               (questionText ? '<div class="trans-prompt">' + escapeHtml(questionText) + '</div>' : '') +
-              renderAnswerOrEmpty(it.student_answer, "fib-student") +
+              '<div class="fib-student">' + (it.student_answer ? escapeHtml(it.student_answer) : '<i>(bỏ trống)</i>') + '</div>' +
               (!it.is_correct ? '<div class="fib-key">Đáp án đúng: ' + escapeHtml(it.answer_key) + '</div>' : '') +
             '</div>' +
             '<span class="fib-mark">' + (it.is_correct ? '✓' : '✗') + '</span>' +
@@ -1418,7 +1400,7 @@
             d.translations.map(tr => (
               '<div class="detail-trans-item">' +
                 '<div class="trans-prompt">' + escapeHtml(tr.prompt || "") + '</div>' +
-                renderAnswerOrEmpty(tr.answer, "trans-answer") +
+                '<div class="trans-answer">' + (tr.answer ? escapeHtml(tr.answer) : '<i>(bỏ trống)</i>') + '</div>' +
               '</div>'
             )).join("") +
           '</div></div>';
@@ -1454,7 +1436,7 @@
           '<div class="detail-fib-item ' + (it.is_correct ? 'is-correct' : 'is-wrong') + '">' +
             '<span class="fib-index">' + (i + 1) + '</span>' +
             '<div>' +
-              renderAnswerOrEmpty(it.student_answer, "fib-student") +
+              '<div class="fib-student">' + (it.student_answer ? escapeHtml(it.student_answer) : '<i>(bỏ trống)</i>') + '</div>' +
               (!it.is_correct ? '<div class="fib-key">Đáp án đúng: ' + escapeHtml(it.answer_key) + '</div>' : '') +
             '</div>' +
             '<span class="fib-mark">' + (it.is_correct ? '✓' : '✗') + '</span>' +
@@ -1472,7 +1454,7 @@
         html += (
           '<div class="detail-trans-item">' +
             '<div class="trans-prompt">' + escapeHtml(tr.prompt) + '</div>' +
-            renderAnswerOrEmpty(tr.answer, "trans-answer") +
+            '<div class="trans-answer">' + (tr.answer ? escapeHtml(tr.answer) : '<i>(bỏ trống)</i>') + '</div>' +
           '</div>'
         );
       });
@@ -1483,7 +1465,7 @@
 
     html += (
       '<div class="detail-block"><h4>🗣️ Bài nói / dàn ý (Bước 04)</h4>' +
-      renderAnswerOrEmpty(speaking, "detail-speaking") + '</div>'
+      '<div class="detail-speaking">' + (speaking ? escapeHtml(speaking) : '<i>(bỏ trống)</i>') + '</div></div>'
     );
 
     document.getElementById("detail-body").innerHTML = html;
