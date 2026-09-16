@@ -801,45 +801,8 @@
   const WORKSHEET_META = {
     "5-topics":         { label: "5 Topics",         icon: "📚" },
     "sports-benefits":  { label: "Sports Benefits",  icon: "🏆" },
-    "field-notes":      { label: "Field Notes",      icon: "📝" },
-    "listening":        { label: "Listening",        icon: "🎧" }
+    "field-notes":      { label: "Field Notes",      icon: "📝" }
   };
-  // Các loại bài dùng cấu trúc "matching / quiz / dictation / form" (bài nghe
-  // dạng Daily Task Listening). Mọi bài Listening mới chỉ cần gửi payload với
-  // data.worksheet = "listening" là tự rơi vào đây, không cần sửa code thêm.
-  const LISTENING_STYLE_KEYS = new Set(["listening"]);
-
-  // Các trường trong `data` mà mọi bài "kiểu điền từ + đúng/sai" có thể dùng.
-  // Bất kỳ worksheet mới nào — dù KHÔNG được khai báo ở WORKSHEET_META hay
-  // LISTENING_STYLE_KEYS — miễn payload đặt data theo 1 trong 2 khuôn dưới đây
-  // thì trang này vẫn tự hiểu và vẽ ra đúng, không cần sửa code:
-  //   A) { correct, total, items: [{student_answer, answer_key, is_correct, ...}] }
-  //   B) một object gồm nhiều field dạng A (ví dụ matching/quiz/dictation/form,
-  //      hoặc fib theo từng chủ đề như "5-topics")
-  function isScoredPart(v){
-    return v && typeof v === "object" && Array.isArray(v.items) &&
-      typeof v.correct === "number" && typeof v.total === "number";
-  }
-  // Nhãn/icon đẹp cho các field quen mặt; field lạ sẽ tự dùng chính tên field.
-  const FIELD_LABELS = {
-    matching:   { label: "Nối từ",       icon: "🔗" },
-    quiz:       { label: "Trắc nghiệm",  icon: "❓" },
-    dictation:  { label: "Nghe điền",    icon: "🎧" },
-    form:       { label: "Điền form",    icon: "📋" },
-    fib:        { label: "Điền từ",      icon: "✏️" }
-  };
-  function fieldMeta(key){
-    return FIELD_LABELS[key] || { label: key, icon: "•" };
-  }
-  // Dò trong s.data mọi field có dạng "scored part" (khuôn A ở trên) — dùng
-  // làm phương án dự phòng cho worksheet chưa được khai báo cấu trúc riêng.
-  function detectScoredParts(d){
-    if(!d || typeof d !== "object") return [];
-    return Object.keys(d)
-      .filter(k => isScoredPart(d[k]))
-      .map(k => ({ key: k, part: d[k], meta: fieldMeta(k) }));
-  }
-
   function getWorksheetKey(s){
     return (s.data && s.data.worksheet) ? s.data.worksheet : "5-topics";
   }
@@ -1123,36 +1086,10 @@
           const cls = d.total && d.correct === d.total ? "full" : (d.correct === 0 ? "zero" : "");
           return '<span class="topic-chip ' + cls + '" title="' + escapeHtml(meta.label) + '">' + meta.icon + ' <span class="frac">' + d.correct + '/' + d.total + '</span></span>';
         }).join("");
-      } else if(LISTENING_STYLE_KEYS.has(wsKey)){
-        // Bài dạng Listening: 4 phần nối từ / trắc nghiệm / nghe điền / điền form
-        const d = (s.data) || {};
-        const parts = [
-          { key: "matching",  label: "Nối từ",     icon: "🔗" },
-          { key: "quiz",      label: "Trắc nghiệm", icon: "❓" },
-          { key: "dictation", label: "Nghe điền",   icon: "🎧" },
-          { key: "form",      label: "Điền form",   icon: "📋" }
-        ];
-        chips = parts.map(p => {
-          const part = d[p.key] || { correct: 0, total: 0 };
-          const cls = part.total && part.correct === part.total ? "full" : (part.correct === 0 ? "zero" : "");
-          return '<span class="topic-chip ' + cls + '" title="' + escapeHtml(p.label) + '">' + p.icon + ' <span class="frac">' + part.correct + '/' + part.total + '</span></span>';
-        }).join("");
       } else {
-        // Worksheet chưa được khai báo cấu trúc riêng ở trên: tự dò mọi field
-        // dạng "scored part" trong s.data và vẽ chip cho từng field tìm được.
-        // Nhờ vậy bài mới nào cũng hiện được ngay, không cần sửa code thêm.
-        const found = detectScoredParts(s.data);
-        if(found.length){
-          chips = found.map(f => {
-            const cls = f.part.total && f.part.correct === f.part.total ? "full" : (f.part.correct === 0 ? "zero" : "");
-            return '<span class="topic-chip ' + cls + '" title="' + escapeHtml(f.meta.label) + '">' + f.meta.icon + ' <span class="frac">' + f.part.correct + '/' + f.part.total + '</span></span>';
-          }).join("");
-        } else {
-          // Không dò được field nào theo khuôn đã biết — vẫn hiện tổng điểm
-          // chung (total_score/max_score) để không để trống hoàn toàn.
-          const cls = s.max_score && s.total_score === s.max_score ? "full" : (s.total_score === 0 ? "zero" : "");
-          chips = '<span class="topic-chip ' + cls + '" title="Tổng điểm">📊 <span class="frac">' + s.total_score + '/' + s.max_score + '</span></span>';
-        }
+        const fib = (s.data && s.data.fib) || { correct: 0, total: 0 };
+        const cls = fib.total && fib.correct === fib.total ? "full" : (fib.correct === 0 ? "zero" : "");
+        chips = '<span class="topic-chip ' + cls + '" title="Điền từ">✏️ <span class="frac">' + fib.correct + '/' + fib.total + '</span></span>';
       }
       const realIndex = allSubmissions.indexOf(s);
       const isChecked = selectedIds.has(s.id);
@@ -1304,8 +1241,7 @@
     document.getElementById("detail-name").textContent = s.student_name;
     document.getElementById("detail-time").textContent = "Nộp lúc " + formatTime(s.created_at);
     const totalEl = document.getElementById("detail-total");
-    const totalLabel = LISTENING_STYLE_KEYS.has(wsKey) ? "Tổng điểm" : "Tổng điền từ";
-    totalEl.textContent = totalLabel + ": " + s.total_score + "/" + s.max_score + " (" + pct + "%)";
+    totalEl.textContent = "Tổng điền từ: " + s.total_score + "/" + s.max_score + " (" + pct + "%)";
     totalEl.style.color = scoreColor(pct);
     totalEl.style.background = scoreColorSoft(pct);
 
@@ -1335,97 +1271,24 @@
     renderDetailBody();
   }
 
-  // Render 1 khối danh sách câu đúng/sai kiểu "đáp án học sinh vs đáp án đúng",
-  // dùng chung cho các phần matching/quiz/dictation/form của bài Listening.
-  function renderListeningPartBlock(title, icon, part, questionLabel){
-    let html = '<div class="detail-block"><h4>' + icon + ' ' + escapeHtml(title) + ' — ' + part.correct + '/' + part.total + ' đúng</h4><div class="detail-fib-list">';
-    const items = part.items || [];
-    if(items.length){
-      items.forEach((it, i) => {
-        const questionText = it.question || it.word || "";
-        html += (
-          '<div class="detail-fib-item ' + (it.is_correct ? 'is-correct' : 'is-wrong') + '">' +
-            '<span class="fib-index">' + (i + 1) + '</span>' +
-            '<div>' +
-              (questionText ? '<div class="trans-prompt">' + escapeHtml(questionText) + '</div>' : '') +
-              '<div class="fib-student">' + (it.student_answer ? escapeHtml(it.student_answer) : '<i>(bỏ trống)</i>') + '</div>' +
-              (!it.is_correct ? '<div class="fib-key">Đáp án đúng: ' + escapeHtml(it.answer_key) + '</div>' : '') +
-            '</div>' +
-            '<span class="fib-mark">' + (it.is_correct ? '✓' : '✗') + '</span>' +
-          '</div>'
-        );
-      });
-    } else {
-      html += '<div style="color:var(--gray);font-size:13px;">Không có dữ liệu.</div>';
-    }
-    html += '</div></div>';
-    return html;
-  }
-
   function renderDetailBody(){
     const s = allSubmissions[currentDetailIndex];
     const wsKey = getWorksheetKey(s);
     const d = (s && s.data) || {};
 
-    // Bài dạng Listening (matching/quiz/dictation/form) có cấu trúc khác hẳn
-    // "5-topics", nên render riêng rồi thoát sớm.
-    if(LISTENING_STYLE_KEYS.has(wsKey)){
-      const matching = d.matching || { items: [], correct: 0, total: 0 };
-      const quiz = d.quiz || { items: [], correct: 0, total: 0 };
-      const dictation = d.dictation || { items: [], correct: 0, total: 0 };
-      const form = d.form || { items: [], correct: 0, total: 0 };
-
-      let html = "";
-      html += renderListeningPartBlock("Nối từ", "🔗", matching);
-      html += renderListeningPartBlock("Trắc nghiệm", "❓", quiz);
-      html += renderListeningPartBlock("Nghe điền (dictation)", "🎧", dictation);
-      html += renderListeningPartBlock("Điền form", "📋", form);
-
-      document.getElementById("detail-body").innerHTML = html;
-      return;
+    let fib, translations, speaking;
+    if(wsKey === "5-topics"){
+      const t = currentDetailTopic;
+      fib = (d.fib && d.fib[t]) || { items: [], correct: 0, total: 0 };
+      translations = (d.translations && d.translations[t]) || [];
+      speaking = (d.speaking && d.speaking[t]) || "";
+    } else {
+      // Phiếu dạng phẳng (ví dụ sports-benefits): fib là { correct, total, items },
+      // translations là mảng [{prompt, answer}], speaking là chuỗi.
+      fib = d.fib || { items: [], correct: 0, total: 0 };
+      translations = d.translations || [];
+      speaking = d.speaking || "";
     }
-
-    if(wsKey !== "5-topics"){
-      // Worksheet chưa được khai báo cấu trúc riêng (không phải "5-topics",
-      // không nằm trong LISTENING_STYLE_KEYS). Tự dò mọi field dạng "scored
-      // part" trong s.data và vẽ từng khối chi tiết tương ứng, để bài mới
-      // nào cũng xem được ngay mà không cần sửa code thêm.
-      const found = detectScoredParts(d);
-      if(found.length){
-        let html = found.map(f => renderListeningPartBlock(f.meta.label, f.meta.icon, f.part)).join("");
-        // Nếu payload còn có translations/speaking dạng phẳng (giống các
-        // phiếu worksheet khác) thì vẫn hiển thị luôn cho đầy đủ.
-        if(Array.isArray(d.translations) && d.translations.length){
-          html += '<div class="detail-block"><h4>🔤 Dịch câu</h4><div class="detail-trans-list">' +
-            d.translations.map(tr => (
-              '<div class="detail-trans-item">' +
-                '<div class="trans-prompt">' + escapeHtml(tr.prompt || "") + '</div>' +
-                '<div class="trans-answer">' + (tr.answer ? escapeHtml(tr.answer) : '<i>(bỏ trống)</i>') + '</div>' +
-              '</div>'
-            )).join("") +
-          '</div></div>';
-        }
-        if(typeof d.speaking === "string" && d.speaking){
-          html += '<div class="detail-block"><h4>🗣️ Bài nói / dàn ý</h4><div class="detail-speaking">' + escapeHtml(d.speaking) + '</div></div>';
-        }
-        document.getElementById("detail-body").innerHTML = html;
-        return;
-      }
-      // Không dò được field nào theo khuôn đã biết: hiện dữ liệu thô để
-      // giáo viên vẫn xem được, thay vì để trống hoàn toàn.
-      document.getElementById("detail-body").innerHTML =
-        '<div class="detail-block"><h4>📄 Dữ liệu bài làm</h4>' +
-        '<pre style="white-space:pre-wrap;font-size:12.5px;color:var(--ink-soft);background:var(--canvas);padding:14px;border-radius:12px;overflow:auto;">' +
-        escapeHtml(JSON.stringify(d, null, 2)) +
-        '</pre></div>';
-      return;
-    }
-
-    // Tới đây chắc chắn wsKey === "5-topics" (các trường hợp khác đã return ở trên)
-    const t = currentDetailTopic;
-    const fib = (d.fib && d.fib[t]) || { items: [], correct: 0, total: 0 };
-    const translations = (d.translations && d.translations[t]) || [];
-    const speaking = (d.speaking && d.speaking[t]) || "";
 
     let html = "";
 

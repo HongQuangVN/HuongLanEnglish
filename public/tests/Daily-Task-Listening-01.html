@@ -1123,6 +1123,8 @@ async function doSubmit(){
     total_score: grade.total,
     max_score: grade.maxTotal,
     data: {
+      worksheet: "listening",
+      worksheet_title: "Daily Task · Listening 01",
       matching: { correct: grade.matchScore, total: vocab.length, items: grade.matchItems },
       quiz: { correct: grade.quizScore, total: quiz.length, items: grade.quizItems },
       dictation: { correct: grade.dictScore, total: dictAnswers.length, items: grade.dictItems },
