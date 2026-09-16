@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://huonglanenglish.vercel.app/sitemap.xml
