@@ -849,6 +849,58 @@
       .map(k => ({ key: k, part: d[k], meta: fieldMeta(k) }));
   }
 
+  // ===== Bài "Ôn từ vựng": lọc chi tiết theo chủ đề =====
+  const VOCAB_TABS = [
+    { key: "all",  label: "Tất cả",   icon: "🗂️" },
+    { key: "t1",   label: "Chủ đề 1", icon: "1️⃣" },
+    { key: "t2",   label: "Chủ đề 2", icon: "2️⃣" },
+    { key: "t3",   label: "Chủ đề 3", icon: "3️⃣" },
+    { key: "t4",   label: "Chủ đề 4", icon: "4️⃣" },
+    { key: "t5",   label: "Chủ đề 5", icon: "5️⃣" },
+    { key: "wrap", label: "Tổng kết", icon: "🏁" }
+  ];
+  // Mỗi câu có question dạng "Chủ đề 1 · ..." / "Tổng kết · ..." — tách tiền tố ra để biết thuộc chủ đề nào.
+  function splitVocabItem(it){
+    const q = String(it.question || it.word || "");
+    const m = q.match(/^(Chủ đề (\d)|Tổng kết) · ([\s\S]*)$/);
+    if(!m) return { topic: it.topic || "all", text: q };
+    return { topic: m[2] ? "t" + m[2] : "wrap", text: m[3] };
+  }
+  function renderVocabDetail(d){
+    const tab = currentDetailTopic || "all";
+    const parts = [
+      { key: "dictation", title: "Nghe điền từ", icon: "🎧" },
+      { key: "matching",  title: "Nối từ với nghĩa", icon: "🔗" },
+      { key: "scramble",  title: "Xếp lại chữ cái", icon: "🔀" }
+    ];
+    let html = "";
+    parts.forEach(pt => {
+      const src = d[pt.key];
+      if(!src || !Array.isArray(src.items)) return;
+      const items = src.items.map(it => {
+        const sp = splitVocabItem(it);
+        return Object.assign({}, it, { _topic: sp.topic, question: tab === "all" ? (it.question || sp.text) : sp.text });
+      }).filter(it => tab === "all" || it._topic === tab);
+      if(!items.length) return;
+      html += renderListeningPartBlock(pt.title, pt.icon, {
+        correct: items.filter(it => it.is_correct).length,
+        total: items.length,
+        items: items
+      });
+    });
+    if((tab === "all" || tab === "t5") && Array.isArray(d.translations) && d.translations.length){
+      html += '<div class="detail-block"><h4>✍️ Trả lời Present Perfect (Chủ đề 5)</h4><div class="detail-trans-list">' +
+        d.translations.map(tr => (
+          '<div class="detail-trans-item">' +
+            '<div class="trans-prompt">' + escapeHtml(tr.prompt || "") + '</div>' +
+            renderAnswerOrEmpty(tr.answer, "trans-answer") +
+          '</div>'
+        )).join("") + '</div></div>';
+    }
+    if(!html) html = '<div class="detail-block"><div style="color:var(--gray);font-size:13px;">Không có dữ liệu cho mục này.</div></div>';
+    document.getElementById("detail-body").innerHTML = html;
+  }
+
   function getWorksheetKey(s){
     return (s.data && s.data.worksheet) ? s.data.worksheet : "5-topics";
   }
@@ -1324,7 +1376,7 @@
     document.getElementById("detail-name").textContent = s.student_name;
     document.getElementById("detail-time").textContent = "Nộp lúc " + formatTime(s.created_at);
     const totalEl = document.getElementById("detail-total");
-    const totalLabel = LISTENING_STYLE_KEYS.has(wsKey) ? "Tổng điểm" : "Tổng điền từ";
+    const totalLabel = (LISTENING_STYLE_KEYS.has(wsKey) || wsKey === "vocab-review") ? "Tổng điểm" : "Tổng điền từ";
     totalEl.textContent = totalLabel + ": " + s.total_score + "/" + s.max_score + " (" + pct + "%)";
     totalEl.style.color = scoreColor(pct);
     totalEl.style.background = scoreColorSoft(pct);
@@ -1337,6 +1389,12 @@
         const meta = TOPIC_META[t] || { label: t, icon: "•" };
         return '<button class="detail-tab-btn' + (t === currentDetailTopic ? ' active' : '') + '" data-topic="' + t + '" onclick="switchDetailTopic(\'' + t + '\')">' + meta.icon + ' ' + escapeHtml(meta.label) + '</button>';
       }).join("");
+    } else if(wsKey === "vocab-review"){
+      currentDetailTopic = "all";
+      tabsEl.style.display = "flex";
+      tabsEl.innerHTML = VOCAB_TABS.map(t =>
+        '<button class="detail-tab-btn' + (t.key === currentDetailTopic ? ' active' : '') + '" data-topic="' + t.key + '" onclick="switchDetailTopic(\'' + t.key + '\')">' + t.icon + ' ' + escapeHtml(t.label) + '</button>'
+      ).join("");
     } else {
       currentDetailTopic = null;
       tabsEl.style.display = "none";
@@ -1402,6 +1460,11 @@
       html += renderListeningPartBlock("Điền form", "📋", form);
 
       document.getElementById("detail-body").innerHTML = html;
+      return;
+    }
+
+    if(wsKey === "vocab-review"){
+      renderVocabDetail(d);
       return;
     }
 
