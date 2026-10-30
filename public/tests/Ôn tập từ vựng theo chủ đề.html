@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ôn tập từ vựng theo chủ đề</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fa;--card:#fff;--ink:#1c2740;--mute:#5c6a82;--line:#dbe3ee;--acc:#0b7f86;--acc2:#e3f3f4;--ok:#1b8a4b;--okbg:#e2f5e9;--bad:#c2372f;--badbg:#fbe5e3;--hint:#fff4d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121826;--card:#1a2236;--ink:#e8edf6;--mute:#9aa7bf;--line:#2c3856;--acc:#4fc3c9;--acc2:#16323a;--ok:#5fd18b;--okbg:#17352436;--bad:#ff8a80;--badbg:#3d1f22;--hint:#3a3220}}
+:root[data-theme="dark"]{--bg:#121826;--card:#1a2236;--ink:#e8edf6;--mute:#9aa7bf;--line:#2c3856;--acc:#4fc3c9;--acc2:#16323a;--ok:#5fd18b;--okbg:#173524;--bad:#ff8a80;--badbg:#3d1f22;--hint:#3a3220}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6}
+header{padding:28px 20px 8px;max-width:900px;margin:0 auto}
+h1{font-size:1.7rem;margin:0 0 4px}
+header p{margin:0;color:var(--mute)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:10px 20px;max-width:100%}
+nav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:20px;font:inherit;font-size:.9rem;cursor:pointer}
+nav button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+main{max-width:900px;margin:0 auto;padding:16px 20px 60px}
+section.topic{display:none}section.topic.on{display:block}
+h2{font-size:1.35rem;margin:6px 0 4px}
+h3{font-size:1.05rem;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:16px 0}
+.sub{color:var(--mute);margin:0 0 12px;font-size:.92rem}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--acc)}
+td.w{font-weight:700}td.ipa{color:var(--acc);font-size:.9rem}
+button.b{border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:8px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+button.b.g{background:transparent;color:var(--acc)}
+button.sp{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:50%;width:32px;height:32px;cursor:pointer}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.bank span{background:var(--acc2);color:var(--acc);padding:3px 10px;border-radius:14px;font-size:.85rem}
+.pass{font-size:1.05rem;line-height:2.3}
+.pass input{font:inherit;border:0;border-bottom:2px solid var(--mute);background:transparent;color:var(--ink);text-align:center;padding:0 4px;margin:0 2px;outline:none}
+.pass input:focus{border-color:var(--acc)}
+.pass input.ok{border-color:var(--ok);background:var(--okbg)}
+.pass input.no{border-color:var(--bad);background:var(--badbg)}
+.pass sup{color:var(--mute);font-size:.7rem}
+.res{font-weight:700;margin-left:6px}
+.trans{display:none;background:var(--hint);padding:10px 14px;border-radius:8px;margin-top:10px;font-size:.95rem}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.mt button{text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 12px;border-radius:8px;font:inherit;font-size:.9rem;cursor:pointer}
+.mt button.sel{border-color:var(--acc);background:var(--acc2)}
+.mt button.ok{border-color:var(--ok);background:var(--okbg);cursor:default}
+.mt button.bad{border-color:var(--bad);background:var(--badbg)}
+.scr{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.scr .it{border:1px solid var(--line);border-radius:10px;padding:12px}
+.scr .lt{font-size:1.25rem;font-weight:700;letter-spacing:.2em;color:var(--acc);text-transform:lowercase}
+.scr input,textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);color:var(--ink);margin-top:6px}
+.scr input.ok{border-color:var(--ok);background:var(--okbg)}.scr input.no{border-color:var(--bad);background:var(--badbg)}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.fm div{background:var(--acc2);border-radius:10px;padding:12px 14px}
+.fm b{display:block;color:var(--acc);margin-bottom:4px}
+code{font-weight:700}
+.q{margin:14px 0;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.q:last-child{border:0}
+.fb{margin-top:6px;font-size:.9rem}
+.model{display:none;background:var(--hint);border-radius:8px;padding:8px 12px;margin-top:6px;font-size:.92rem}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media (max-width:560px){.mt{grid-template-columns:1fr}h1{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ôn tập từ vựng theo chủ đề</h1>
+  <p>Mỗi chủ đề có: từ vựng, bài nghe điền từ, nối từ với nghĩa và xếp chữ.</p>
+</header>
+<nav id="nav" aria-label="Chủ đề"></nav>
+<main id="main"></main>
+
+<script>
+const T=[
+{id:'t1',title:'Chủ đề 1: Sở thích & mâu thuẫn',
+words:[
+["the latest releases","/ðə ˈleɪtɪst rɪˈliːsɪz/","những ấn phẩm / bộ phim mới ra mắt gần đây"],
+["have sth in common","/hæv ˈsʌmθɪŋ ɪn ˈkɒmən/","có điểm chung"],
+["argue","/ˈɑːɡjuː/","tranh luận, cãi nhau"],
+["conflict","/ˈkɒnflɪkt/","mâu thuẫn, xung đột"],
+["struggle to do sth","/ˈstrʌɡl tə duː ˈsʌmθɪŋ/","đấu tranh / vật lộn để làm gì đó"],
+["out of touch with the modern world","/aʊt əv tʌtʃ wɪð ðə ˈmɒdən wɜːld/","lạc hậu với thế giới hiện đại"],
+["cost","/kɒst/","có giá, trị giá"],
+["a close bond","/ə kləʊs bɒnd/","mối quan hệ gần gũi, khăng khít"],
+["taste","/teɪst/","gu, sở thích (thẩm mỹ)"]],
+listen:"Minh and Nam are best friends, and they have a lot [[in common]]. They both love watching [[the latest releases]] at the cinema, but their [[taste]] is not always the same. Sometimes they [[argue]] about which film to watch, but it’s never a serious [[conflict]]. Nam’s grandfather often feels [[out of touch]] with the modern world, and he has to [[struggle]] to use a smartphone. A movie ticket doesn’t [[cost]] much, and the two boys share a [[close bond]].",
+scr:["argue","conflict","cost","taste"]},
+{id:'t2',title:'Chủ đề 2: Linh hoạt & quan hệ xã hội',
+words:[
+["dance to any tune","/dæns tuː ˈen.i tuːn/","nhạc nào cũng chơi được (thích ứng được mọi thứ)"],
+["flexible","/ˈflek.sə.bəl/","linh hoạt"],
+["responsive to something","/rɪˈspɒn.sɪv tuː ˈsʌm.θɪŋ/","phản ứng nhanh với cái gì đó"],
+["read my mind","/riːd maɪ maɪnd/","đọc được tâm trí (hiểu ai đó mà không cần nói)"],
+["acquaintances","/əˈkweɪn.tən.sɪz/","người quen (không thân)"],
+["meet my expectation","/miːt maɪ ˌek.spekˈteɪ.ʃən/","đáp ứng kỳ vọng của tôi"]],
+listen:"In a startup, you need to [[dance to any tune]]. My manager is very [[flexible]] about working hours, and she is always [[responsive]] to complaints. At the party, I only met some [[acquaintances]], but my best friend can [[read my mind]]. I hope the new job will [[meet my expectation]].",
+scr:["flexible","acquaintances"]},
+{id:'t3',title:'Chủ đề 3: Hai mặt & tâm lý học',
+words:[
+["durable","/ˈdʊr.ə.bəl/","bền"],
+["every coin has two sides","/ˈev.ri kɔɪn hæz tuː saɪdz/","chuyện gì cũng có hai mặt của nó"],
+["but then again, the downside of it is","/bʌt ðen əˈɡen ðə ˈdaʊn.saɪd əv ɪt ɪz/","nhưng mặt hạn chế là"],
+["in need of something","/ɪn niːd əv ˈsʌm.θɪŋ/","cần cái gì đó"],
+["psychology","/saɪˈkɒl.ə.dʒi/","tâm lý học"],
+["people are inclined to do something","/ˈpiː.pəl ɑːr ɪnˈklaɪnd tuː duː ˈsʌm.θɪŋ/","mọi người có khuynh hướng làm gì đó"],
+["mechanism","/ˈmek.ə.nɪ.zəm/","cơ chế"],
+["algorithm","/ˈæl.ɡə.rɪ.ðəm/","thuật toán"]],
+listen:"This backpack is cheap but very [[durable]]. Working from home is great, but [[every coin has two sides]]. But then again, [[the downside of it is]] that you can feel lonely. Our team is [[in need of]] more people. She studies [[psychology]] to understand why people are [[inclined to]] trust a brand that responds quickly. Researchers are still studying the [[mechanism]] behind this behavior, and the app’s [[algorithm]] reacts to what you watch.",
+scr:["durable","psychology","mechanism","algorithm"]},
+{id:'t4',title:'Chủ đề 4: Cảm xúc & tình bạn',
+words:[
+["intrinsically","/ɪnˈtrɪn.zɪ.kli/","về bản chất, vốn dĩ"],
+["recently","/ˈriː.sənt.li/","gần đây"],
+["end up (our relationship)","/end ʌp/","kết thúc (mối quan hệ)"],
+["it’s been a month","/ɪts bɪn ə mʌnθ/","đã một tháng rồi"],
+["it’s beyond my emotions","/ɪts bɪˈjɒnd maɪ ɪˈmoʊ.ʃənz/","vượt quá cảm xúc của tôi, không thể chịu đựng nổi"],
+["can’t handle emotions","/kɑːnt ˈhæn.dəl ɪˈmoʊ.ʃənz/","không thể kiểm soát/chịu đựng được cảm xúc"],
+["back then","/bæk ðen/","hồi đó, trước đây"],
+["hurt","/hɜːrt/","tổn thương"],
+["I just pretend that nothing has happened","/aɪ dʒʌst prɪˈtend ðæt ˈnʌθ.ɪŋ hæz ˈhæp.ənd/","tôi chỉ giả vờ như không có chuyện gì xảy ra"],
+["mutual friends","/ˈmjuː.tʃu.əl frendz/","bạn chung"],
+["have a sharp mind","/hæv ə ʃɑːrp maɪnd/","có đầu óc nhạy bén"]],
+listen:"[[Back then]], we were inseparable. [[Recently]], we don’t talk much, and [[it’s been a month]] since we last spoke. [[Intrinsically]], we were never really compatible, but I never thought we would [[end up]] like this. What she said really [[hurt]] me. Sometimes [[it’s beyond my emotions]] and I [[can’t handle emotions]] on my own. Around our [[mutual friends]], I just [[pretend that nothing has happened]].",
+scr:["intrinsically","recently","hurt"]}
+];
+const WRAP_LISTEN="[[Back then]], Linh and I had a [[close bond]]. We had so much [[in common]], and we loved watching [[the latest releases]] together. Our [[taste]] in movies was almost the same, and she could [[read my mind]]. Of course, we sometimes had a small [[conflict]]. Linh was very [[flexible]] and always [[responsive]] to my feelings. But [[recently]], we haven’t talked much. [[It’s been a month]] since we last spoke. [[Intrinsically]], I know we were never really compatible. It [[hurt]] a lot, and I just [[pretend that nothing has happened]] around our [[mutual friends]].";
+const WRAP_PAIRS=[["a close bond","mối quan hệ gần gũi, khăng khít"],["conflict","mâu thuẫn, xung đột"],["flexible","linh hoạt"],["responsive to something","phản ứng nhanh với cái gì đó"],["acquaintances","người quen (không thân)"],["read my mind","đọc được tâm trí"],["durable","bền"],["every coin has two sides","chuyện gì cũng có hai mặt"],["psychology","tâm lý học"],["algorithm","thuật toán"],["mutual friends","bạn chung"],["intrinsically","về bản chất, vốn dĩ"]];
+const WRAP_BANK=["back then","a close bond","in common","the latest releases","taste","read my mind","conflict","flexible","responsive","recently","it’s been a month","intrinsically","hurt","pretend that nothing has happened","mutual friends"];
+
+const PP_LISTEN="I have [[been]] to Da Lat twice. My friend has [[never]] travelled abroad, but she has [[visited]] many provinces. We have [[tried]] street food in Hue, and I have [[lost]] my phone once! How many places [[have]] you been to?";
+const PP_Q=[
+["Have you ever travelled abroad? Where have you been?","Yes, I have. I have been to Thailand and Singapore. / No, I haven’t, but I have visited many cities in Vietnam."],
+["What is the most beautiful place you have ever visited?","The most beautiful place I have ever visited is Ha Long Bay. I have never seen such amazing scenery."],
+["Have you ever tried a local dish that you didn’t like?","Yes, I have. I have tried snake meat once, and I haven’t eaten it again."],
+["Have you ever had a problem while travelling (lost, late, sick…)?","Yes, I have. I have missed a flight once because I arrived at the airport too late."]];
+
+const $=(s,e=document)=>e.querySelector(s);
+const esc=s=>s.replace(/</g,'&lt;');
+const norm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]/g,'').replace(/\s+/g,' ').trim();
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function say(t,rate){if(!('speechSynthesis' in window)){alert('Trình duyệt chưa hỗ trợ đọc giọng nói.');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=rate||1;speechSynthesis.speak(u)}
+const plain=t=>t.replace(/\[\[(.+?)\]\]/g,'$1');
+
+function vocabCard(words){
+  return `<div class="card"><h3>1. Từ vựng</h3><div class="tw"><table><tr><th>Từ / cụm từ</th><th>Phiên âm</th><th>Nghĩa tiếng Việt</th><th></th></tr>`+
+  words.map(w=>`<tr><td class="w">${esc(w[0])}</td><td class="ipa">${esc(w[1])}</td><td>${esc(w[2])}</td><td><button class="sp" data-say="${esc(w[0])}" aria-label="Nghe từ ${esc(w[0])}">🔊</button></td></tr>`).join('')+`</table></div></div>`;
+}
+function listenCard(n,text,bank,num){
+  let i=0;const body=text.replace(/\[\[(.+?)\]\]/g,(m,a)=>{i++;const w=Math.max(6,Math.min(a.length,22));return `<sup>${i}</sup><input data-a="${esc(a)}" style="width:${w*0.62+1}em" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Chỗ trống ${i}">`});
+  return `<div class="card ls" data-text="${esc(plain(text))}"><h3>${num}. Nghe và điền từ (${i} chỗ trống)</h3>
+  <p class="sub">Bấm nghe, rồi điền từ còn thiếu vào chỗ trống. Có thể nghe chậm và nghe lại nhiều lần.</p>
+  <div class="row"><button class="b" data-play="1">▶ Nghe</button><button class="b g" data-play="0.7">🐢 Nghe chậm</button><button class="b g" data-stop>■ Dừng</button></div>
+  <div class="pass">${body}</div>
+  <div class="row"><button class="b" data-check>Kiểm tra</button><button class="b g" data-reveal>Xem đáp án &amp; bài nghe</button><button class="b g" data-reset>Làm lại</button><span class="res"></span></div>
+  <div class="trans">${esc(plain(text))}</div></div>`;
+}
+function matchCard(num,id){return `<div class="card mc" data-id="${id}"><h3>${num}. Nối từ với nghĩa</h3><p class="sub">Bấm một từ bên trái, rồi bấm nghĩa tương ứng bên phải. <span class="res"></span></p><div class="mt"></div></div>`}
+function scrCard(num,list,words){
+  return `<div class="card"><h3>${num}. Xếp lại chữ cái</h3><p class="sub">Sắp xếp các chữ cái thành từ đúng (chỉ áp dụng cho từ đơn lẻ). Bấm 🔊 để nghe gợi ý.</p><div class="scr">`+
+  list.map(w=>{let s=w;for(let k=0;k<10&&s===w;k++)s=shuffle(w.split('')).join('');const vi=words.find(x=>x[0]===w)[2];
+  return `<div class="it" data-w="${w}"><div class="lt">${s}</div><div class="sub" style="margin:2px 0">${esc(vi)} <button class="sp" data-say="${w}" aria-label="Nghe">🔊</button></div><input placeholder="Nhập từ đúng" autocomplete="off" autocapitalize="off" spellcheck="false"></div>`}).join('')+
+  `</div><div class="row"><button class="b" data-scr>Kiểm tra</button><span class="res"></span></div></div>`;
+}
+function ppSection(){
+  return `<h2>Chủ đề 5: Thì hiện tại hoàn thành (Present Perfect)</h2>
+  <div class="card"><h3>1. Công thức</h3><div class="fm">
+  <div><b>Khẳng định</b>S + have/has + V3/V-ed<br><code>I have visited Hue.</code><br><code>She has visited Hue.</code></div>
+  <div><b>Phủ định</b>S + have/has + not + V3/V-ed<br><code>I haven’t been to Japan.</code><br><code>He hasn’t tried sushi.</code></div>
+  <div><b>Nghi vấn</b>Have/Has + S + V3/V-ed?<br><code>Have you ever been abroad?</code><br>Yes, I have. / No, I haven’t.</div></div>
+  <p class="sub" style="margin-top:12px"><b>Cách dùng:</b> nói về trải nghiệm trong đời (không nói rõ thời điểm), hoặc việc bắt đầu trong quá khứ và còn liên quan đến hiện tại.<br><b>Dấu hiệu:</b> ever, never, already, yet, just, recently, so far, since, for.</p></div>
+  <div class="card"><h3>2. Ví dụ</h3><ul style="margin:0;padding-left:20px">
+  <li>I <b>have been</b> to Da Nang three times.</li>
+  <li>She <b>has never travelled</b> by plane.</li>
+  <li>We <b>have tried</b> a lot of street food in Vietnam.</li>
+  <li><b>Have</b> you ever <b>lost</b> your luggage?</li></ul>
+  <p class="sub" style="margin:8px 0 0">Lưu ý: <i>have been to</i> = đã từng đến (và đã về); <i>have gone to</i> = đã đi và chưa về.</p></div>
+  <div class="card"><h3>3. Trả lời về trải nghiệm du lịch (4 câu)</h3><p class="sub">Viết câu trả lời bằng tiếng Anh, dùng have/has + V3. Bấm “Kiểm tra cấu trúc” để xem bạn đã dùng đúng thì chưa.</p>`+
+  PP_Q.map((q,i)=>`<div class="q" data-i="${i}"><b>${i+1}. ${esc(q[0])}</b><textarea rows="2" placeholder="Câu trả lời của bạn…"></textarea><div class="row"><button class="b" data-ppcheck>Kiểm tra cấu trúc</button><button class="b g" data-ppmodel>Xem câu mẫu</button></div><div class="fb"></div><div class="model">${esc(q[1])}</div></div>`).join('')+`</div>`+
+  listenCard(0,PP_LISTEN,["been","never","visited","tried","lost","have"],4);
+}
+
+function build(){
+  const nav=$('#nav'),main=$('#main');
+  const tabs=T.map(t=>[t.id,t.title.split(':')[0]]).concat([['t5','Chủ đề 5'],['wrap','Tổng kết']]);
+  nav.innerHTML=tabs.map(t=>`<button data-tab="${t[0]}">${t[1]}</button>`).join('');
+  let h='';
+  T.forEach(t=>{h+=`<section class="topic" id="${t.id}"><h2>${t.title}</h2>`+vocabCard(t.words)+listenCard(0,t.listen,t.words.map(w=>w[0]),2)+matchCard(3,t.id)+scrCard(4,t.scr,t.words)+`</section>`});
+  h+=`<section class="topic" id="t5">${ppSection()}</section>`;
+  h+=`<section class="topic" id="wrap"><h2>Tổng kết: ôn lại tất cả chủ đề</h2><p class="sub">Một bài nghe (15 chỗ trống) và một bài nối từ với nghĩa bao quát các chủ đề.</p>`+listenCard(0,WRAP_LISTEN,WRAP_BANK,1)+matchCard(2,'wrap')+`</section>`;
+  main.innerHTML=h;
+  main.querySelectorAll('.card h3').forEach(h3=>{h3.innerHTML=h3.innerHTML.replace(/^0\. /,'')});
+  main.querySelectorAll('.mc').forEach(initMatch);
+  show(location.hash.slice(1)||'t1');
+}
+function show(id){
+  if(!document.getElementById(id))id='t1';
+  document.querySelectorAll('section.topic').forEach(s=>s.classList.toggle('on',s.id===id));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===id));
+  speechSynthesis&&speechSynthesis.cancel();
+  try{history.replaceState(null,'','#'+id)}catch(e){}
+  window.scrollTo(0,0);
+}
+
+function initMatch(card){
+  const id=card.dataset.id;
+  const pairs=id==='wrap'?WRAP_PAIRS:T.find(t=>t.id===id).words.map(w=>[w[0],w[2]]);
+  const L=pairs.map((p,k)=>({t:p[0],k})),R=shuffle(pairs.map((p,k)=>({t:p[1],k})));
+  const box=$('.mt',card);
+  box.innerHTML=L.map(x=>`<button data-s="l" data-k="${x.k}" style="grid-column:1">${esc(x.t)}</button>`).join('')+R.map(x=>`<button data-s="r" data-k="${x.k}" style="grid-column:2">${esc(x.t)}</button>`).join('');
+  // place rows: left items in col 1, right in col 2
+  box.style.gridAutoFlow='column';box.style.gridTemplateRows=`repeat(${pairs.length},auto)`;
+  let sel=null,done=0;
+  box.onclick=e=>{const b=e.target.closest('button');if(!b||b.classList.contains('ok'))return;
+    if(!sel){sel=b;b.classList.add('sel');return}
+    if(sel===b){b.classList.remove('sel');sel=null;return}
+    if(sel.dataset.s===b.dataset.s){sel.classList.remove('sel');sel=b;b.classList.add('sel');return}
+    if(sel.dataset.k===b.dataset.k){[sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('ok')});done++;$('.res',card).textContent=`Đúng ${done}/${pairs.length}`+(done===pairs.length?' 🎉':'')}
+    else{const a=sel;[a,b].forEach(x=>x.classList.add('bad'));setTimeout(()=>[a,b].forEach(x=>x.classList.remove('bad','sel')),600)}
+    sel=null;};
+}
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.tab){show(t.dataset.tab);return}
+  if(t.dataset.say){say(t.dataset.say,0.9);return}
+  const ls=t.closest('.ls');
+  if(ls){
+    const ins=[...ls.querySelectorAll('input')];
+    if(t.dataset.play){say(ls.dataset.text,parseFloat(t.dataset.play))}
+    else if('stop' in t.dataset){speechSynthesis.cancel()}
+    else if('check' in t.dataset){let ok=0;ins.forEach(i=>{const good=norm(i.value)===norm(i.dataset.a);i.classList.toggle('ok',good);i.classList.toggle('no',!good);if(good)ok++;i.title=good?'':'Chưa đúng'});$('.res',ls).textContent=`Đúng ${ok}/${ins.length}`+(ok===ins.length?' 🎉':'')}
+    else if('reveal' in t.dataset){ins.forEach(i=>{if(norm(i.value)!==norm(i.dataset.a)){i.value=i.dataset.a;i.classList.add('no');i.classList.remove('ok')}});$('.trans',ls).style.display='block'}
+    else if('reset' in t.dataset){ins.forEach(i=>{i.value='';i.classList.remove('ok','no')});$('.trans',ls).style.display='none';$('.res',ls).textContent=''}
+    return;
+  }
+  if('scr' in t.dataset){const card=t.closest('.card');let ok=0,n=0;card.querySelectorAll('.it').forEach(it=>{n++;const i=$('input',it);const good=norm(i.value)===it.dataset.w;i.classList.toggle('ok',good);i.classList.toggle('no',!good);if(good)ok++});$('.res',card).textContent=`Đúng ${ok}/${n}`+(ok===n?' 🎉':'');return}
+  if('ppcheck' in t.dataset){const q=t.closest('.q'),v=$('textarea',q).value.trim(),fb=$('.fb',q);
+    if(!v){fb.textContent='Hãy viết câu trả lời trước nhé.';return}
+    const has=/\b(have|has|haven['’]t|hasn['’]t|i['’]ve|we['’]ve|they['’]ve|she['’]s|he['’]s)\b/i.test(v);
+    const v3=/\b(been|visited|tried|seen|eaten|lost|gone|travell?ed|missed|done|stayed|taken|met|had|got|gotten|never)\b/i.test(v);
+    fb.style.color=has&&v3?'var(--ok)':'var(--bad)';
+    fb.textContent=has&&v3?'Tốt! Bạn đã dùng have/has + V3. Hãy đối chiếu thêm với câu mẫu.':'Chưa thấy cấu trúc have/has + V3. Hãy thử viết lại, ví dụ: “I have been to…”.';return}
+  if('ppmodel' in t.dataset){const m=$('.model',t.closest('.q'));m.style.display=m.style.display==='block'?'none':'block'}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('.scr input')){$('[data-scr]',e.target.closest('.card')).click()}});
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+build();
+</script>
+</body>
+</html>
