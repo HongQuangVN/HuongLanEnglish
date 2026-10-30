@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ôn tập từ vựng theo chủ đề</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/config.js"></script>
 <style>
 :root{--bg:#f4f7fa;--card:#fff;--ink:#1c2740;--mute:#5c6a82;--line:#dbe3ee;--acc:#0b7f86;--acc2:#e3f3f4;--ok:#1b8a4b;--okbg:#e2f5e9;--bad:#c2372f;--badbg:#fbe5e3;--hint:#fff4d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121826;--card:#1a2236;--ink:#e8edf6;--mute:#9aa7bf;--line:#2c3856;--acc:#4fc3c9;--acc2:#16323a;--ok:#5fd18b;--okbg:#17352436;--bad:#ff8a80;--badbg:#3d1f22;--hint:#3a3220}}
@@ -15,7 +17,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro'
 header{padding:28px 20px 8px;max-width:900px;margin:0 auto}
 h1{font-size:1.7rem;margin:0 0 4px}
 header p{margin:0;color:var(--mute)}
-nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:10px 20px;max-width:100%}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;padding:10px max(20px,calc((100% - 900px)/2 + 20px));max-width:100%}
 nav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:20px;font:inherit;font-size:.9rem;cursor:pointer}
 nav button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
 main{max-width:900px;margin:0 auto;padding:16px 20px 60px}
@@ -62,6 +64,21 @@ code{font-weight:700}
 .fb{margin-top:6px;font-size:.9rem}
 .model{display:none;background:var(--hint);border-radius:8px;padding:8px 12px;margin-top:6px;font-size:.92rem}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.idbar{max-width:900px;margin:12px auto 0;padding:0 20px}
+.idbar .card{margin:8px 0;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
+.idbar .f{display:flex;flex-direction:column;gap:4px;flex:1;min-width:200px}
+.idbar .f.sm{flex:0 0 auto;min-width:160px}
+.idbar label{font-size:.85rem;font-weight:700;color:var(--mute)}
+.idbar input,.idbar select{height:44px;font:inherit;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--bg);color:var(--ink);width:100%}
+.submitbox{max-width:900px;margin:0 auto;padding:0 20px 60px}
+.submitbox .card{text-align:center}
+.submitbox .b{font-size:1rem;padding:12px 28px}
+.mo{display:none;position:fixed;inset:0;z-index:50;background:rgba(10,16,30,.55);align-items:center;justify-content:center;padding:20px}
+.mb{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:24px;max-width:420px;width:100%}
+.mb h3{font-size:1.15rem;margin:0 0 12px}
+.mb p{margin:0 0 6px}
+.mb .sub{color:var(--mute)}
+.ma{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
 @media (max-width:560px){.mt{grid-template-columns:1fr}h1{font-size:1.4rem}}
 </style>
 </head>
@@ -70,8 +87,24 @@ code{font-weight:700}
   <h1>Ôn tập từ vựng theo chủ đề</h1>
   <p>Mỗi chủ đề có: từ vựng, bài nghe điền từ, nối từ với nghĩa và xếp chữ.</p>
 </header>
+<div class="idbar"><div class="card">
+  <div class="f"><label for="studentName">Họ tên học sinh</label><input type="text" id="studentName" placeholder="Nhập tên của em..." autocomplete="name"></div>
+  <div class="f sm"><label for="classCode">Mã lớp</label><select id="classCode"><option value="">-- Chọn mã lớp --</option><option value="IE12">IE12</option><option value="IE13">IE13</option><option value="T261">T261</option><option value="T262">T262</option><option value="O1O">O1O</option></select></div>
+</div></div>
 <nav id="nav" aria-label="Chủ đề"></nav>
 <main id="main"></main>
+<div class="submitbox"><div class="card">
+  <h3>Nộp bài</h3>
+  <p class="sub">Nhập họ tên và chọn mã lớp ở đầu trang, rồi bấm nộp. Hệ thống chấm phần nghe điền từ, nối từ và xếp chữ của tất cả chủ đề; phần trả lời Present Perfect (Chủ đề 5) được lưu để giáo viên xem. Ô nào đã bấm “Xem đáp án” sẽ tính là sai — bấm “Làm lại” nếu muốn làm lại ô đó.</p>
+  <button class="b" onclick="openSubmitModal()">📤 Nộp bài &amp; Chấm điểm</button>
+</div></div>
+<div class="mo" id="submit-modal"><div class="mb">
+  <div id="ms-confirm"><h3>Xác nhận nộp bài</h3><p>Học sinh: <b id="m-name">—</b></p><p>Mã lớp: <b id="m-class">—</b></p><p class="sub" id="m-score"></p>
+    <div class="ma"><button class="b g" onclick="closeSubmitModal()">Hủy</button><button class="b" onclick="doSubmit()">Xác nhận nộp</button></div></div>
+  <div id="ms-loading" style="display:none"><h3>Đang gửi bài...</h3><p class="sub">Vui lòng chờ trong giây lát.</p></div>
+  <div id="ms-success" style="display:none"><h3>🎉 Nộp bài thành công!</h3><p class="sub" id="m-ok"></p><div class="ma"><button class="b" onclick="closeSubmitModal()">Đóng</button></div></div>
+  <div id="ms-error" style="display:none"><h3>⚠️ Có lỗi xảy ra</h3><p class="sub" id="m-err"></p><div class="ma"><button class="b g" onclick="closeSubmitModal()">Đóng</button><button class="b" onclick="doSubmit()">Thử lại</button></div></div>
+</div></div>
 
 <script>
 const T=[
@@ -231,9 +264,9 @@ document.addEventListener('click',e=>{
     const ins=[...ls.querySelectorAll('input')];
     if(t.dataset.play){say(ls.dataset.text,parseFloat(t.dataset.play))}
     else if('stop' in t.dataset){speechSynthesis.cancel()}
-    else if('check' in t.dataset){let ok=0;ins.forEach(i=>{const good=norm(i.value)===norm(i.dataset.a);i.classList.toggle('ok',good);i.classList.toggle('no',!good);if(good)ok++;i.title=good?'':'Chưa đúng'});$('.res',ls).textContent=`Đúng ${ok}/${ins.length}`+(ok===ins.length?' 🎉':'')}
-    else if('reveal' in t.dataset){ins.forEach(i=>{if(norm(i.value)!==norm(i.dataset.a)){i.value=i.dataset.a;i.classList.add('no');i.classList.remove('ok')}});$('.trans',ls).style.display='block'}
-    else if('reset' in t.dataset){ins.forEach(i=>{i.value='';i.classList.remove('ok','no')});$('.trans',ls).style.display='none';$('.res',ls).textContent=''}
+    else if('check' in t.dataset){let ok=0;ins.forEach(i=>{const good=!i.dataset.rev&&norm(i.value)===norm(i.dataset.a);i.classList.toggle('ok',good);i.classList.toggle('no',!good);if(good)ok++;i.title=good?'':'Chưa đúng'});$('.res',ls).textContent=`Đúng ${ok}/${ins.length}`+(ok===ins.length?' 🎉':'')}
+    else if('reveal' in t.dataset){ins.forEach(i=>{if(norm(i.value)!==norm(i.dataset.a)){if(!i.dataset.rev){i.dataset.typed=i.value;i.dataset.rev='1'}i.value=i.dataset.a;i.classList.add('no');i.classList.remove('ok')}});$('.trans',ls).style.display='block'}
+    else if('reset' in t.dataset){ins.forEach(i=>{i.value='';i.classList.remove('ok','no');delete i.dataset.rev;delete i.dataset.typed});$('.trans',ls).style.display='none';$('.res',ls).textContent=''}
     return;
   }
   if('scr' in t.dataset){const card=t.closest('.card');let ok=0,n=0;card.querySelectorAll('.it').forEach(it=>{n++;const i=$('input',it);const good=norm(i.value)===it.dataset.w;i.classList.toggle('ok',good);i.classList.toggle('no',!good);if(good)ok++});$('.res',card).textContent=`Đúng ${ok}/${n}`+(ok===n?' 🎉':'');return}
@@ -246,6 +279,66 @@ document.addEventListener('click',e=>{
   if('ppmodel' in t.dataset){const m=$('.model',t.closest('.q'));m.style.display=m.style.display==='block'?'none':'block'}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('.scr input')){$('[data-scr]',e.target.closest('.card')).click()}});
+
+/* ---------------- NỘP BÀI (lưu vào Supabase) ---------------- */
+const secLabel=sec=>sec.id==='wrap'?'Tổng kết':'Chủ đề '+sec.id.slice(1);
+function part(items){return{correct:items.filter(x=>x.is_correct).length,total:items.length,items}}
+function gradeAll(){
+  const dict=[],match=[],scr=[];
+  document.querySelectorAll('section.topic').forEach(sec=>{
+    const lab=secLabel(sec);
+    sec.querySelectorAll('.ls').forEach(ls=>ls.querySelectorAll('input').forEach((i,n)=>{
+      const rev=!!i.dataset.rev;
+      dict.push({question:lab+' · chỗ trống '+(n+1),answer_key:i.dataset.a,student_answer:rev?(i.dataset.typed||'').trim():i.value.trim(),is_correct:!rev&&norm(i.value)===norm(i.dataset.a)});
+    }));
+    sec.querySelectorAll('.mc').forEach(mc=>mc.querySelectorAll('button[data-s="l"]').forEach(l=>{
+      const r=mc.querySelector('button[data-s="r"][data-k="'+l.dataset.k+'"]'),ok=l.classList.contains('ok');
+      match.push({question:lab+' · '+l.textContent,answer_key:r.textContent,student_answer:ok?r.textContent:'',is_correct:ok});
+    }));
+    const tp=T.find(t=>t.id===sec.id);
+    sec.querySelectorAll('.scr .it').forEach(it=>{
+      const w=it.dataset.w,v=$('input',it).value.trim(),vi=tp?(tp.words.find(x=>x[0]===w)||[])[2]||'':'';
+      scr.push({question:lab+' · '+$('.lt',it).textContent+(vi?' ('+vi+')':''),answer_key:w,student_answer:v,is_correct:norm(v)===w});
+    });
+  });
+  const pp=[...document.querySelectorAll('#t5 .q')].map(q=>({prompt:$('b',q).textContent,answer:$('textarea',q).value.trim()}));
+  const dictation=part(dict),matching=part(match),scramble=part(scr);
+  return{dictation,matching,scramble,translations:pp,
+    total:dictation.correct+matching.correct+scramble.correct,
+    max:dictation.total+matching.total+scramble.total};
+}
+function modalStep(s){['confirm','loading','success','error'].forEach(x=>{const el=document.getElementById('ms-'+x);if(el)el.style.display=x===s?'block':'none'})}
+function openSubmitModal(){
+  const name=document.getElementById('studentName').value.trim(),cls=document.getElementById('classCode').value;
+  if(!name){alert('Vui lòng nhập họ tên học sinh trước khi nộp bài nhé!');document.getElementById('studentName').focus();window.scrollTo(0,0);return}
+  if(!cls){alert('Vui lòng chọn mã lớp trước khi nộp bài nhé!');document.getElementById('classCode').focus();window.scrollTo(0,0);return}
+  const g=gradeAll();
+  document.getElementById('m-name').textContent=name;
+  document.getElementById('m-class').textContent=cls;
+  document.getElementById('m-score').textContent='Tổng điểm hiện tại: '+g.total+' / '+g.max;
+  modalStep('confirm');document.getElementById('submit-modal').style.display='flex';
+}
+function closeSubmitModal(){document.getElementById('submit-modal').style.display='none'}
+async function doSubmit(){
+  modalStep('loading');
+  const name=document.getElementById('studentName').value.trim(),cls=document.getElementById('classCode').value;
+  const g=gradeAll();
+  const payload={student_name:name,class_code:cls,total_score:g.total,max_score:g.max,data:{
+    worksheet:'vocab-review',worksheet_title:'Ôn tập từ vựng theo chủ đề',
+    dictation:g.dictation,matching:g.matching,scramble:g.scramble,translations:g.translations,
+    submitted_at_client:new Date().toISOString()}};
+  try{
+    if(!window.supabaseClient)throw new Error('missing-config');
+    const {error}=await window.supabaseClient.from('submissions').insert(payload);
+    if(error)throw error;
+    document.getElementById('m-ok').textContent='Đã lưu bài làm của '+name+' (lớp '+cls+') — '+g.total+'/'+g.max+' điểm. Giáo viên sẽ xem được bài này trong trang kết quả.';
+    modalStep('success');
+  }catch(e){
+    console.error('Submit error:',e);
+    document.getElementById('m-err').textContent=(e&&e.message==='missing-config')?'Trang chưa được cấu hình Supabase (thiếu config.js). Vui lòng báo giáo viên/quản trị trang.':'Không gửi được bài làm. Vui lòng kiểm tra kết nối mạng và thử lại.';
+    modalStep('error');
+  }
+}
 window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
 build();
 </script>
